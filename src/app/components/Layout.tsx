@@ -25,6 +25,7 @@ export default function Layout() {
   const navigate = useNavigate();
   const { user, setUser } = useUser();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [desktopSidebarOpen, setDesktopSidebarOpen] = useState(true);
 
   const isActive = (path: string) => {
     if (path === "/home") {
@@ -85,6 +86,7 @@ export default function Layout() {
   }, [user?.role]);
 
   const closeMobileMenu = () => setMobileMenuOpen(false);
+  const toggleDesktopSidebar = () => setDesktopSidebarOpen((current) => !current);
 
   const roleAccent =
     user?.role === "admin" ? "from-red-500 to-rose-500" :
@@ -93,13 +95,23 @@ export default function Layout() {
 
   const SidebarContent = (
     <>
-      <div className={`border-b border-white/70 bg-gradient-to-br ${roleAccent} p-6 text-white`}>
-        <p className="text-xs font-semibold uppercase tracking-[0.28em] text-white/70">SquatGym</p>
-        <h1 className="mt-2 text-2xl font-bold">Panel administrativo</h1>
-        <p className="mt-1 text-sm text-white/80">Gestión centralizada del gimnasio</p>
+      <div className={`shrink-0 border-b border-white/70 bg-gradient-to-br ${roleAccent} p-6 text-white`}>
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-white/70">SquatGym</p>
+            <h1 className="mt-2 text-2xl font-bold">Panel administrativo</h1>
+          </div>
+          <button
+            onClick={toggleDesktopSidebar}
+            className="hidden h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-white/20 bg-white/10 text-white transition-all duration-300 hover:bg-white/20 lg:inline-flex"
+            aria-label="Contraer sidebar"
+          >
+            <Menu className="h-5 w-5" />
+          </button>
+        </div>
       </div>
 
-      <nav className="flex-1 space-y-6 overflow-y-auto px-4 py-5">
+      <nav className="min-h-0 flex-1 space-y-6 overflow-y-auto px-4 py-5">
         {navigationGroups.map((group) => (
           <div key={group.title}>
             <p className="px-3 pb-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">
@@ -111,7 +123,7 @@ export default function Layout() {
                   key={item.to}
                   to={item.to}
                   onClick={closeMobileMenu}
-                  className={`flex items-center gap-3 rounded-xl px-3 py-3 text-sm transition-all ${
+                  className={`flex items-center gap-3 rounded-xl px-3 py-3 text-sm transition-all duration-300 ${
                     isActive(item.to)
                       ? "bg-slate-900 text-white shadow-lg shadow-slate-900/10"
                       : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
@@ -126,7 +138,7 @@ export default function Layout() {
         ))}
       </nav>
 
-      <div className="border-t border-slate-200 p-4">
+      <div className="mt-auto shrink-0 border-t border-slate-200 p-4 pb-5">
         <div className="mb-3 rounded-2xl border border-slate-200 bg-slate-50 p-4">
           <div className="flex items-center gap-3">
             <div className={`flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br ${roleAccent} text-white shadow-sm`}>
@@ -146,7 +158,7 @@ export default function Layout() {
         </div>
         <button
           onClick={handleLogout}
-          className="flex w-full items-center justify-center gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-600 transition-colors hover:bg-red-100"
+          className="flex w-full items-center justify-center gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-600 transition-all duration-300 hover:bg-red-100"
         >
           <LogOut className="h-4 w-4" />
           Cerrar sesión
@@ -156,12 +168,30 @@ export default function Layout() {
   );
 
   return (
-    <div className="min-h-svh bg-transparent lg:flex">
-      <aside className="hidden h-svh w-80 shrink-0 border-r border-white/70 bg-white/90 backdrop-blur lg:flex lg:flex-col">
+    <div className="min-h-svh bg-transparent">
+      <aside
+        className={`fixed inset-y-0 left-0 z-40 hidden h-screen w-80 flex-col border-r border-white/70 bg-white/90 backdrop-blur transition-all duration-300 lg:flex ${
+          desktopSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
         {SidebarContent}
       </aside>
 
-      <div className="flex min-h-svh flex-1 flex-col">
+      {!desktopSidebarOpen && (
+        <button
+          onClick={toggleDesktopSidebar}
+          className="fixed left-4 top-4 z-30 hidden h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white/95 text-slate-700 shadow-sm transition-all duration-300 hover:bg-white lg:inline-flex"
+          aria-label="Expandir sidebar"
+        >
+          <Menu className="h-5 w-5" />
+        </button>
+      )}
+
+      <div
+        className={`flex min-h-svh flex-1 flex-col transition-all duration-300 ${
+          desktopSidebarOpen ? "lg:pl-80" : "lg:pl-0"
+        }`}
+      >
         <header className="sticky top-0 z-30 border-b border-white/70 bg-white/80 px-4 py-3 backdrop-blur sm:px-6 lg:hidden">
           <div className="flex items-center justify-between gap-3">
             <div>

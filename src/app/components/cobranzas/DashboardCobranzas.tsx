@@ -6,7 +6,6 @@ import {
   AlertCircle,
   Search,
   FileText,
-  Calendar,
   ArrowRight,
 } from "lucide-react";
 
@@ -57,7 +56,7 @@ export default function DashboardCobranzas() {
         ))}
       </div>
 
-      <div className="mt-6 grid grid-cols-1 gap-4 xl:grid-cols-3">
+      <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
         <Link
           to="/cobranzas/buscar-alumno"
           className="rounded-[24px] bg-gradient-to-br from-blue-600 to-cyan-500 p-5 text-white shadow-lg"
@@ -75,12 +74,6 @@ export default function DashboardCobranzas() {
           <p className="mt-4 text-xl font-bold">Listado de cobranzas</p>
           <p className="mt-1 text-sm text-violet-50">Visualizá los registros de cobros del período.</p>
         </Link>
-
-        <div className="rounded-[24px] bg-gradient-to-br from-emerald-600 to-green-500 p-5 text-white shadow-lg">
-          <Calendar className="h-8 w-8" />
-          <p className="mt-4 text-xl font-bold">Abril 2026</p>
-          <p className="mt-1 text-sm text-emerald-50">Período operativo actual.</p>
-        </div>
       </div>
 
       <div className="mt-6 grid grid-cols-1 gap-6 xl:grid-cols-2">

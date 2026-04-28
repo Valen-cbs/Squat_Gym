@@ -195,12 +195,6 @@
     line-height: 1.5;
   }
 
-  table {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch;
-  }
 }
 
 @layer components {
@@ -242,6 +236,9 @@
 
   .app-table {
     @apply min-w-[640px];
+    display: table;
+    table-layout: auto;
+    white-space: nowrap;
   }
 
   main > div.p-8 {
