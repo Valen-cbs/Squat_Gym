@@ -22,7 +22,6 @@ import Auditoria from "./components/admin/Auditoria";
 import ConfiguracionPermisos from "./components/admin/ConfiguracionPermisos";
 import DashboardEncargado from "./components/encargado/DashboardEncargado";
 import InscripcionesPagos from "./components/encargado/InscripcionesPagos";
-import AsistenciaProfesores from "./components/encargado/AsistenciaProfesores";
 import AlertasNotificaciones from "./components/encargado/AlertasNotificaciones";
 import NovedadesInternas from "./components/encargado/NovedadesInternas";
 import StockReposicion from "./components/encargado/StockReposicion";
@@ -81,7 +80,6 @@ export const router = createBrowserRouter([
     children: [
       { index: true, Component: DashboardEncargado },
       { path: "inscripciones", Component: InscripcionesPagos },
-      { path: "asistencia", Component: AsistenciaProfesores },
       { path: "alertas", Component: AlertasNotificaciones },
       { path: "novedades", Component: NovedadesInternas },
       { path: "stock", Component: StockReposicion },

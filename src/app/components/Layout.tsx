@@ -12,7 +12,6 @@ import {
   BarChart3,
   Activity,
   Settings,
-  UserCheck,
   Bell,
   FileText,
   Package,
@@ -62,7 +61,6 @@ export default function Layout() {
         title: "Gestión de sucursal",
         items: [
           { to: "/encargado/inscripciones", label: "Inscripciones y pagos", icon: DollarSign },
-          { to: "/encargado/asistencia", label: "Asistencia profesores", icon: UserCheck },
           { to: "/encargado/alertas", label: "Alertas", icon: Bell },
           { to: "/encargado/novedades", label: "Novedades internas", icon: FileText },
           { to: "/encargado/stock", label: "Stock y reposición", icon: Package },

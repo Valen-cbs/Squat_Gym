@@ -4,17 +4,13 @@ import {
   ShoppingCart,
   Users,
   AlertCircle,
-  Calendar,
   ArrowRight,
-  Shield,
-  Briefcase,
   Tag,
   BarChart3,
   Activity,
-  UserCheck,
+  Shield,
   Bell,
   FileText,
-  Sparkles,
 } from "lucide-react";
 import { useUser } from "../context/UserContext";
 
@@ -55,14 +51,6 @@ export default function Home() {
       color: "from-blue-600 to-cyan-500",
       link: "/encargado/inscripciones",
       features: ["Ver inscripciones", "Consultar pagos", "Registros por secretaría"],
-    },
-    {
-      title: "Asistencia profesores",
-      description: "Validá presencia, llegadas tarde y cobertura del equipo docente.",
-      icon: UserCheck,
-      color: "from-emerald-600 to-green-500",
-      link: "/encargado/asistencia",
-      features: ["Registro diario", "Tardanzas y ausencias", "Resumen semanal"],
     },
     {
       title: "Alertas y notificaciones",
@@ -144,67 +132,9 @@ export default function Home() {
     { id: 3, type: "info", message: "23 alumnos pendientes de pago este mes", severity: "medium" },
   ];
 
-  const roleIcon =
-    user?.role === "admin" ? Shield :
-    user?.role === "manager" ? Briefcase :
-    Users;
-
-  const RoleIcon = roleIcon;
-
   return (
     <div className="app-page">
-      <section className="app-panel overflow-hidden">
-        <div className="grid gap-6 px-5 py-6 sm:px-8 sm:py-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)]">
-          <div>
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-blue-700">
-              <Sparkles className="h-3.5 w-3.5" />
-              Centro de control
-            </div>
-            <h1 className="text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl lg:text-5xl">
-              Un panel más claro, ágil y listo para usarse desde el celular.
-            </h1>
-            <p className="mt-4 max-w-2xl text-sm leading-6 text-slate-600 sm:text-base">
-              Reordenamos la experiencia para que cada rol encuentre rápido lo importante:
-              métricas, accesos frecuentes y alertas operativas sin depender de una vista de escritorio.
-            </p>
-          </div>
-
-          <div className="rounded-[28px] bg-slate-950 p-5 text-white shadow-2xl shadow-slate-900/20">
-            <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10">
-                <RoleIcon className="h-6 w-6" />
-              </div>
-              <div>
-                <p className="text-sm text-white/70">Sesión activa</p>
-                <p className="text-lg font-semibold">{user?.name || "Usuario"}</p>
-              </div>
-            </div>
-            <div className="mt-6 grid grid-cols-2 gap-3">
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <p className="text-xs uppercase tracking-[0.18em] text-white/55">Rol</p>
-                <p className="mt-2 text-sm font-medium">{user?.roleName || "Sin asignar"}</p>
-              </div>
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <p className="text-xs uppercase tracking-[0.18em] text-white/55">Estado</p>
-                <p className="mt-2 text-sm font-medium text-emerald-300">Operativo</p>
-              </div>
-            </div>
-            <div className="mt-4 rounded-2xl border border-white/10 bg-gradient-to-r from-white/10 to-white/5 p-4">
-              <p className="text-sm text-white/70">Fecha actual</p>
-              <p className="mt-2 text-xl font-semibold capitalize">
-                {new Date().toLocaleDateString("es-AR", {
-                  weekday: "long",
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="mt-6 app-stat-grid">
+      <section className="app-stat-grid">
         {stats.map((stat, index) => (
           <div key={index} className="app-panel p-5 sm:p-6">
             <div className="flex items-start justify-between gap-4">
@@ -221,47 +151,16 @@ export default function Home() {
         ))}
       </section>
 
-      <section className="mt-6 rounded-[28px] bg-gradient-to-r from-blue-700 via-blue-600 to-cyan-500 px-5 py-6 text-white shadow-xl shadow-blue-900/15 sm:px-8">
-        <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
-          <div className="flex items-start gap-4">
-            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/15">
-              <Calendar className="h-7 w-7" />
-            </div>
-            <div>
-              <p className="text-sm text-blue-100">Período operativo</p>
-              <p className="mt-1 text-2xl font-bold">Abril 2026</p>
-              <p className="mt-2 max-w-xl text-sm text-blue-50/90">
-                La vista inicial ahora prioriza lectura rápida, accesos grandes y bloques que apilan bien en mobile.
-              </p>
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-            <div className="rounded-2xl border border-white/15 bg-white/10 p-4">
-              <p className="text-xs uppercase tracking-[0.18em] text-blue-100">Cobros</p>
-              <p className="mt-2 text-xl font-semibold">$125k</p>
-            </div>
-            <div className="rounded-2xl border border-white/15 bg-white/10 p-4">
-              <p className="text-xs uppercase tracking-[0.18em] text-blue-100">Ventas</p>
-              <p className="mt-2 text-xl font-semibold">$4.2k</p>
-            </div>
-            <div className="rounded-2xl border border-white/15 bg-white/10 p-4 col-span-2 sm:col-span-1">
-              <p className="text-xs uppercase tracking-[0.18em] text-blue-100">Alertas</p>
-              <p className="mt-2 text-xl font-semibold">8 activas</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="mt-6">
+      <section className="mt-8">
         <div className="app-page-header">
           <div>
             <h2 className="app-page-title">Accesos principales</h2>
-            <p className="app-page-copy">Cada módulo ahora tiene mejor respiración visual y una lectura más cómoda en pantallas chicas.</p>
+            <p className="app-page-copy">Acciones rápidas para operar cada módulo sin información repetida ni bloques innecesarios.</p>
           </div>
         </div>
 
         <div className={`grid gap-4 ${
-          quickActions.length > 2 ? "grid-cols-1 md:grid-cols-2 2xl:grid-cols-3" : "grid-cols-1 xl:grid-cols-2"
+          quickActions.length > 4 ? "grid-cols-1 md:grid-cols-2 2xl:grid-cols-3" : "grid-cols-1 md:grid-cols-2 xl:grid-cols-4"
         }`}>
           {quickActions.map((action, index) => (
             <Link

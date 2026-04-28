@@ -1,7 +1,6 @@
 import { Link } from "react-router";
 import {
   Users,
-  UserCheck,
   Bell,
   FileText,
   Package,
@@ -14,7 +13,7 @@ import {
 export default function DashboardEncargado() {
   const stats = [
     { label: "Inscripciones del mes", value: "23", icon: Users, color: "from-sky-500 to-blue-500", trend: "+5" },
-    { label: "Asistencia profesores", value: "92%", icon: UserCheck, color: "from-emerald-500 to-green-500", trend: "+3%" },
+    { label: "Pagos registrados", value: "$4,250", icon: DollarSign, color: "from-emerald-500 to-green-500", trend: "+3%" },
     { label: "Alertas pendientes", value: "7", icon: AlertTriangle, color: "from-amber-500 to-orange-500", trend: "Prioridad alta" },
     { label: "Novedades del día", value: "4", icon: FileText, color: "from-violet-500 to-purple-500", trend: "Seguimiento" },
   ];
@@ -27,14 +26,6 @@ export default function DashboardEncargado() {
       color: "from-blue-600 to-cyan-500",
       link: "/encargado/inscripciones",
       badge: "23 este mes",
-    },
-    {
-      title: "Asistencia profesores",
-      description: "Controlar presencia, llegadas tarde y ausencias.",
-      icon: UserCheck,
-      color: "from-emerald-600 to-green-500",
-      link: "/encargado/asistencia",
-      badge: "8 profesores",
     },
     {
       title: "Alertas y notificaciones",
@@ -81,9 +72,9 @@ export default function DashboardEncargado() {
     },
     {
       id: 3,
-      message: "Prof. María González marcó asistencia",
+      message: "Se registró una nueva inscripción en la sede",
       time: "Hace 1 hora",
-      icon: UserCheck,
+      icon: Users,
       containerClass: "bg-blue-100",
       iconClass: "text-blue-600",
     },
