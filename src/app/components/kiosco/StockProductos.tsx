@@ -12,12 +12,12 @@ export default function StockProductos() {
   const [searchTerm, setSearchTerm] = useState("");
 
   const products = [
-    { id: 1, name: "Bebida Isotónica", category: "Bebidas", price: 60, stock: 15, minStock: 10, status: "ok" },
+    { id: 1, name: "Bebida Isotonica", category: "Bebidas", price: 60, stock: 15, minStock: 10, status: "ok" },
     { id: 2, name: "Barrita Proteica", category: "Suplementos", price: 70, stock: 22, minStock: 15, status: "ok" },
     { id: 3, name: "Agua Mineral", category: "Bebidas", price: 30, stock: 35, minStock: 20, status: "ok" },
-    { id: 4, name: "Batido de Proteína", category: "Suplementos", price: 80, stock: 18, minStock: 12, status: "ok" },
+    { id: 4, name: "Batido de Proteina", category: "Suplementos", price: 80, stock: 18, minStock: 12, status: "ok" },
     { id: 5, name: "Snack Saludable", category: "Alimentos", price: 40, stock: 28, minStock: 15, status: "ok" },
-    { id: 6, name: "Bebida Energética", category: "Bebidas", price: 65, stock: 3, minStock: 10, status: "critical" },
+    { id: 6, name: "Bebida Energetica", category: "Bebidas", price: 65, stock: 3, minStock: 10, status: "critical" },
     { id: 7, name: "Toalla Deportiva", category: "Accesorios", price: 150, stock: 2, minStock: 5, status: "critical" },
     { id: 8, name: "Guantes de Entrenamiento", category: "Accesorios", price: 250, stock: 6, minStock: 8, status: "warning" },
     { id: 9, name: "Shaker", category: "Accesorios", price: 120, stock: 15, minStock: 8, status: "ok" },
@@ -29,23 +29,15 @@ export default function StockProductos() {
     product.category.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const criticalStock = products.filter((p) => p.status === "critical").length;
-  const warningStock = products.filter((p) => p.status === "warning").length;
-  const totalValue = products.reduce((sum, p) => sum + (p.price * p.stock), 0);
+  const criticalStock = products.filter((product) => product.status === "critical").length;
+  const warningStock = products.filter((product) => product.status === "warning").length;
+  const totalValue = products.reduce((sum, product) => sum + product.price * product.stock, 0);
 
   return (
-    <div className="p-8">
-      <Link
-        to="/kiosco"
-        className="mb-6 inline-flex items-center gap-2 text-blue-600 hover:text-blue-700"
-      >
-        <ArrowLeft className="h-4 w-4" />
-        Volver al kiosco
-      </Link>
-
+    <div className="app-page">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Stock de Productos</h1>
-        <p className="mt-2 text-gray-500">Consulta y gestiona el inventario del kiosco</p>
+        <h1 className="text-3xl font-bold text-gray-900">Stock de productos</h1>
+        <p className="mt-2 text-gray-500">Consulta y gestiona el inventario del kiosco.</p>
       </div>
 
       <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-4">
@@ -61,7 +53,7 @@ export default function StockProductos() {
         <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
           <div className="flex items-center justify-between">
             <div>
-              <p className="mb-1 text-sm text-gray-500">Stock crítico</p>
+              <p className="mb-1 text-sm text-gray-500">Stock critico</p>
               <p className="text-2xl font-bold text-red-600">{criticalStock}</p>
             </div>
             <AlertTriangle className="h-10 w-10 text-red-500" />
@@ -89,7 +81,7 @@ export default function StockProductos() {
           <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
           <input
             type="text"
-            placeholder="Buscar por nombre o categoría..."
+            placeholder="Buscar por nombre o categoria..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full rounded-lg border border-gray-300 py-3 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -99,14 +91,12 @@ export default function StockProductos() {
 
       <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
         <div className="flex items-center justify-between border-b border-gray-200 p-6">
-          <h2 className="text-xl font-bold text-gray-900">
-            Inventario ({filteredProducts.length})
-          </h2>
+          <h2 className="text-xl font-bold text-gray-900">Inventario ({filteredProducts.length})</h2>
           <Link
             to="/kiosco/reposicion"
             className="rounded-lg bg-orange-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-orange-700"
           >
-            Solicitar Reposición
+            Solicitar reposicion
           </Link>
         </div>
         <div className="overflow-x-auto">
@@ -114,11 +104,11 @@ export default function StockProductos() {
             <thead>
               <tr className="border-b border-gray-200 bg-gray-50">
                 <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Producto</th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Categoría</th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Categoria</th>
                 <th className="px-6 py-4 text-right text-sm font-medium text-gray-500">Precio</th>
                 <th className="px-6 py-4 text-center text-sm font-medium text-gray-500">Stock</th>
                 <th className="px-6 py-4 text-center text-sm font-medium text-gray-500">Estado</th>
-                <th className="px-6 py-4 text-center text-sm font-medium text-gray-500">Acción</th>
+                <th className="px-6 py-4 text-center text-sm font-medium text-gray-500">Accion</th>
               </tr>
             </thead>
             <tbody>
@@ -158,13 +148,21 @@ export default function StockProductos() {
                       </span>
                     )}
                   </td>
-                  <td className="px-6 py-4 text-center">
-                    <Link
-                      to={`/kiosco/producto/${product.id}`}
-                      className="text-sm font-medium text-blue-600 hover:text-blue-700 hover:underline"
-                    >
-                      Ver detalle
-                    </Link>
+                  <td className="px-6 py-4">
+                    <div className="flex items-center justify-center gap-4 text-sm">
+                      <Link
+                        to={`/kiosco/producto/${product.id}`}
+                        className="font-medium text-blue-600 hover:text-blue-700 hover:underline"
+                      >
+                        Ver detalle
+                      </Link>
+                      <Link
+                        to={`/kiosco/producto/${product.id}/editar`}
+                        className="font-medium text-violet-600 hover:text-violet-700 hover:underline"
+                      >
+                        Editar
+                      </Link>
+                    </div>
                   </td>
                 </tr>
               ))}

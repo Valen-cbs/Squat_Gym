@@ -21,14 +21,6 @@ export default function DetalleVenta() {
 
   return (
     <div className="p-8">
-      <Link
-        to="/kiosco"
-        className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-6"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        Volver al kiosco
-      </Link>
-
       {/* Success Message */}
       <div className="bg-green-50 border border-green-200 rounded-xl p-6 mb-6 flex items-center gap-4">
         <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">

@@ -2,7 +2,6 @@ import { Link } from "react-router";
 import {
   DollarSign,
   Users,
-  TrendingUp,
   AlertCircle,
   Search,
   FileText,
@@ -12,35 +11,34 @@ import {
 export default function DashboardCobranzas() {
   const stats = [
     { label: "Cobranzas del mes", value: "$125,400", icon: DollarSign, color: "from-emerald-500 to-green-500" },
-    { label: "Alumnos al día", value: "142", icon: Users, color: "from-sky-500 to-blue-500" },
+    { label: "Alumnos al dia", value: "142", icon: Users, color: "from-sky-500 to-blue-500" },
     { label: "Pendientes de pago", value: "23", icon: AlertCircle, color: "from-amber-500 to-orange-500" },
-    { label: "Ingresos proyectados", value: "$148,000", icon: TrendingUp, color: "from-violet-500 to-purple-500" },
   ];
 
   const recentPayments = [
-    { id: 1, name: "Juan Pérez", amount: 850, method: "Efectivo", date: "21/04/2026" },
-    { id: 2, name: "María González", amount: 850, method: "Transferencia", date: "21/04/2026" },
-    { id: 3, name: "Carlos Rodríguez", amount: 1200, method: "Tarjeta", date: "20/04/2026" },
-    { id: 4, name: "Ana Martínez", amount: 850, method: "QR", date: "20/04/2026" },
-    { id: 5, name: "Pedro Sánchez", amount: 680, method: "Efectivo", date: "19/04/2026" },
+    { id: 1, name: "Juan Perez", amount: 850, method: "Efectivo", date: "21/04/2026" },
+    { id: 2, name: "Maria Gonzalez", amount: 850, method: "Transferencia", date: "21/04/2026" },
+    { id: 3, name: "Carlos Rodriguez", amount: 1200, method: "Tarjeta", date: "20/04/2026" },
+    { id: 4, name: "Ana Martinez", amount: 850, method: "QR", date: "20/04/2026" },
+    { id: 5, name: "Pedro Sanchez", amount: 680, method: "Efectivo", date: "19/04/2026" },
   ];
 
   const debtors = [
     { id: 6, name: "Roberto Silva", debt: 1700, months: 2 },
-    { id: 7, name: "Laura Fernández", debt: 850, months: 1 },
-    { id: 8, name: "Diego López", debt: 2550, months: 3 },
+    { id: 7, name: "Laura Fernandez", debt: 850, months: 1 },
+    { id: 8, name: "Diego Lopez", debt: 2550, months: 3 },
   ];
 
   return (
     <div className="app-page">
       <div className="app-page-header">
         <div>
-          <h1 className="app-page-title">Dashboard de cobranzas</h1>
-          <p className="app-page-copy">Seguimiento de pagos, cuentas corrientes y alumnos con deuda desde una vista más compacta para mobile.</p>
+          <h1 className="app-page-title">Panel de cobranzas</h1>
+          <p className="app-page-copy">Seguimiento de pagos, cuentas corrientes y alumnos con deuda desde una vista mas compacta para mobile.</p>
         </div>
       </div>
 
-      <div className="app-stat-grid">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
         {stats.map((stat, index) => (
           <div key={index} className="app-panel p-5 sm:p-6">
             <div className="flex items-center justify-between gap-4">
@@ -72,14 +70,14 @@ export default function DashboardCobranzas() {
         >
           <FileText className="h-8 w-8" />
           <p className="mt-4 text-xl font-bold">Listado de cobranzas</p>
-          <p className="mt-1 text-sm text-violet-50">Visualizá los registros de cobros del período.</p>
+          <p className="mt-1 text-sm text-violet-50">Visualiza los registros de cobros del periodo.</p>
         </Link>
       </div>
 
       <div className="mt-6 grid grid-cols-1 gap-6 xl:grid-cols-2">
         <div className="app-panel overflow-hidden">
           <div className="border-b border-slate-200 px-5 py-4 sm:px-6">
-            <h2 className="text-xl font-bold text-slate-900">Últimos pagos recibidos</h2>
+            <h2 className="text-xl font-bold text-slate-900">Ultimos pagos recibidos</h2>
           </div>
           <div className="app-table-scroll px-5 py-4 sm:px-6">
             <table className="app-table w-full">
@@ -87,7 +85,7 @@ export default function DashboardCobranzas() {
                 <tr className="border-b border-slate-200">
                   <th className="py-3 text-left text-sm font-medium text-slate-500">Alumno</th>
                   <th className="py-3 text-left text-sm font-medium text-slate-500">Monto</th>
-                  <th className="py-3 text-left text-sm font-medium text-slate-500">Método</th>
+                  <th className="py-3 text-left text-sm font-medium text-slate-500">Metodo</th>
                   <th className="py-3 text-left text-sm font-medium text-slate-500">Fecha</th>
                 </tr>
               </thead>

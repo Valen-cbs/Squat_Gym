@@ -7,8 +7,6 @@ import {
   ArrowRight,
   Tag,
   BarChart3,
-  Activity,
-  Shield,
   Bell,
   FileText,
 } from "lucide-react";
@@ -17,71 +15,49 @@ import { useUser } from "../context/UserContext";
 export default function Home() {
   const { user } = useUser();
 
-  const stats = [
-    { label: "Cobranzas del mes", value: "$125,400", icon: DollarSign, color: "from-emerald-500 to-green-500", trend: "+12%" },
-    { label: "Ventas kiosco hoy", value: "$4,250", icon: ShoppingCart, color: "from-sky-500 to-blue-500", trend: "+8%" },
-    { label: "Alumnos activos", value: "165", icon: Users, color: "from-violet-500 to-purple-500", trend: "+5" },
-    { label: "Alertas pendientes", value: "8", icon: AlertCircle, color: "from-amber-500 to-orange-500", trend: "Revisar" },
-  ];
-
   const secretaryActions = [
-    {
-      title: "Gestión de cobranzas",
-      description: "Registrar pagos, revisar estados de cuenta y seguir la recaudación diaria.",
-      icon: DollarSign,
-      color: "from-blue-600 to-cyan-500",
-      link: "/cobranzas",
-      features: ["Búsqueda de alumnos", "Registrar pagos", "Historial de cobranzas"],
-    },
-    {
-      title: "Administración de kiosco",
-      description: "Controlar ventas, stock y reposiciones sin salir del mismo flujo.",
-      icon: ShoppingCart,
-      color: "from-fuchsia-600 to-violet-500",
-      link: "/kiosco",
-      features: ["Nueva venta", "Control de stock", "Pedidos de reposición"],
-    },
+
   ];
 
   const managerActions = [
     {
       title: "Inscripciones y pagos",
-      description: "Seguí el movimiento comercial de tu sede y el trabajo de recepción.",
+      description: "Segui el movimiento comercial de tu sede y el trabajo de recepcion.",
       icon: DollarSign,
       color: "from-blue-600 to-cyan-500",
       link: "/encargado/inscripciones",
-      features: ["Ver inscripciones", "Consultar pagos", "Registros por secretaría"],
+      features: ["Ver inscripciones", "Consultar pagos", "Registros por secretaria"],
     },
     {
-      title: "Alertas y notificaciones",
-      description: "Priorizá deudores, clases reprogramadas y stock crítico desde un solo panel.",
+      title: "Alertas",
+      description: "Prioriza deudores, clases reprogramadas y stock critico desde un solo panel.",
       icon: Bell,
       color: "from-amber-600 to-orange-500",
       link: "/encargado/alertas",
-      features: ["Alumnos deudores", "Clases reprogramadas", "Stock crítico"],
+      features: ["Alumnos deudores", "Clases reprogramadas", "Stock critico"],
     },
     {
       title: "Novedades internas",
-      description: "Registrá incidentes, tareas operativas y eventos especiales de la sede.",
+      description: "Registra incidentes, tareas operativas y eventos especiales de la sede.",
       icon: FileText,
       color: "from-violet-600 to-purple-500",
       link: "/encargado/novedades",
       features: ["Mantenimientos", "Incidentes", "Eventos especiales"],
     },
     {
-      title: "Stock y reposición",
-      description: "Monitoreá inventario, faltantes y próximos pedidos del kiosco.",
+      title: "Stock y reposicion",
+      description: "Monitorea inventario, faltantes y proximos pedidos del kiosco.",
       icon: ShoppingCart,
       color: "from-rose-600 to-red-500",
       link: "/encargado/stock",
-      features: ["Inventario actual", "Productos críticos", "Generar pedidos"],
+      features: ["Inventario actual", "Productos criticos", "Generar pedidos"],
     },
   ];
 
   const adminActions = [
     {
-      title: "Gestión de usuarios",
-      description: "Creá cuentas, definí roles y mantené el acceso del equipo bajo control.",
+      title: "Gestion de usuarios",
+      description: "Crea cuentas, define roles y mantene el acceso del equipo bajo control.",
       icon: Users,
       color: "from-blue-600 to-cyan-500",
       link: "/admin/usuarios",
@@ -89,35 +65,19 @@ export default function Home() {
     },
     {
       title: "Promociones y planes",
-      description: "Configurá campañas comerciales y propuestas especiales por sede.",
+      description: "Configura campanas comerciales y propuestas especiales por sede.",
       icon: Tag,
       color: "from-violet-600 to-fuchsia-500",
       link: "/admin/promociones",
-      features: ["Promociones activas", "Planes de membresía", "Descuentos"],
+      features: ["Promociones activas", "Planes de membresia", "Descuentos"],
     },
     {
       title: "Reportes por sede",
-      description: "Visualizá métricas, comparativas e indicadores consolidados.",
+      description: "Visualiza metricas, comparativas e indicadores consolidados.",
       icon: BarChart3,
       color: "from-emerald-600 to-green-500",
       link: "/admin/reportes",
-      features: ["Ingresos por sede", "Comparativas", "Métricas clave"],
-    },
-    {
-      title: "Auditoría de actividad",
-      description: "Seguí acciones clave del sistema y revisá trazabilidad operativa.",
-      icon: Activity,
-      color: "from-amber-600 to-orange-500",
-      link: "/admin/auditoria",
-      features: ["Log de eventos", "Acciones de usuarios", "Alertas de seguridad"],
-    },
-    {
-      title: "Permisos y alertas",
-      description: "Ajustá accesos, notificaciones y reglas generales del panel.",
-      icon: Shield,
-      color: "from-rose-600 to-red-500",
-      link: "/admin/permisos",
-      features: ["Roles y permisos", "Reglas de alertas", "Configuración general"],
+      features: ["Ingresos por sede", "Comparativas", "Metricas clave"],
     },
   ];
 
@@ -126,42 +86,75 @@ export default function Home() {
     user?.role === "manager" ? managerActions :
     secretaryActions;
 
-  const recentAlerts = [
-    { id: 1, type: "debt", message: "3 alumnos con deuda mayor a 2 meses", severity: "high" },
-    { id: 2, type: "stock", message: "5 productos con stock crítico", severity: "high" },
-    { id: 3, type: "info", message: "23 alumnos pendientes de pago este mes", severity: "medium" },
+  const secretaryPriorityActions = [
+    {
+      title: "REGISTRAR PAGO GYM",
+      description: "Ir directo al cobro de cuotas y buscar al alumno en el mismo paso.",
+      icon: DollarSign,
+      link: "/cobranzas/buscar-alumno",
+      color: "from-emerald-600 to-green-500",
+    },
+    {
+      title: "REGISTRAR VENTA DE KIOSCO",
+      description: "Abrir una nueva venta con el catalogo listo para buscar productos rapido.",
+      icon: ShoppingCart,
+      link: "/kiosco/nueva-venta",
+      color: "from-orange-500 to-amber-500",
+    },
   ];
+
+  const recentAlerts = [
+    { id: 1, type: "debt", message: "3 alumnos deudores", severity: "high" },
+    { id: 2, type: "stock", message: "4 productos con stock critico", severity: "high" },
+  ];
+
+  const getAlertLink = (type: string) => {
+    if (type === "stock") {
+      return "/kiosco/stock";
+    }
+
+    return "/cobranzas/deudores";
+  };
 
   return (
     <div className="app-page">
-      <section className="app-stat-grid">
-        {stats.map((stat, index) => (
-          <div key={index} className="app-panel p-5 sm:p-6">
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <p className="text-sm text-slate-500">{stat.label}</p>
-                <p className="mt-2 text-2xl font-bold text-slate-950 sm:text-3xl">{stat.value}</p>
-                <p className="mt-3 text-sm font-medium text-slate-500">{stat.trend}</p>
-              </div>
-              <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br ${stat.color} text-white shadow-lg`}>
-                <stat.icon className="h-6 w-6" />
-              </div>
-            </div>
-          </div>
-        ))}
-      </section>
-
-      <section className="mt-8">
+      <section>
         <div className="app-page-header">
           <div>
             <h2 className="app-page-title">Accesos principales</h2>
-            <p className="app-page-copy">Acciones rápidas para operar cada módulo sin información repetida ni bloques innecesarios.</p>
           </div>
         </div>
 
-        <div className={`grid gap-4 ${
-          quickActions.length > 4 ? "grid-cols-1 md:grid-cols-2 2xl:grid-cols-3" : "grid-cols-1 md:grid-cols-2 xl:grid-cols-4"
-        }`}>
+        {user?.role === "secretary" && (
+          <div className="mx-auto mb-6 grid max-w-5xl gap-4 lg:grid-cols-2">
+            {secretaryPriorityActions.map((action) => (
+              <Link
+                key={action.title}
+                to={action.link}
+                className={`group rounded-[30px] bg-gradient-to-br ${action.color} p-6 text-white shadow-xl transition-transform duration-200 hover:-translate-y-1`}
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/15">
+                    <action.icon className="h-7 w-7" />
+                  </div>
+                  <ArrowRight className="h-5 w-5 text-white/80 transition-transform group-hover:translate-x-1" />
+                </div>
+                <h3 className="mt-5 text-xl font-bold sm:text-2xl">{action.title}</h3>
+                <p className="mt-2 max-w-xl text-sm leading-6 text-white/90">{action.description}</p>
+              </Link>
+            ))}
+          </div>
+        )}
+
+        <div
+          className={`grid gap-4 ${
+            quickActions.length > 4
+              ? "grid-cols-1 md:grid-cols-2 2xl:grid-cols-3"
+              : user?.role === "secretary"
+                ? "mx-auto max-w-5xl grid-cols-1 md:grid-cols-2"
+                : "grid-cols-1 md:grid-cols-2 xl:grid-cols-4"
+          }`}
+        >
           {quickActions.map((action, index) => (
             <Link
               key={index}
@@ -197,7 +190,7 @@ export default function Home() {
         <div className="border-b border-slate-200 px-5 py-5 sm:px-6">
           <div className="flex items-center gap-2">
             <AlertCircle className="h-5 w-5 text-amber-500" />
-            <h2 className="text-xl font-bold text-slate-900">Alertas y notificaciones</h2>
+            <h2 className="text-xl font-bold text-slate-900">Alertas</h2>
           </div>
         </div>
         <div className="space-y-3 px-5 py-5 sm:px-6">
@@ -212,18 +205,20 @@ export default function Home() {
             >
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-start gap-3">
-                  <AlertCircle className={`mt-0.5 h-5 w-5 shrink-0 ${
-                    alert.severity === "high" ? "text-amber-600" : "text-blue-600"
-                  }`} />
+                  <AlertCircle
+                    className={`mt-0.5 h-5 w-5 shrink-0 ${
+                      alert.severity === "high" ? "text-amber-600" : "text-blue-600"
+                    }`}
+                  />
                   <p className="font-medium text-slate-900">{alert.message}</p>
                 </div>
                 <Link
-                  to={alert.type === "debt" ? "/cobranzas" : "/kiosco"}
+                  to={getAlertLink(alert.type)}
                   className={`inline-flex items-center gap-2 text-sm font-semibold ${
                     alert.severity === "high" ? "text-amber-700" : "text-blue-700"
                   }`}
                 >
-                  Ver módulo
+                  Ver
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>

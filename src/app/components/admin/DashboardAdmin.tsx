@@ -3,7 +3,6 @@ import {
   Users,
   Tag,
   BarChart3,
-  Shield,
   Activity,
   TrendingUp,
   AlertTriangle,
@@ -20,7 +19,7 @@ export default function DashboardAdmin() {
 
   const quickActions = [
     {
-      title: "Gestión de usuarios",
+      title: "Gestion de usuarios",
       description: "Crear, modificar y administrar accesos.",
       icon: Users,
       color: "from-blue-600 to-cyan-500",
@@ -29,7 +28,7 @@ export default function DashboardAdmin() {
     },
     {
       title: "Promociones y planes",
-      description: "Campañas, membresías y descuentos vigentes.",
+      description: "Campanas, membresias y descuentos vigentes.",
       icon: Tag,
       color: "from-violet-600 to-fuchsia-500",
       link: "/admin/promociones",
@@ -37,35 +36,19 @@ export default function DashboardAdmin() {
     },
     {
       title: "Reportes por sede",
-      description: "Comparativas y métricas consolidadas.",
+      description: "Comparativas y metricas consolidadas.",
       icon: BarChart3,
       color: "from-emerald-600 to-green-500",
       link: "/admin/reportes",
       badge: "3 sedes",
     },
-    {
-      title: "Auditoría de actividad",
-      description: "Historial de acciones y eventos del sistema.",
-      icon: Activity,
-      color: "from-amber-600 to-orange-500",
-      link: "/admin/auditoria",
-      badge: "2,456 eventos",
-    },
-    {
-      title: "Permisos y alertas",
-      description: "Reglas de acceso y notificaciones generales.",
-      icon: Shield,
-      color: "from-rose-600 to-red-500",
-      link: "/admin/permisos",
-      badge: "12 reglas",
-    },
   ];
 
   const recentActivity = [
-    { id: 1, user: "Juan Pérez", action: "Creó nueva promoción '2x1 Verano'", time: "Hace 5 minutos", type: "create" },
-    { id: 2, user: "María González", action: "Modificó permisos de usuario 'Ana López'", time: "Hace 15 minutos", type: "update" },
-    { id: 3, user: "Carlos Rodríguez", action: "Generó reporte de sede Central", time: "Hace 1 hora", type: "report" },
-    { id: 4, user: "Sistema", action: "Alerta automática: stock crítico en sede Norte", time: "Hace 2 horas", type: "alert" },
+    { id: 1, user: "Juan Perez", action: "Creo nueva promocion '2x1 Verano'", time: "Hace 5 minutos", type: "create" },
+    { id: 2, user: "Maria Gonzalez", action: "Modifico permisos de usuario 'Ana Lopez'", time: "Hace 15 minutos", type: "update" },
+    { id: 3, user: "Carlos Rodriguez", action: "Genero reporte de sede Central", time: "Hace 1 hora", type: "report" },
+    { id: 4, user: "Sistema", action: "Alerta automatica: stock critico en sede Norte", time: "Hace 2 horas", type: "alert" },
   ];
 
   const systemHealth = [
@@ -78,8 +61,8 @@ export default function DashboardAdmin() {
     <div className="app-page">
       <div className="app-page-header">
         <div>
-          <h1 className="app-page-title">Dashboard del administrador</h1>
-          <p className="app-page-copy">Supervisión general del sistema con módulos más claros, compactos y cómodos para revisar desde mobile.</p>
+          <h1 className="app-page-title">Panel del administrador</h1>
+          <p className="app-page-copy">Supervision general del sistema con modulos mas claros, compactos y comodos para revisar desde mobile.</p>
         </div>
       </div>
 

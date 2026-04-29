@@ -10,8 +10,6 @@ import {
   Briefcase,
   Tag,
   BarChart3,
-  Activity,
-  Settings,
   Bell,
   FileText,
   Package,
@@ -19,6 +17,7 @@ import {
   X,
 } from "lucide-react";
 import { useUser } from "../context/UserContext";
+import PageBackButton from "./PageBackButton";
 
 export default function Layout() {
   const location = useLocation();
@@ -59,31 +58,29 @@ export default function Layout() {
 
     if (user?.role === "manager") {
       groups.push({
-        title: "Gestión de sucursal",
+        title: "Gestion de sucursal",
         items: [
           { to: "/encargado/inscripciones", label: "Inscripciones y pagos", icon: DollarSign },
           { to: "/encargado/alertas", label: "Alertas", icon: Bell },
           { to: "/encargado/novedades", label: "Novedades internas", icon: FileText },
-          { to: "/encargado/stock", label: "Stock y reposición", icon: Package },
+          { to: "/encargado/stock", label: "Stock y reposicion", icon: Package },
         ],
       });
     }
 
     if (user?.role === "admin") {
       groups.push({
-        title: "Administración general",
+        title: "Administracion general",
         items: [
           { to: "/admin/usuarios", label: "Usuarios", icon: Users },
           { to: "/admin/promociones", label: "Promociones", icon: Tag },
           { to: "/admin/reportes", label: "Reportes", icon: BarChart3 },
-          { to: "/admin/auditoria", label: "Auditoría", icon: Activity },
-          { to: "/admin/permisos", label: "Configuración", icon: Settings },
         ],
       });
     }
 
     return groups;
-  }, [user?.role]);
+  }, [user?.role, location.pathname]);
 
   const closeMobileMenu = () => setMobileMenuOpen(false);
   const toggleDesktopSidebar = () => setDesktopSidebarOpen((current) => !current);
@@ -161,7 +158,7 @@ export default function Layout() {
           className="flex w-full items-center justify-center gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-600 transition-all duration-300 hover:bg-red-100"
         >
           <LogOut className="h-4 w-4" />
-          Cerrar sesión
+          Cerrar sesion
         </button>
       </div>
     </>
@@ -201,7 +198,7 @@ export default function Layout() {
             <button
               onClick={() => setMobileMenuOpen(true)}
               className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700 shadow-sm"
-              aria-label="Abrir navegación"
+              aria-label="Abrir navegacion"
             >
               <Menu className="h-5 w-5" />
             </button>
@@ -213,11 +210,11 @@ export default function Layout() {
             <button
               className="absolute inset-0 bg-slate-950/45 backdrop-blur-[2px]"
               onClick={closeMobileMenu}
-              aria-label="Cerrar navegación"
+              aria-label="Cerrar navegacion"
             />
             <aside className="relative flex h-full w-[88vw] max-w-xs flex-col bg-white shadow-2xl">
               <div className="flex items-center justify-between border-b border-slate-200 px-4 py-3">
-                <p className="font-semibold text-slate-900">Navegación</p>
+                <p className="font-semibold text-slate-900">Navegacion</p>
                 <button
                   onClick={closeMobileMenu}
                   className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-slate-600"
@@ -232,6 +229,7 @@ export default function Layout() {
         )}
 
         <main className="flex-1 overflow-x-hidden overflow-y-auto">
+          <PageBackButton pathname={location.pathname} />
           <Outlet />
         </main>
       </div>

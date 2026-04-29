@@ -40,14 +40,6 @@ export default function ListadoCobranzas() {
 
   return (
     <div className="p-8">
-      <Link
-        to="/cobranzas"
-        className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-6"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        Volver al dashboard
-      </Link>
-
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Listado de Cobranzas</h1>
         <p className="text-gray-500 mt-2">Historial completo de pagos recibidos</p>
@@ -137,7 +129,7 @@ export default function ListadoCobranzas() {
                 <th className="text-left px-6 py-4 text-sm font-medium text-gray-500">Monto</th>
                 <th className="text-left px-6 py-4 text-sm font-medium text-gray-500">Método</th>
                 <th className="text-left px-6 py-4 text-sm font-medium text-gray-500">Estado</th>
-                <th className="text-left px-6 py-4 text-sm font-medium text-gray-500">Acción</th>
+                <th className="text-left px-6 py-4 text-sm font-medium text-gray-500">Detalle</th>
               </tr>
             </thead>
             <tbody>
@@ -164,7 +156,7 @@ export default function ListadoCobranzas() {
                       to={`/cobranzas/recibo/${cobranza.id}`}
                       className="text-blue-600 hover:text-blue-700 text-sm font-medium hover:underline"
                     >
-                      Ver recibo
+                      Ver
                     </Link>
                   </td>
                 </tr>

@@ -1,19 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import { Search, User, Calendar, CheckCircle, AlertCircle } from "lucide-react";
+import { Search, User, Calendar, AlertCircle } from "lucide-react";
 
-export default function BusquedaAlumno() {
+export default function Deudores() {
   const [searchTerm, setSearchTerm] = useState("");
 
   const alumnos = [
-    { id: 1, name: "Juan Perez", dni: "12345678", status: "Al dia", lastPayment: "01/04/2026", plan: "Musculacion" },
-    { id: 2, name: "Maria Gonzalez", dni: "23456789", status: "Al dia", lastPayment: "05/04/2026", plan: "Full Access" },
-    { id: 3, name: "Carlos Rodriguez", dni: "34567890", status: "Al dia", lastPayment: "10/04/2026", plan: "CrossFit" },
-    { id: 4, name: "Ana Martinez", dni: "45678901", status: "Al dia", lastPayment: "15/04/2026", plan: "Natacion" },
-    { id: 5, name: "Pedro Sanchez", dni: "56789012", status: "Al dia", lastPayment: "18/04/2026", plan: "Musculacion" },
-    { id: 6, name: "Roberto Silva", dni: "67890123", status: "Deudor", lastPayment: "15/02/2026", plan: "Full Access" },
-    { id: 7, name: "Laura Fernandez", dni: "78901234", status: "Deudor", lastPayment: "20/03/2026", plan: "Musculacion" },
-    { id: 8, name: "Diego Lopez", dni: "89012345", status: "Deudor", lastPayment: "10/01/2026", plan: "CrossFit" },
+    { id: 6, name: "Roberto Silva", dni: "67890123", status: "Deudor", lastPayment: "15/02/2026", plan: "Full Access", debtAmount: 1700, overdueMonths: 2 },
+    { id: 7, name: "Laura Fernandez", dni: "78901234", status: "Deudor", lastPayment: "20/03/2026", plan: "Musculacion", debtAmount: 850, overdueMonths: 1 },
+    { id: 8, name: "Diego Lopez", dni: "89012345", status: "Deudor", lastPayment: "10/01/2026", plan: "CrossFit", debtAmount: 2550, overdueMonths: 3 },
   ];
 
   const filteredAlumnos = alumnos.filter((alumno) =>
@@ -24,8 +19,8 @@ export default function BusquedaAlumno() {
   return (
     <div className="app-page">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Buscar alumno</h1>
-        <p className="mt-2 text-gray-500">Encuentra un alumno para consultar su estado de cuenta o registrar un pago.</p>
+        <h1 className="text-3xl font-bold text-gray-900">Deudores</h1>
+        <p className="mt-2 text-gray-500">Listado de alumnos con deuda para seguimiento y cobranza.</p>
       </div>
 
       <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
@@ -53,6 +48,7 @@ export default function BusquedaAlumno() {
                 <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">DNI</th>
                 <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Plan</th>
                 <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Ultimo pago</th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Deuda</th>
                 <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Estado</th>
                 <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Acciones</th>
               </tr>
@@ -62,8 +58,8 @@ export default function BusquedaAlumno() {
                 <tr key={alumno.id} className="border-b border-gray-100 hover:bg-gray-50">
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100">
-                        <User className="h-5 w-5 text-blue-600" />
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-100">
+                        <User className="h-5 w-5 text-orange-600" />
                       </div>
                       <Link
                         to={`/cobranzas/estado-cuenta/${alumno.id}`}
@@ -81,20 +77,11 @@ export default function BusquedaAlumno() {
                       {alumno.lastPayment}
                     </div>
                   </td>
+                  <td className="px-6 py-4 text-sm font-bold text-orange-700">${alumno.debtAmount}</td>
                   <td className="px-6 py-4">
-                    <span
-                      className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-medium ${
-                        alumno.status === "Al dia"
-                          ? "bg-green-100 text-green-700"
-                          : "bg-orange-100 text-orange-700"
-                      }`}
-                    >
-                      {alumno.status === "Al dia" ? (
-                        <CheckCircle className="h-4 w-4" />
-                      ) : (
-                        <AlertCircle className="h-4 w-4" />
-                      )}
-                      {alumno.status}
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-orange-100 px-3 py-1 text-sm font-medium text-orange-700">
+                      <AlertCircle className="h-4 w-4" />
+                      {alumno.overdueMonths} {alumno.overdueMonths === 1 ? "mes" : "meses"} de atraso
                     </span>
                   </td>
                   <td className="px-6 py-4">

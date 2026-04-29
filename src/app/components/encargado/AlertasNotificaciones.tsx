@@ -126,14 +126,6 @@ export default function AlertasNotificaciones() {
 
   return (
     <div className="p-8">
-      <Link
-        to="/encargado"
-        className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-6"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        Volver al dashboard
-      </Link>
-
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Alertas y Notificaciones</h1>
         <p className="text-gray-500 mt-2">Control de deudores, clases reprogramadas y stock crítico</p>

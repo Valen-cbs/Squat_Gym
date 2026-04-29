@@ -4,6 +4,7 @@ import Login from "./components/Login";
 import Home from "./components/Home";
 import DashboardCobranzas from "./components/cobranzas/DashboardCobranzas";
 import BusquedaAlumno from "./components/cobranzas/BusquedaAlumno";
+import Deudores from "./components/cobranzas/Deudores";
 import EstadoCuenta from "./components/cobranzas/EstadoCuenta";
 import RegistrarPago from "./components/cobranzas/RegistrarPago";
 import ReciboGenerado from "./components/cobranzas/ReciboGenerado";
@@ -13,6 +14,7 @@ import RegistrarVenta from "./components/kiosco/RegistrarVenta";
 import DetalleVenta from "./components/kiosco/DetalleVenta";
 import StockProductos from "./components/kiosco/StockProductos";
 import DetalleProducto from "./components/kiosco/DetalleProducto";
+import EditarProducto from "./components/kiosco/EditarProducto";
 import PedidoReposicion from "./components/kiosco/PedidoReposicion";
 import DashboardAdmin from "./components/admin/DashboardAdmin";
 import GestionUsuarios from "./components/admin/GestionUsuarios";
@@ -44,6 +46,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, Component: DashboardCobranzas },
       { path: "buscar-alumno", Component: BusquedaAlumno },
+      { path: "deudores", Component: Deudores },
       { path: "estado-cuenta/:id", Component: EstadoCuenta },
       { path: "registrar-pago/:id", Component: RegistrarPago },
       { path: "recibo/:id", Component: ReciboGenerado },
@@ -59,6 +62,7 @@ export const router = createBrowserRouter([
       { path: "venta/:id", Component: DetalleVenta },
       { path: "stock", Component: StockProductos },
       { path: "producto/:id", Component: DetalleProducto },
+      { path: "producto/:id/editar", Component: EditarProducto },
       { path: "reposicion", Component: PedidoReposicion },
     ],
   },

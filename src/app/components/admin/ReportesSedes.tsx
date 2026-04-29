@@ -48,14 +48,6 @@ export default function ReportesSedes() {
 
   return (
     <div className="p-8">
-      <Link
-        to="/admin"
-        className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-6"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        Volver al dashboard
-      </Link>
-
       <div className="mb-8">
         <div className="flex items-center justify-between">
           <div>

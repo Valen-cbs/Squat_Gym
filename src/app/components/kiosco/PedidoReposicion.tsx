@@ -2,72 +2,76 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { ArrowLeft, Plus, Trash2, Send, AlertTriangle } from "lucide-react";
 
+type OrderItem = {
+  id: number;
+  name: string;
+  stock: number;
+  minStock: number;
+  quantity: number;
+};
+
 export default function PedidoReposicion() {
   const navigate = useNavigate();
-  const [orderItems, setOrderItems] = useState<Array<{ id: number; name: string; stock: number; minStock: number; quantity: number }>>([]);
+  const [orderItems, setOrderItems] = useState<OrderItem[]>([]);
 
   const lowStockProducts = [
-    { id: 6, name: "Bebida Energética", category: "Bebidas", stock: 3, minStock: 10, suggested: 20 },
+    { id: 6, name: "Bebida Energetica", category: "Bebidas", stock: 3, minStock: 10, suggested: 20 },
     { id: 7, name: "Toalla Deportiva", category: "Accesorios", stock: 2, minStock: 5, suggested: 10 },
     { id: 8, name: "Guantes de Entrenamiento", category: "Accesorios", stock: 6, minStock: 8, suggested: 15 },
-    { id: 1, name: "Bebida Isotónica", category: "Bebidas", stock: 8, minStock: 10, suggested: 20 },
+    { id: 1, name: "Bebida Isotonica", category: "Bebidas", stock: 8, minStock: 10, suggested: 20 },
   ];
 
   const allProducts = [
     { id: 2, name: "Barrita Proteica", category: "Suplementos", stock: 22, minStock: 15, suggested: 20 },
     { id: 3, name: "Agua Mineral", category: "Bebidas", stock: 35, minStock: 20, suggested: 30 },
-    { id: 4, name: "Batido de Proteína", category: "Suplementos", stock: 18, minStock: 12, suggested: 20 },
+    { id: 4, name: "Batido de Proteina", category: "Suplementos", stock: 18, minStock: 12, suggested: 20 },
     { id: 5, name: "Snack Saludable", category: "Alimentos", stock: 28, minStock: 15, suggested: 25 },
     { id: 9, name: "Shaker", category: "Accesorios", stock: 15, minStock: 8, suggested: 15 },
     { id: 10, name: "Creatina", category: "Suplementos", stock: 12, minStock: 8, suggested: 15 },
   ];
 
   const addToOrder = (product: { id: number; name: string; stock: number; minStock: number; suggested: number }) => {
-    const existing = orderItems.find((item) => item.id === product.id);
-    if (!existing) {
-      setOrderItems([
-        ...orderItems,
-        {
-          id: product.id,
-          name: product.name,
-          stock: product.stock,
-          minStock: product.minStock,
-          quantity: product.suggested,
-        },
-      ]);
+    if (orderItems.some((item) => item.id === product.id)) {
+      return;
     }
+
+    setOrderItems((current) => [
+      ...current,
+      {
+        id: product.id,
+        name: product.name,
+        stock: product.stock,
+        minStock: product.minStock,
+        quantity: product.suggested,
+      },
+    ]);
   };
 
   const removeFromOrder = (productId: number) => {
-    setOrderItems(orderItems.filter((item) => item.id !== productId));
+    setOrderItems((current) => current.filter((item) => item.id !== productId));
   };
 
   const updateQuantity = (productId: number, quantity: number) => {
-    if (quantity === 0) {
+    if (quantity <= 0) {
       removeFromOrder(productId);
-    } else {
-      setOrderItems(orderItems.map((item) => (item.id === productId ? { ...item, quantity } : item)));
+      return;
     }
+
+    setOrderItems((current) =>
+      current.map((item) => (item.id === productId ? { ...item, quantity } : item))
+    );
   };
 
   const handleSubmitOrder = () => {
-    alert("¡Pedido de reposición enviado exitosamente!");
+    alert("Pedido de reposicion enviado exitosamente.");
     navigate("/kiosco");
   };
 
   return (
     <div className="app-page">
-      <Link
-        to="/kiosco"
-        className="mb-6 inline-flex items-center gap-2 text-blue-600 hover:text-blue-700"
-      >
-        <ArrowLeft className="h-4 w-4" />
-        Volver al kiosco
-      </Link>
-
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">Solicitar reposición</h1>
-        <p className="mt-2 text-sm text-gray-500 sm:text-base">Genera un pedido de productos para reponer el stock</p>
+        <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">Solicitar reposicion</h1>
+        <p className="mt-2 text-sm text-gray-500 sm:text-base">Genera un pedido y ajusta manualmente la cantidad de cada producto.</p>
       </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
@@ -84,8 +88,8 @@ export default function PedidoReposicion() {
                     <p className="font-medium text-gray-900">{product.name}</p>
                     <p className="text-sm text-gray-600">{product.category}</p>
                     <div className="mt-2 flex flex-wrap items-center gap-2">
-                      <span className="rounded px-2 py-1 text-xs text-red-700 bg-red-100">Stock: {product.stock}</span>
-                      <span className="rounded bg-gray-100 px-2 py-1 text-xs text-gray-700">Mín: {product.minStock}</span>
+                      <span className="rounded bg-red-100 px-2 py-1 text-xs text-red-700">Stock: {product.stock}</span>
+                      <span className="rounded bg-gray-100 px-2 py-1 text-xs text-gray-700">Min: {product.minStock}</span>
                     </div>
                   </div>
                   <button
@@ -115,7 +119,7 @@ export default function PedidoReposicion() {
                     <p className="text-sm text-gray-600">{product.category}</p>
                     <div className="mt-2 flex flex-wrap items-center gap-2">
                       <span className="rounded bg-green-100 px-2 py-1 text-xs text-green-700">Stock: {product.stock}</span>
-                      <span className="rounded bg-gray-100 px-2 py-1 text-xs text-gray-700">Mín: {product.minStock}</span>
+                      <span className="rounded bg-gray-100 px-2 py-1 text-xs text-gray-700">Min: {product.minStock}</span>
                     </div>
                   </div>
                   <button
@@ -159,21 +163,26 @@ export default function PedidoReposicion() {
                           <Trash2 className="h-4 w-4" />
                         </button>
                       </div>
-                      <div className="mb-2">
-                        <p className="text-xs text-gray-500">Stock actual: {item.stock} | Mínimo: {item.minStock}</p>
-                      </div>
+                      <p className="mb-3 text-xs text-gray-500">Stock actual: {item.stock} | Minimo: {item.minStock}</p>
                       <div className="flex flex-wrap items-center justify-between gap-3">
                         <div className="flex items-center gap-2">
                           <button
-                            onClick={() => updateQuantity(item.id, item.quantity - 5)}
-                            className="h-7 w-7 rounded bg-gray-100 hover:bg-gray-200"
+                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                            className="h-8 w-8 rounded bg-gray-100 hover:bg-gray-200"
                           >
                             -
                           </button>
-                          <span className="w-12 text-center font-medium">{item.quantity}</span>
+                          <input
+                            type="number"
+                            min="1"
+                            step="1"
+                            value={item.quantity}
+                            onChange={(e) => updateQuantity(item.id, Number(e.target.value))}
+                            className="w-20 rounded-lg border border-gray-300 px-2 py-1 text-center focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
                           <button
-                            onClick={() => updateQuantity(item.id, item.quantity + 5)}
-                            className="h-7 w-7 rounded bg-gray-100 hover:bg-gray-200"
+                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                            className="h-8 w-8 rounded bg-gray-100 hover:bg-gray-200"
                           >
                             +
                           </button>
