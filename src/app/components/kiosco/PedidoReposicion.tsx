@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { useState, useEffect } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router";
 import { ArrowLeft, Plus, Trash2, Send, AlertTriangle } from "lucide-react";
 
 type OrderItem = {
@@ -12,23 +12,41 @@ type OrderItem = {
 
 export default function PedidoReposicion() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [orderItems, setOrderItems] = useState<OrderItem[]>([]);
 
-  const lowStockProducts = [
+  const allProducts = [
+    { id: 1, name: "Bebida Isotonica", category: "Bebidas", stock: 8, minStock: 10, suggested: 20 },
+    { id: 2, name: "Barrita Proteica", category: "Suplementos", stock: 22, minStock: 15, suggested: 20 },
+    { id: 3, name: "Agua Mineral", category: "Bebidas", stock: 35, minStock: 20, suggested: 30 },
+    { id: 4, name: "Toalla Deportiva", category: "Accesorios", stock: 2, minStock: 5, suggested: 10 },
+    { id: 5, name: "Snack Saludable", category: "Alimentos", stock: 28, minStock: 15, suggested: 25 },
     { id: 6, name: "Bebida Energetica", category: "Bebidas", stock: 3, minStock: 10, suggested: 20 },
     { id: 7, name: "Toalla Deportiva", category: "Accesorios", stock: 2, minStock: 5, suggested: 10 },
     { id: 8, name: "Guantes de Entrenamiento", category: "Accesorios", stock: 6, minStock: 8, suggested: 15 },
-    { id: 1, name: "Bebida Isotonica", category: "Bebidas", stock: 8, minStock: 10, suggested: 20 },
-  ];
-
-  const allProducts = [
-    { id: 2, name: "Barrita Proteica", category: "Suplementos", stock: 22, minStock: 15, suggested: 20 },
-    { id: 3, name: "Agua Mineral", category: "Bebidas", stock: 35, minStock: 20, suggested: 30 },
-    { id: 4, name: "Batido de Proteina", category: "Suplementos", stock: 18, minStock: 12, suggested: 20 },
-    { id: 5, name: "Snack Saludable", category: "Alimentos", stock: 28, minStock: 15, suggested: 25 },
     { id: 9, name: "Shaker", category: "Accesorios", stock: 15, minStock: 8, suggested: 15 },
     { id: 10, name: "Creatina", category: "Suplementos", stock: 12, minStock: 8, suggested: 15 },
   ];
+
+  const lowStockProducts = allProducts.filter(p => p.stock < p.minStock);
+
+  useEffect(() => {
+    const productId = searchParams.get("productId");
+    if (productId) {
+      const product = allProducts.find(p => p.id === parseInt(productId));
+      if (product && !orderItems.some(item => item.id === product.id)) {
+        setOrderItems([
+          {
+            id: product.id,
+            name: product.name,
+            stock: product.stock,
+            minStock: product.minStock,
+            quantity: product.suggested,
+          },
+        ]);
+      }
+    }
+  }, [searchParams, allProducts]);
 
   const addToOrder = (product: { id: number; name: string; stock: number; minStock: number; suggested: number }) => {
     if (orderItems.some((item) => item.id === product.id)) {

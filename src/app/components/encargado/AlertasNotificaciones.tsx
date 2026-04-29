@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import {
   ArrowLeft,
   AlertTriangle,
@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 
 export default function AlertasNotificaciones() {
+  const navigate = useNavigate();
   const [filterType, setFilterType] = useState("all");
 
   const alertas = [
@@ -33,7 +34,8 @@ export default function AlertasNotificaciones() {
       message: "Bebida Isotónica: Solo 2 unidades disponibles",
       date: "21/04/2026 13:45",
       status: "pending",
-      icon: Package
+      icon: Package,
+      productId: 1
     },
     {
       id: 3,
@@ -63,7 +65,8 @@ export default function AlertasNotificaciones() {
       message: "Toalla Deportiva: 3 unidades (mínimo: 5)",
       date: "20/04/2026 16:30",
       status: "pending",
-      icon: Package
+      icon: Package,
+      productId: 4
     },
     {
       id: 6,
@@ -93,7 +96,8 @@ export default function AlertasNotificaciones() {
       message: "Barrita Proteica: Sin stock disponible",
       date: "19/04/2026 11:20",
       status: "resolved",
-      icon: Package
+      icon: Package,
+      productId: 2
     },
   ];
 
@@ -244,9 +248,18 @@ export default function AlertasNotificaciones() {
                   <button className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium">
                     Resolver
                   </button>
-                  <button className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium">
-                    Ver detalle
-                  </button>
+                  {alert.type === "stock" && "productId" in alert ? (
+                    <Link
+                      to={`/kiosco/producto/${alert.productId}`}
+                      className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium"
+                    >
+                      Ver detalle
+                    </Link>
+                  ) : (
+                    <button className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium">
+                      Ver detalle
+                    </button>
+                  )}
                 </div>
               )}
             </div>

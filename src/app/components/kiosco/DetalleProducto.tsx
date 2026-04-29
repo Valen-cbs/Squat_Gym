@@ -86,7 +86,7 @@ export default function DetalleProducto() {
 
       <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2">
         <Link
-          to="/kiosco/reposicion"
+          to={`/kiosco/reposicion?productId=${product.id}`}
           className="flex items-center justify-center gap-3 rounded-lg bg-orange-600 p-4 text-white transition-colors hover:bg-orange-700"
         >
           <Plus className="h-5 w-5" />

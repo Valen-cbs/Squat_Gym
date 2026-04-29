@@ -91,20 +91,16 @@ export default function ListadoCobranzas() {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
-            <p className="text-sm text-blue-600 mb-1">Total del período</p>
-            <p className="text-2xl font-bold text-blue-700">${totalAmount.toLocaleString()}</p>
-          </div>
-          <div className="bg-green-50 rounded-lg p-4 border border-green-200">
-            <p className="text-sm text-green-600 mb-1">Pagos registrados</p>
-            <p className="text-2xl font-bold text-green-700">{filteredCobranzas.length}</p>
-          </div>
-          <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
-            <p className="text-sm text-purple-600 mb-1">Promedio por pago</p>
-            <p className="text-2xl font-bold text-purple-700">
-              ${filteredCobranzas.length > 0 ? Math.round(totalAmount / filteredCobranzas.length) : 0}
-            </p>
+        <div className="bg-gradient-to-r from-slate-50 to-slate-100 rounded-lg p-6 border border-slate-200">
+          <div className="flex items-baseline gap-4">
+            <div>
+              <p className="text-sm font-medium text-slate-600 mb-2">Pagos totales</p>
+              <p className="text-3xl font-bold text-slate-900">{filteredCobranzas.length}</p>
+            </div>
+            <div className="border-l border-slate-300 pl-4">
+              <p className="text-sm font-medium text-slate-600 mb-2">Monto total</p>
+              <p className="text-3xl font-bold text-slate-900">${totalAmount.toLocaleString()}</p>
+            </div>
           </div>
         </div>
       </div>
