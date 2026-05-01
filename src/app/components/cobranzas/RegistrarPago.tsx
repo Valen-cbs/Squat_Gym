@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useParams, useNavigate } from "react-router";
-import { ArrowLeft, CreditCard, Tag, Calendar, User } from "lucide-react";
+import { CreditCard, Tag, Calendar, User } from "lucide-react";
 import PaymentMethodSelector, { paymentMethodLabels } from "../PaymentMethodSelector";
 
 export default function RegistrarPago() {
@@ -8,7 +8,6 @@ export default function RegistrarPago() {
   const navigate = useNavigate();
   const [paymentMethod, setPaymentMethod] = useState("efectivo");
   const [amount, setAmount] = useState("850");
-  const [discount, setDiscount] = useState("");
   const [notes, setNotes] = useState("");
 
   const alumno = {
@@ -18,22 +17,26 @@ export default function RegistrarPago() {
     monthlyFee: 850,
   };
 
-  const promotions = [
-    { id: "promo1", name: "Sin promocion", discount: 0 },
-    { id: "promo2", name: "Pago anual", discount: 15 },
-    { id: "promo3", name: "Pago semestral", discount: 10 },
-    { id: "promo4", name: "Referido", discount: 5 },
-  ];
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    navigate(`/cobranzas/recibo/${Date.now()}`);
+    navigate(`/cobranzas/recibo/${Date.now()}`, {
+      state: {
+        alumno,
+        payment: {
+          amount: subtotal,
+          method: paymentMethodLabels[paymentMethod],
+          discount: Number(discountAmount.toFixed(2)),
+          total: Number(finalAmount.toFixed(2)),
+        },
+        notes,
+      },
+    });
   };
 
   const subtotal = Number(amount || 0);
-  const finalAmount = discount
-    ? subtotal * (1 - Number(discount) / 100)
-    : subtotal;
+  const discountPercent = paymentMethod === "efectivo" ? 10 : 0;
+  const discountAmount = subtotal * discountPercent / 100;
+  const finalAmount = subtotal - discountAmount;
 
   return (
     <div className="app-page">
@@ -45,10 +48,10 @@ export default function RegistrarPago() {
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2">
           <form onSubmit={handleSubmit} className="app-panel p-5 sm:p-6">
-            <div className="mb-6 rounded-lg border border-blue-200 bg-blue-50 p-4">
+            <div className="mb-6 rounded-lg border border-indigo-light bg-indigo-lightest p-4">
               <div className="flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100">
-                  <User className="h-6 w-6 text-blue-600" />
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-indigo-light">
+                  <User className="h-6 w-6 text-indigo-primary" />
                 </div>
                 <div>
                   <p className="font-bold text-gray-900">{alumno.name}</p>
@@ -77,19 +80,13 @@ export default function RegistrarPago() {
             <div className="mb-6">
               <label className="mb-2 block text-sm font-medium text-gray-700">
                 <Tag className="mr-2 inline h-4 w-4" />
-                Aplicar promocion
+                Promocion aplicada
               </label>
-              <select
-                value={discount}
-                onChange={(e) => setDiscount(e.target.value)}
-                className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                {promotions.map((promo) => (
-                  <option key={promo.id} value={promo.discount}>
-                    {promo.name} {promo.discount > 0 && `(-${promo.discount}%)`}
-                  </option>
-                ))}
-              </select>
+              <div className="rounded-lg border border-indigo-light bg-indigo-lightest px-4 py-3 text-sm text-indigo-dark">
+                {paymentMethod === "efectivo"
+                  ? "Pago en efectivo: descuento automatico del 10%."
+                  : "Sin descuento para este metodo de pago."}
+              </div>
             </div>
 
             <div className="mb-6">
@@ -105,7 +102,7 @@ export default function RegistrarPago() {
 
             <button
               type="submit"
-              className="w-full rounded-lg bg-green-600 py-3 font-medium text-white transition-colors hover:bg-green-700"
+              className="w-full rounded-lg bg-success-medium py-3 font-medium text-white transition-colors hover:opacity-90"
             >
               Confirmar pago y emitir recibo
             </button>
@@ -121,12 +118,10 @@ export default function RegistrarPago() {
                 <span className="text-gray-600">Subtotal:</span>
                 <span className="font-medium text-gray-900">${subtotal}</span>
               </div>
-              {Number(discount) > 0 && (
+              {discountPercent > 0 && (
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">Descuento ({discount}%):</span>
-                  <span className="font-medium text-green-600">
-                    -${(subtotal * Number(discount) / 100).toFixed(2)}
-                  </span>
+                  <span className="text-gray-600">Descuento efectivo ({discountPercent}%):</span>
+                  <span className="font-medium text-success-dark">-${discountAmount.toFixed(2)}</span>
                 </div>
               )}
             </div>

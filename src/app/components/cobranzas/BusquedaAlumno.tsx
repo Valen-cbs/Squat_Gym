@@ -62,12 +62,12 @@ export default function BusquedaAlumno() {
                 <tr key={alumno.id} className="border-b border-gray-100 hover:bg-gray-50">
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100">
-                        <User className="h-5 w-5 text-blue-600" />
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-light">
+                        <User className="h-5 w-5 text-indigo-primary" />
                       </div>
                       <Link
-                        to={`/cobranzas/estado-cuenta/${alumno.id}`}
-                        className="font-medium text-gray-900 transition-colors hover:text-blue-700 hover:underline"
+                        to={`/cobranzas/registrar-pago/${alumno.id}`}
+                        className="font-medium text-gray-900 transition-colors hover:text-indigo-primary hover:underline"
                       >
                         {alumno.name}
                       </Link>
@@ -85,8 +85,8 @@ export default function BusquedaAlumno() {
                     <span
                       className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-medium ${
                         alumno.status === "Al dia"
-                          ? "bg-green-100 text-green-700"
-                          : "bg-orange-100 text-orange-700"
+                          ? "bg-success-light text-success-dark"
+                          : "bg-warning-light text-warning-dark"
                       }`}
                     >
                       {alumno.status === "Al dia" ? (

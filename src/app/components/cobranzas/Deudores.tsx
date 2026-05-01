@@ -77,9 +77,9 @@ export default function Deudores() {
                       {alumno.lastPayment}
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-sm font-bold text-orange-700">${alumno.debtAmount}</td>
+                  <td className="px-6 py-4 text-sm font-bold text-error-dark">${alumno.debtAmount}</td>
                   <td className="px-6 py-4">
-                    <span className="inline-flex items-center gap-1.5 rounded-full bg-orange-100 px-3 py-1 text-sm font-medium text-orange-700">
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-error-light px-3 py-1 text-sm font-medium text-error-dark">
                       <AlertCircle className="h-4 w-4" />
                       {alumno.overdueMonths} {alumno.overdueMonths === 1 ? "mes" : "meses"} de atraso
                     </span>
@@ -87,7 +87,7 @@ export default function Deudores() {
                   <td className="px-6 py-4">
                     <Link
                       to={`/cobranzas/registrar-pago/${alumno.id}`}
-                      className="text-sm font-medium text-blue-600 hover:text-blue-700 hover:underline"
+                      className="text-sm font-medium text-indigo-primary hover:text-indigo-dark hover:underline"
                     >
                       Registrar pago
                     </Link>

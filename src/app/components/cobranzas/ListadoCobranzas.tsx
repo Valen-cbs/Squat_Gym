@@ -107,7 +107,7 @@ export default function ListadoCobranzas() {
 
       {/* Export Button */}
       <div className="mb-4 flex justify-end">
-        <button className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+        <button className="flex items-center gap-2 px-4 py-2 bg-success-medium text-white rounded-lg hover:opacity-90 transition-colors">
           <Download className="w-4 h-4" />
           Exportar a Excel
         </button>
@@ -142,7 +142,7 @@ export default function ListadoCobranzas() {
                   <td className="px-6 py-4 text-sm font-bold text-gray-900">${cobranza.amount}</td>
                   <td className="px-6 py-4 text-sm text-gray-600">{cobranza.method}</td>
                   <td className="px-6 py-4">
-                    <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
+                    <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium bg-success-light text-success-dark">
                       <CheckCircle className="w-3 h-3" />
                       {cobranza.status}
                     </span>

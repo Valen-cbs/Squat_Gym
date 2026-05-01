@@ -111,20 +111,20 @@ export default function AlertasNotificaciones() {
 
   const getSeverityColor = (severity: string) => {
     switch(severity) {
-      case "critical": return "border-red-500 bg-red-50";
-      case "high": return "border-orange-500 bg-orange-50";
-      default: return "border-yellow-500 bg-yellow-50";
+      case "critical": return "border-error-medium bg-error-light";
+      case "high": return "border-warning-medium bg-warning-light";
+      default: return "border-warning-medium bg-warning-light";
     }
   };
 
   const getSeverityBadge = (severity: string) => {
     switch(severity) {
       case "critical":
-        return <span className="px-2 py-1 bg-red-100 text-red-700 rounded text-xs font-medium">CRÍTICO</span>;
+        return <span className="px-2 py-1 bg-error-light text-error-dark rounded text-xs font-medium">CRÍTICO</span>;
       case "high":
-        return <span className="px-2 py-1 bg-orange-100 text-orange-700 rounded text-xs font-medium">ALTO</span>;
+        return <span className="px-2 py-1 bg-warning-light text-warning-dark rounded text-xs font-medium">ALTO</span>;
       default:
-        return <span className="px-2 py-1 bg-yellow-100 text-yellow-700 rounded text-xs font-medium">MEDIO</span>;
+        return <span className="px-2 py-1 bg-warning-light text-warning-dark rounded text-xs font-medium">MEDIO</span>;
     }
   };
 
@@ -221,12 +221,12 @@ export default function AlertasNotificaciones() {
             <div className="flex items-start justify-between">
               <div className="flex items-start gap-4 flex-1">
                 <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${
-                  alert.severity === "critical" ? "bg-red-100" :
-                  alert.severity === "high" ? "bg-orange-100" : "bg-yellow-100"
+                  alert.severity === "critical" ? "bg-error-light" :
+                  alert.severity === "high" ? "bg-warning-light" : "bg-warning-light"
                 }`}>
                   <alert.icon className={`w-6 h-6 ${
-                    alert.severity === "critical" ? "text-red-600" :
-                    alert.severity === "high" ? "text-orange-600" : "text-yellow-600"
+                    alert.severity === "critical" ? "text-error-dark" :
+                    alert.severity === "high" ? "text-warning-dark" : "text-warning-dark"
                   }`} />
                 </div>
                 <div className="flex-1">
@@ -234,7 +234,7 @@ export default function AlertasNotificaciones() {
                     <h3 className="font-bold text-gray-900">{alert.title}</h3>
                     {getSeverityBadge(alert.severity)}
                     {alert.status === "resolved" && (
-                      <span className="px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-medium">
+                      <span className="px-2 py-1 bg-success-light text-success-dark rounded text-xs font-medium">
                         RESUELTA
                       </span>
                     )}
@@ -245,7 +245,7 @@ export default function AlertasNotificaciones() {
               </div>
               {alert.status === "pending" && (
                 <div className="flex gap-2">
-                  <button className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium">
+                  <button className="px-4 py-2 bg-success-medium text-white rounded-lg hover:opacity-90 transition-colors text-sm font-medium">
                     Resolver
                   </button>
                   {alert.type === "stock" && "productId" in alert ? (

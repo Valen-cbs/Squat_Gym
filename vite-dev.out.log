@@ -1,0 +1,27 @@
+
+> @figma/my-make-file@0.0.1 dev
+> vite --host 127.0.0.1
+
+Port 5173 is in use, trying another one...
+
+  [32m[1mVITE[22m v6.3.5[39m  [2mready in [0m[1m1347[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5174[22m/[39m
+[2m10:13:53[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/@fs/C:\squat\Squat_Gym\src\app\components\cobranzas\DashboardCobranzas.tsx, /src/styles/index.css[22m
+[2m10:34:58[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/@fs/C:\squat\Squat_Gym\src\app\components\cobranzas\ReciboGenerado.tsx, /src/styles/index.css[22m
+[2m10:35:18[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/@fs/C:\squat\Squat_Gym\src\app\components\kiosco\DetalleVenta.tsx, /src/styles/index.css[22m
+[2m10:35:18[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/@fs/C:\squat\Squat_Gym\src\app\components\kiosco\DetalleVenta.tsx, /src/styles/index.css[22m
+[2m10:35:38[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/@fs/C:\squat\Squat_Gym\src\app\components\cobranzas\RegistrarPago.tsx, /src/styles/index.css[22m
+[2m10:35:42[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/@fs/C:\squat\Squat_Gym\src\app\components\cobranzas\BusquedaAlumno.tsx, /src/styles/index.css[22m
+[2m10:36:04[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/@fs/C:\squat\Squat_Gym\src\app\components\Home.tsx, /src/styles/index.css[22m
+[2m10:36:16[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/@fs/C:\squat\Squat_Gym\src\app\components\Layout.tsx, /src/styles/index.css[22m
+[2m10:36:30[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/@fs/C:\squat\Squat_Gym\src\app\components\cobranzas\RegistrarPago.tsx, /src/styles/index.css[22m
+[2m10:36:42[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/@fs/C:\squat\Squat_Gym\src\app\components\cobranzas\ReciboGenerado.tsx, /src/styles/index.css[22m
+[2m10:36:46[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/@fs/C:\squat\Squat_Gym\src\app\components\kiosco\RegistrarVenta.tsx, /src/styles/index.css[22m
+[2m10:36:58[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/@fs/C:\squat\Squat_Gym\src\app\components\kiosco\DetalleVenta.tsx, /src/styles/index.css[22m
+[2m10:37:50[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/@fs/C:\squat\Squat_Gym\src\app\components\kiosco\RegistrarVenta.tsx, /src/styles/index.css[22m
+[2m10:37:50[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/@fs/C:\squat\Squat_Gym\src\app\components\kiosco\RegistrarVenta.tsx, /src/styles/index.css[22m
+[2m10:41:52[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/@fs/C:\squat\Squat_Gym\src\app\components\Layout.tsx, /src/styles/index.css[22m
+[2m10:43:18[22m [36m[1m[vite][22m[39m [32mvite.config.ts changed, restarting server...[39m
+[2m10:43:18[22m [36m[1m[vite][22m[39m [32mvite.config.ts changed, restarting server...[39m
+[2m10:43:18[22m [36m[1m[vite][22m[39m server restarted.

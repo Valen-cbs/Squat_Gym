@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router";
-import { ArrowLeft, Plus, Trash2, ShoppingCart, Search, CreditCard } from "lucide-react";
+import { Plus, Trash2, ShoppingCart, Search, CreditCard } from "lucide-react";
 import PaymentMethodSelector, { paymentMethodLabels } from "../PaymentMethodSelector";
 
 type Product = {
@@ -70,7 +70,13 @@ export default function RegistrarVenta() {
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   const handleConfirmSale = () => {
-    navigate(`/kiosco/venta/${Date.now()}`);
+    navigate(`/kiosco/venta/${Date.now()}`, {
+      state: {
+        items: cart,
+        total,
+        paymentMethod: paymentMethodLabels[paymentMethod],
+      },
+    });
   };
 
   return (

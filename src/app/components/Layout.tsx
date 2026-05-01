@@ -85,10 +85,8 @@ export default function Layout() {
   const closeMobileMenu = () => setMobileMenuOpen(false);
   const toggleDesktopSidebar = () => setDesktopSidebarOpen((current) => !current);
 
-  const roleAccent =
-    user?.role === "admin" ? "from-red-500 to-rose-500" :
-    user?.role === "manager" ? "from-orange-500 to-amber-500" :
-    "from-blue-500 to-cyan-500";
+  const roleAccent = "from-indigo-primary to-indigo-dark";
+  const branchLabel = "Sede 1 - French 414";
 
   const SidebarContent = (
     <>
@@ -97,6 +95,7 @@ export default function Layout() {
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.28em] text-white/70">SquatGym</p>
             <h1 className="mt-2 text-2xl font-bold">Panel administrativo</h1>
+            <p className="mt-1 text-sm text-white/75">{branchLabel}</p>
           </div>
           <button
             onClick={toggleDesktopSidebar}
@@ -232,6 +231,13 @@ export default function Layout() {
           <PageBackButton pathname={location.pathname} />
           <Outlet />
         </main>
+        <footer className="border-t border-indigo-light bg-white/85 px-4 py-4 text-sm text-indigo-dark backdrop-blur sm:px-6 lg:px-8">
+          <div className="mx-auto grid w-full max-w-7xl gap-2 sm:grid-cols-3 sm:items-center">
+            <p className="font-medium text-indigo-darkest">SquatGym</p>
+            <p className="text-left sm:text-center">{branchLabel}</p>
+            <p className="text-left sm:text-right">Sistema administrativo 2026</p>
+          </div>
+        </footer>
       </div>
     </div>
   );
