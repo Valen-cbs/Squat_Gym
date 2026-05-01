@@ -7,8 +7,9 @@ import {
   CreditCard,
   CheckCircle,
   AlertCircle,
-  Trash2,
 } from "lucide-react";
+import { useUser } from "../../context/UserContext";
+import { hasPermission } from "../../permissions";
 
 const alumnos = {
   "1": {
@@ -62,8 +63,11 @@ const alumnos = {
 } as const;
 
 export default function EstadoCuenta() {
+  const { user } = useUser();
   const { id } = useParams();
   const alumno = alumnos[(id as keyof typeof alumnos) ?? "1"] ?? alumnos["1"];
+  const canRegisterPayment = hasPermission(user?.role, "collections.registerPayment");
+  const canSendReminder = hasPermission(user?.role, "collections.sendMassDueReminders");
 
   const paymentHistory = [
     { id: 1, date: "01/04/2026", amount: 850, method: "Efectivo", status: "Pagado", receipt: "REC-001234" },
@@ -150,25 +154,31 @@ export default function EstadoCuenta() {
         )}
       </div>
 
-      <div className={`mb-6 grid grid-cols-1 gap-4 ${alumno.status === "Deudor" ? "md:grid-cols-3" : "md:grid-cols-2"}`}>
-        <Link
-          to={`/cobranzas/registrar-pago/${alumno.id}`}
-          className="flex items-center justify-center gap-3 rounded-lg bg-green-600 p-4 text-white transition-colors hover:bg-green-700"
-        >
-          <CreditCard className="h-5 w-5" />
-          <span className="font-medium">Registrar pago</span>
-        </Link>
-        {alumno.status === "Deudor" && (
-          <button className="flex items-center justify-center gap-3 rounded-lg bg-blue-600 p-4 text-white transition-colors hover:bg-blue-700">
-            <Mail className="h-5 w-5" />
-            <span className="font-medium">Enviar recordatorio</span>
-          </button>
-        )}
-        <button className="flex items-center justify-center gap-3 rounded-lg border border-red-200 bg-red-50 p-4 text-red-700 transition-colors hover:bg-red-100">
-          <Trash2 className="h-5 w-5" />
-          <span className="font-medium">Eliminar alumno</span>
-        </button>
-      </div>
+      {(canRegisterPayment || (canSendReminder && alumno.status === "Deudor")) && (
+        <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+          {canRegisterPayment && (
+            <Link
+              to={`/cobranzas/registrar-pago/${alumno.id}`}
+              className="flex items-center justify-center gap-3 rounded-lg bg-green-600 p-4 text-white transition-colors hover:bg-green-700"
+            >
+              <CreditCard className="h-5 w-5" />
+              <span className="font-medium">Registrar pago</span>
+            </Link>
+          )}
+          {canSendReminder && alumno.status === "Deudor" && (
+            <button className="flex items-center justify-center gap-3 rounded-lg bg-blue-600 p-4 text-white transition-colors hover:bg-blue-700">
+              <Mail className="h-5 w-5" />
+              <span className="font-medium">Enviar recordatorio</span>
+            </button>
+          )}
+        </div>
+      )}
+
+      {!canRegisterPayment && !canSendReminder && alumno.status === "Deudor" && (
+        <div className="mb-6 rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
+          Vista de consulta: el registro de pagos y los recordatorios quedan asignados a Secretaria o Sistema segun corresponda.
+        </div>
+      )}
 
       <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
         <div className="border-b border-gray-200 p-6">
@@ -200,12 +210,16 @@ export default function EstadoCuenta() {
                   </td>
                   <td className="px-6 py-4 font-mono text-sm text-gray-600">{payment.receipt}</td>
                   <td className="px-6 py-4">
-                    <Link
-                      to={`/cobranzas/recibo/${payment.id}`}
-                      className="text-sm font-medium text-blue-600 hover:text-blue-700 hover:underline"
-                    >
-                      Ver
-                    </Link>
+                    {canRegisterPayment ? (
+                      <Link
+                        to={`/cobranzas/recibo/${payment.id}`}
+                        className="text-sm font-medium text-blue-600 hover:text-blue-700 hover:underline"
+                      >
+                        Ver
+                      </Link>
+                    ) : (
+                      <span className="text-sm text-slate-500">Solo consulta</span>
+                    )}
                   </td>
                 </tr>
               ))}

@@ -1,6 +1,5 @@
 import { createContext, useContext, useState, ReactNode } from "react";
-
-type Role = "admin" | "manager" | "secretary";
+import type { Role } from "../permissions";
 
 interface User {
   name: string;

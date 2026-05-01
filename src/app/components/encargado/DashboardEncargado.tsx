@@ -7,6 +7,7 @@ import {
   TrendingUp,
   AlertTriangle,
   DollarSign,
+  ShoppingCart,
 } from "lucide-react";
 
 export default function DashboardEncargado() {
@@ -26,6 +27,22 @@ export default function DashboardEncargado() {
       color: "from-amber-600 to-orange-500",
       badge: "7 alertas",
       link: "/encargado/alertas",
+    },
+    {
+      title: "Alumnos con deuda",
+      description: "Consultar montos pendientes y fechas de atraso.",
+      icon: Users,
+      color: "from-rose-600 to-red-500",
+      badge: "3 deudores",
+      link: "/cobranzas/deudores",
+    },
+    {
+      title: "Ventas del kiosco",
+      description: "Revisar ventas diarias por sede y turno.",
+      icon: ShoppingCart,
+      color: "from-emerald-600 to-green-500",
+      badge: "$4.250 hoy",
+      link: "/kiosco",
     },
     {
       title: "Novedades internas",

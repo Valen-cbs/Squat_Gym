@@ -7,9 +7,13 @@ import {
   CheckCircle,
   Package,
 } from "lucide-react";
+import { useUser } from "../../context/UserContext";
+import { hasPermission } from "../../permissions";
 
 export default function StockProductos() {
+  const { user } = useUser();
   const [searchTerm, setSearchTerm] = useState("");
+  const canCreateRestockOrder = hasPermission(user?.role, "kiosk.createRestockOrder");
 
   const products = [
     { id: 1, name: "Bebida Isotonica", category: "Bebidas", price: 60, stock: 15, minStock: 10, status: "ok" },
@@ -92,12 +96,14 @@ export default function StockProductos() {
       <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
         <div className="flex items-center justify-between border-b border-gray-200 p-6">
           <h2 className="text-xl font-bold text-gray-900">Inventario ({filteredProducts.length})</h2>
-          <Link
-            to="/kiosco/reposicion"
-            className="rounded-lg bg-orange-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-orange-700"
-          >
-            Solicitar reposicion
-          </Link>
+          {canCreateRestockOrder && (
+            <Link
+              to="/kiosco/reposicion"
+              className="rounded-lg bg-orange-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-orange-700"
+            >
+              Generar reposicion
+            </Link>
+          )}
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">
@@ -155,12 +161,6 @@ export default function StockProductos() {
                         className="font-medium text-blue-600 hover:text-blue-700 hover:underline"
                       >
                         Ver detalle
-                      </Link>
-                      <Link
-                        to={`/kiosco/producto/${product.id}/editar`}
-                        className="font-medium text-violet-600 hover:text-violet-700 hover:underline"
-                      >
-                        Editar
                       </Link>
                     </div>
                   </td>

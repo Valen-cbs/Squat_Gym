@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
 import {
   ArrowLeft,
   AlertTriangle,
@@ -12,7 +12,6 @@ import {
 } from "lucide-react";
 
 export default function AlertasNotificaciones() {
-  const navigate = useNavigate();
   const [filterType, setFilterType] = useState("all");
 
   const alertas = [
@@ -24,7 +23,8 @@ export default function AlertasNotificaciones() {
       message: "Roberto Silva - 3 meses de deuda ($2,550)",
       date: "21/04/2026 14:30",
       status: "pending",
-      icon: Users
+      icon: Users,
+      studentId: 8
     },
     {
       id: 2,
@@ -55,7 +55,8 @@ export default function AlertasNotificaciones() {
       message: "Laura Gómez - 2 meses de deuda ($1,700)",
       date: "21/04/2026 10:15",
       status: "pending",
-      icon: Users
+      icon: Users,
+      studentId: 7
     },
     {
       id: 5,
@@ -86,7 +87,8 @@ export default function AlertasNotificaciones() {
       message: "Diego Castro - $1,200 pendiente",
       date: "19/04/2026 14:00",
       status: "resolved",
-      icon: Users
+      icon: Users,
+      studentId: 6
     },
     {
       id: 8,
@@ -98,6 +100,17 @@ export default function AlertasNotificaciones() {
       status: "resolved",
       icon: Package,
       productId: 2
+    },
+    {
+      id: 9,
+      type: "stock",
+      severity: "critical",
+      title: "Diferencia de inventario detectada",
+      message: "Creatina: stock real 8 unidades, sistema 12 unidades",
+      date: "21/04/2026 15:10",
+      status: "pending",
+      icon: Package,
+      productId: 10
     },
   ];
 
@@ -251,6 +264,13 @@ export default function AlertasNotificaciones() {
                   {alert.type === "stock" && "productId" in alert ? (
                     <Link
                       to={`/kiosco/producto/${alert.productId}`}
+                      className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium"
+                    >
+                      Ver detalle
+                    </Link>
+                  ) : alert.type === "debtor" && "studentId" in alert ? (
+                    <Link
+                      to={`/cobranzas/estado-cuenta/${alert.studentId}`}
                       className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium"
                     >
                       Ver detalle

@@ -9,8 +9,13 @@ import {
   BarChart3,
   Bell,
   FileText,
+  ClipboardList,
+  Send,
+  Package,
+  Settings,
 } from "lucide-react";
 import { useUser } from "../context/UserContext";
+import { hasPermission } from "../permissions";
 
 export default function Home() {
   const { user } = useUser();
@@ -23,8 +28,50 @@ export default function Home() {
     user?.role === "admin" ? "Administrador" :
     "Usuario";
 
-  const secretaryActions = [
+  const canViewDebtors = hasPermission(user?.role, "collections.viewDebtors");
+  const canManageClaims = hasPermission(user?.role, "collections.managePaymentClaim");
+  const canSendReminders = hasPermission(user?.role, "collections.sendMassDueReminders");
+  const canViewStock = hasPermission(user?.role, "kiosk.viewStock");
+  const canCreateRestockOrder = hasPermission(user?.role, "kiosk.createRestockOrder");
+  const canViewDailySales = hasPermission(user?.role, "kiosk.viewDailySales");
 
+  const secretaryActions = [
+    ...(canViewDebtors
+      ? [{
+          title: "Alumnos con deuda",
+          description: "Consultar deudores con montos, fechas y estado de acceso.",
+          icon: AlertCircle,
+          link: "/cobranzas/deudores",
+          features: ["Detalle de deuda", "Fechas de atraso", "Estado del alumno"],
+        }]
+      : []),
+    ...(canManageClaims
+      ? [{
+          title: "Reclamos de pago",
+          description: "Verificar pagos informados por alumnos que no figuran en caja.",
+          icon: ClipboardList,
+          link: "/cobranzas/reclamos",
+          features: ["Validar comprobante", "Resolver reclamo", "Conciliar pago"],
+        }]
+      : []),
+    ...(canSendReminders
+      ? [{
+          title: "Recordatorios masivos",
+          description: "Enviar avisos a alumnos con cuotas proximas a vencer.",
+          icon: Send,
+          link: "/cobranzas/recordatorios",
+          features: ["Seleccion masiva", "Vencidos y proximos", "Envio por canal"],
+        }]
+      : []),
+    ...(canViewStock
+      ? [{
+          title: "Stock del kiosco",
+          description: "Consultar inventario actual por producto y detectar faltantes.",
+          icon: Package,
+          link: "/kiosco/stock",
+          features: ["Stock actual", "Minimos", "Productos criticos"],
+        }]
+      : []),
   ];
 
   const managerActions = [
@@ -42,6 +89,24 @@ export default function Home() {
       link: "/encargado/alertas",
       features: ["Alumnos deudores", "Clases reprogramadas", "Stock critico"],
     },
+    ...(canViewDebtors
+      ? [{
+          title: "Alumnos con deuda",
+          description: "Consulta el listado de alumnos deudores de tu sede.",
+          icon: AlertCircle,
+          link: "/cobranzas/deudores",
+          features: ["Montos", "Fechas de atraso", "Detalle de cuenta"],
+        }]
+      : []),
+    ...(canViewDailySales
+      ? [{
+          title: "Ventas del kiosco",
+          description: "Revisa ventas diarias por sede, turno y comprobante.",
+          icon: ShoppingCart,
+          link: "/kiosco",
+          features: ["Ventas por turno", "Ingresos del dia", "Detalle de tickets"],
+        }]
+      : []),
     {
       title: "Novedades internas",
       description: "Registra incidentes, tareas operativas y eventos especiales de la sede.",
@@ -54,7 +119,9 @@ export default function Home() {
       description: "Monitorea inventario, faltantes y proximos pedidos del kiosco.",
       icon: ShoppingCart,
       link: "/encargado/stock",
-      features: ["Inventario actual", "Productos criticos", "Generar pedidos"],
+      features: canCreateRestockOrder
+        ? ["Inventario actual", "Productos criticos", "Generar pedidos"]
+        : ["Inventario actual", "Productos criticos"],
     },
   ];
 
@@ -74,11 +141,27 @@ export default function Home() {
       features: ["Promociones activas", "Planes de membresia", "Descuentos"],
     },
     {
-      title: "Reportes por sede",
-      description: "Visualiza metricas, comparativas e indicadores consolidados.",
+      title: "Reporte de cobranzas",
+      description: "Informe consolidado de pagos recibidos, pendientes y deuda por sede.",
       icon: BarChart3,
       link: "/admin/reportes",
-      features: ["Ingresos por sede", "Comparativas", "Metricas clave"],
+      features: ["Pagos recibidos", "Pendientes", "Deudas por sede"],
+    },
+    ...(canViewDailySales
+      ? [{
+          title: "Ventas del kiosco",
+          description: "Consulta ventas diarias por sede y turno.",
+          icon: ShoppingCart,
+          link: "/kiosco",
+          features: ["Ventas por sede", "Turnos", "Tickets"],
+        }]
+      : []),
+    {
+      title: "Permisos y alertas",
+      description: "Revisa la matriz de roles y las acciones automaticas del sistema.",
+      icon: Settings,
+      link: "/admin/permisos",
+      features: ["Roles", "Permisos", "Reglas automaticas"],
     },
   ];
 
@@ -105,13 +188,17 @@ export default function Home() {
   ];
 
   const recentAlerts = [
-    { id: 1, type: "debt", message: "3 alumnos deudores", severity: "high" },
-    { id: 2, type: "stock", message: "4 productos con stock critico", severity: "high" },
+    ...(canViewDebtors
+      ? [{ id: 1, type: "debt", message: "3 alumnos deudores", severity: "high" }]
+      : []),
+    ...(canViewStock || canCreateRestockOrder
+      ? [{ id: 2, type: "stock", message: "4 productos con stock critico", severity: "high" }]
+      : []),
   ];
 
   const getAlertLink = (type: string) => {
     if (type === "stock") {
-      return "/kiosco/stock";
+      return user?.role === "manager" ? "/encargado/stock" : "/kiosco/stock";
     }
 
     return "/cobranzas/deudores";
@@ -209,6 +296,7 @@ export default function Home() {
         </div>
       </section>
 
+      {recentAlerts.length > 0 && (
       <section className="mt-6 app-panel">
         <div className="border-b border-indigo-light px-5 py-5 sm:px-6">
           <div className="flex items-center gap-2">
@@ -249,6 +337,7 @@ export default function Home() {
           ))}
         </div>
       </section>
+      )}
     </div>
   );
 }

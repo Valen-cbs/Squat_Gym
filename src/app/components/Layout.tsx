@@ -15,9 +15,12 @@ import {
   Package,
   Menu,
   X,
+  Settings,
+  ClipboardList,
 } from "lucide-react";
 import { useUser } from "../context/UserContext";
 import PageBackButton from "./PageBackButton";
+import { hasPermission } from "../permissions";
 
 export default function Layout() {
   const location = useLocation();
@@ -25,13 +28,6 @@ export default function Layout() {
   const { user, setUser } = useUser();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [desktopSidebarOpen, setDesktopSidebarOpen] = useState(true);
-
-  const isActive = (path: string) => {
-    if (path === "/home") {
-      return location.pathname === "/home";
-    }
-    return location.pathname.startsWith(path);
-  };
 
   const handleLogout = () => {
     setUser(null);
@@ -51,6 +47,8 @@ export default function Layout() {
         title: "Operaciones",
         items: [
           { to: "/cobranzas", label: "Cobranzas", icon: DollarSign },
+          { to: "/cobranzas/reclamos", label: "Reclamos de pago", icon: ClipboardList },
+          { to: "/cobranzas/recordatorios", label: "Recordatorios", icon: Bell },
           { to: "/kiosco", label: "Kiosco", icon: ShoppingCart },
         ],
       });
@@ -62,6 +60,8 @@ export default function Layout() {
         items: [
           { to: "/encargado/inscripciones", label: "Inscripciones y pagos", icon: DollarSign },
           { to: "/encargado/alertas", label: "Alertas", icon: Bell },
+          { to: "/cobranzas/deudores", label: "Alumnos con deuda", icon: Users },
+          { to: "/kiosco", label: "Ventas kiosco", icon: ShoppingCart },
           { to: "/encargado/novedades", label: "Novedades internas", icon: FileText },
           { to: "/encargado/stock", label: "Stock y reposicion", icon: Package },
         ],
@@ -74,13 +74,34 @@ export default function Layout() {
         items: [
           { to: "/admin/usuarios", label: "Usuarios", icon: Users },
           { to: "/admin/promociones", label: "Promociones", icon: Tag },
-          { to: "/admin/reportes", label: "Reportes", icon: BarChart3 },
+          { to: "/admin/reportes", label: "Reporte cobranzas", icon: BarChart3 },
+          ...(hasPermission(user.role, "kiosk.viewDailySales")
+            ? [{ to: "/kiosco", label: "Ventas kiosco", icon: ShoppingCart }]
+            : []),
+          { to: "/admin/permisos", label: "Permisos", icon: Settings },
         ],
       });
     }
 
     return groups;
   }, [user?.role, location.pathname]);
+
+  const activeNavigationPath = useMemo(() => {
+    const allItems = navigationGroups.flatMap((group) => group.items);
+    const matchingItems = allItems
+      .filter((item) => {
+        if (item.to === "/home") {
+          return location.pathname === "/home";
+        }
+
+        return location.pathname === item.to || location.pathname.startsWith(`${item.to}/`);
+      })
+      .sort((a, b) => b.to.length - a.to.length);
+
+    return matchingItems[0]?.to;
+  }, [navigationGroups, location.pathname]);
+
+  const isActive = (path: string) => activeNavigationPath === path;
 
   const closeMobileMenu = () => setMobileMenuOpen(false);
   const toggleDesktopSidebar = () => setDesktopSidebarOpen((current) => !current);

@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router";
+import type { ComponentType } from "react";
 import Layout from "./components/Layout";
 import Login from "./components/Login";
 import Home from "./components/Home";
@@ -9,12 +10,13 @@ import EstadoCuenta from "./components/cobranzas/EstadoCuenta";
 import RegistrarPago from "./components/cobranzas/RegistrarPago";
 import ReciboGenerado from "./components/cobranzas/ReciboGenerado";
 import ListadoCobranzas from "./components/cobranzas/ListadoCobranzas";
+import ReclamosPago from "./components/cobranzas/ReclamosPago";
+import RecordatoriosVencimientos from "./components/cobranzas/RecordatoriosVencimientos";
 import KioscoPrincipal from "./components/kiosco/KioscoPrincipal";
 import RegistrarVenta from "./components/kiosco/RegistrarVenta";
 import DetalleVenta from "./components/kiosco/DetalleVenta";
 import StockProductos from "./components/kiosco/StockProductos";
 import DetalleProducto from "./components/kiosco/DetalleProducto";
-import EditarProducto from "./components/kiosco/EditarProducto";
 import PedidoReposicion from "./components/kiosco/PedidoReposicion";
 import DashboardAdmin from "./components/admin/DashboardAdmin";
 import GestionUsuarios from "./components/admin/GestionUsuarios";
@@ -27,6 +29,24 @@ import InscripcionesPagos from "./components/encargado/InscripcionesPagos";
 import AlertasNotificaciones from "./components/encargado/AlertasNotificaciones";
 import NovedadesInternas from "./components/encargado/NovedadesInternas";
 import StockReposicion from "./components/encargado/StockReposicion";
+import PermissionGuard, { RequireAuth } from "./components/PermissionGuard";
+import type { PermissionId } from "./permissions";
+
+const withAuth = (Component: ComponentType) => function AuthenticatedRoute() {
+  return (
+    <RequireAuth>
+      <Component />
+    </RequireAuth>
+  );
+};
+
+const withPermission = (permissions: PermissionId[], Component: ComponentType) => function PermissionRoute() {
+  return (
+    <PermissionGuard permissions={permissions}>
+      <Component />
+    </PermissionGuard>
+  );
+};
 
 export const router = createBrowserRouter([
   {
@@ -35,58 +55,81 @@ export const router = createBrowserRouter([
   },
   {
     path: "/home",
-    Component: Layout,
+    Component: withAuth(Layout),
     children: [
-      { index: true, Component: Home },
+      { index: true, Component: withAuth(Home) },
     ],
   },
   {
     path: "/cobranzas",
-    Component: Layout,
+    Component: withPermission([
+      "collections.registerPayment",
+      "collections.viewDebtors",
+      "collections.managePaymentClaim",
+      "collections.sendMassDueReminders",
+    ], Layout),
     children: [
-      { index: true, Component: DashboardCobranzas },
-      { path: "buscar-alumno", Component: BusquedaAlumno },
-      { path: "deudores", Component: Deudores },
-      { path: "estado-cuenta/:id", Component: EstadoCuenta },
-      { path: "registrar-pago/:id", Component: RegistrarPago },
-      { path: "recibo/:id", Component: ReciboGenerado },
-      { path: "listado", Component: ListadoCobranzas },
+      { index: true, Component: withPermission(["collections.registerPayment"], DashboardCobranzas) },
+      { path: "buscar-alumno", Component: withPermission(["collections.registerPayment"], BusquedaAlumno) },
+      { path: "deudores", Component: withPermission(["collections.viewDebtors"], Deudores) },
+      { path: "estado-cuenta/:id", Component: withPermission(["collections.viewDebtors"], EstadoCuenta) },
+      { path: "registrar-pago/:id", Component: withPermission(["collections.registerPayment"], RegistrarPago) },
+      { path: "recibo/:id", Component: withPermission(["collections.registerPayment"], ReciboGenerado) },
+      { path: "listado", Component: withPermission(["collections.managePaymentClaim"], ListadoCobranzas) },
+      { path: "reclamos", Component: withPermission(["collections.managePaymentClaim"], ReclamosPago) },
+      { path: "recordatorios", Component: withPermission(["collections.sendMassDueReminders"], RecordatoriosVencimientos) },
     ],
   },
   {
     path: "/kiosco",
-    Component: Layout,
+    Component: withPermission([
+      "kiosk.registerSale",
+      "kiosk.viewStock",
+      "kiosk.createRestockOrder",
+      "kiosk.viewDailySales",
+    ], Layout),
     children: [
-      { index: true, Component: KioscoPrincipal },
-      { path: "nueva-venta", Component: RegistrarVenta },
-      { path: "venta/:id", Component: DetalleVenta },
-      { path: "stock", Component: StockProductos },
-      { path: "producto/:id", Component: DetalleProducto },
-      { path: "producto/:id/editar", Component: EditarProducto },
-      { path: "reposicion", Component: PedidoReposicion },
+      { index: true, Component: withPermission(["kiosk.registerSale", "kiosk.viewStock", "kiosk.viewDailySales"], KioscoPrincipal) },
+      { path: "nueva-venta", Component: withPermission(["kiosk.registerSale"], RegistrarVenta) },
+      { path: "venta/:id", Component: withPermission(["kiosk.registerSale", "kiosk.viewDailySales"], DetalleVenta) },
+      { path: "stock", Component: withPermission(["kiosk.viewStock"], StockProductos) },
+      { path: "producto/:id", Component: withPermission(["kiosk.viewStock"], DetalleProducto) },
+      { path: "reposicion", Component: withPermission(["kiosk.createRestockOrder"], PedidoReposicion) },
     ],
   },
   {
     path: "/admin",
-    Component: Layout,
+    Component: withPermission([
+      "collections.generateReport",
+      "kiosk.viewDailySales",
+      "admin.manageUsers",
+      "admin.managePromotions",
+      "admin.configurePermissions",
+      "admin.audit",
+    ], Layout),
     children: [
-      { index: true, Component: DashboardAdmin },
-      { path: "usuarios", Component: GestionUsuarios },
-      { path: "promociones", Component: GestionPromociones },
-      { path: "reportes", Component: ReportesSedes },
-      { path: "auditoria", Component: Auditoria },
-      { path: "permisos", Component: ConfiguracionPermisos },
+      { index: true, Component: withPermission(["admin.manageUsers"], DashboardAdmin) },
+      { path: "usuarios", Component: withPermission(["admin.manageUsers"], GestionUsuarios) },
+      { path: "promociones", Component: withPermission(["admin.managePromotions"], GestionPromociones) },
+      { path: "reportes", Component: withPermission(["collections.generateReport"], ReportesSedes) },
+      { path: "auditoria", Component: withPermission(["admin.audit"], Auditoria) },
+      { path: "permisos", Component: withPermission(["admin.configurePermissions"], ConfiguracionPermisos) },
     ],
   },
   {
     path: "/encargado",
-    Component: Layout,
+    Component: withPermission([
+      "collections.viewDebtors",
+      "kiosk.viewStock",
+      "kiosk.createRestockOrder",
+      "kiosk.viewDailySales",
+    ], Layout),
     children: [
-      { index: true, Component: DashboardEncargado },
-      { path: "inscripciones", Component: InscripcionesPagos },
-      { path: "alertas", Component: AlertasNotificaciones },
-      { path: "novedades", Component: NovedadesInternas },
-      { path: "stock", Component: StockReposicion },
+      { index: true, Component: withPermission(["collections.viewDebtors"], DashboardEncargado) },
+      { path: "inscripciones", Component: withPermission(["collections.viewDebtors"], InscripcionesPagos) },
+      { path: "alertas", Component: withPermission(["collections.viewDebtors"], AlertasNotificaciones) },
+      { path: "novedades", Component: withPermission(["collections.viewDebtors"], NovedadesInternas) },
+      { path: "stock", Component: withPermission(["kiosk.createRestockOrder"], StockReposicion) },
     ],
   },
 ]);

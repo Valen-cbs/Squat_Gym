@@ -1,10 +1,14 @@
 import { Link, useLocation, useParams } from "react-router";
 import { CheckCircle, Printer, ShoppingCart } from "lucide-react";
 import PaymentReceipt from "../PaymentReceipt";
+import { useUser } from "../../context/UserContext";
+import { hasPermission } from "../../permissions";
 
 export default function DetalleVenta() {
+  const { user } = useUser();
   const { id } = useParams();
   const location = useLocation();
+  const canRegisterSale = hasPermission(user?.role, "kiosk.registerSale");
   const saleState = location.state as
     | {
         items?: Array<{ id: number; name: string; price: number; quantity: number }>;
@@ -43,18 +47,20 @@ export default function DetalleVenta() {
         </div>
       </div>
 
-      <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div className={`mb-6 grid grid-cols-1 gap-4 ${canRegisterSale ? "md:grid-cols-2" : ""}`}>
         <button className="flex items-center justify-center gap-3 rounded-lg bg-indigo-primary p-4 text-white transition-colors hover:opacity-90">
           <Printer className="h-5 w-5" />
           <span className="font-medium">Imprimir ticket</span>
         </button>
-        <Link
-          to="/kiosco/nueva-venta"
-          className="flex items-center justify-center gap-3 rounded-lg bg-indigo-primary p-4 text-white transition-colors hover:opacity-90"
-        >
-          <ShoppingCart className="h-5 w-5" />
-          <span className="font-medium">Nueva venta</span>
-        </Link>
+        {canRegisterSale && (
+          <Link
+            to="/kiosco/nueva-venta"
+            className="flex items-center justify-center gap-3 rounded-lg bg-indigo-primary p-4 text-white transition-colors hover:opacity-90"
+          >
+            <ShoppingCart className="h-5 w-5" />
+            <span className="font-medium">Nueva venta</span>
+          </Link>
+        )}
       </div>
 
       <PaymentReceipt

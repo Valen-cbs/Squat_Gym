@@ -6,6 +6,8 @@ import {
   FileText,
   ArrowRight,
   CheckCircle2,
+  ClipboardList,
+  Send,
 } from "lucide-react";
 
 export default function DashboardCobranzas() {
@@ -69,7 +71,7 @@ export default function DashboardCobranzas() {
         ))}
       </div>
 
-      <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
         <Link
           to="/cobranzas/buscar-alumno"
           className="app-action-card"
@@ -77,6 +79,33 @@ export default function DashboardCobranzas() {
           <Search className="h-8 w-8" />
           <p className="mt-4 text-xl font-bold">Buscar alumno</p>
           <p className="mt-1 text-sm text-white/90">Consultar estado de cuenta y pagos pendientes.</p>
+        </Link>
+
+        <Link
+          to="/cobranzas/deudores"
+          className="app-action-card"
+        >
+          <AlertCircle className="h-8 w-8" />
+          <p className="mt-4 text-xl font-bold">Alumnos con deuda</p>
+          <p className="mt-1 text-sm text-white/90">Ver montos, fechas de atraso y detalle de cuenta.</p>
+        </Link>
+
+        <Link
+          to="/cobranzas/reclamos"
+          className="app-action-card"
+        >
+          <ClipboardList className="h-8 w-8" />
+          <p className="mt-4 text-xl font-bold">Reclamos de pago</p>
+          <p className="mt-1 text-sm text-white/90">Resolver pagos informados que no figuran registrados.</p>
+        </Link>
+
+        <Link
+          to="/cobranzas/recordatorios"
+          className="app-action-card"
+        >
+          <Send className="h-8 w-8" />
+          <p className="mt-4 text-xl font-bold">Recordatorios</p>
+          <p className="mt-1 text-sm text-white/90">Enviar avisos masivos de vencimiento.</p>
         </Link>
 
         <Link

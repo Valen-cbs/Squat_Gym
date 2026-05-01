@@ -1,9 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import { Search, User, Calendar, AlertCircle } from "lucide-react";
+import { useUser } from "../../context/UserContext";
+import { hasPermission } from "../../permissions";
 
 export default function Deudores() {
+  const { user } = useUser();
   const [searchTerm, setSearchTerm] = useState("");
+  const canRegisterPayment = hasPermission(user?.role, "collections.registerPayment");
 
   const alumnos = [
     { id: 6, name: "Roberto Silva", dni: "67890123", status: "Deudor", lastPayment: "15/02/2026", plan: "Full Access", debtAmount: 1700, overdueMonths: 2 },
@@ -85,12 +89,21 @@ export default function Deudores() {
                     </span>
                   </td>
                   <td className="px-6 py-4">
-                    <Link
-                      to={`/cobranzas/registrar-pago/${alumno.id}`}
-                      className="text-sm font-medium text-indigo-primary hover:text-indigo-dark hover:underline"
-                    >
-                      Registrar pago
-                    </Link>
+                    {canRegisterPayment ? (
+                      <Link
+                        to={`/cobranzas/registrar-pago/${alumno.id}`}
+                        className="text-sm font-medium text-indigo-primary hover:text-indigo-dark hover:underline"
+                      >
+                        Registrar pago
+                      </Link>
+                    ) : (
+                      <Link
+                        to={`/cobranzas/estado-cuenta/${alumno.id}`}
+                        className="text-sm font-medium text-indigo-primary hover:text-indigo-dark hover:underline"
+                      >
+                        Ver detalle
+                      </Link>
+                    )}
                   </td>
                 </tr>
               ))}

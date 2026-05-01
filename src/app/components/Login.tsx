@@ -23,14 +23,14 @@ export default function Login() {
       name: "Encargado de sucursal",
       icon: Briefcase,
       color: "from-amber-500 to-orange-500",
-      description: "Gestión operativa de la sede",
+      description: "Deudores, ventas, stock y reposicion",
     },
     {
       value: "secretary" as const,
       name: "Secretaría / recepción",
       icon: Users,
       color: "from-sky-500 to-blue-500",
-      description: "Cobros, kiosco y atención diaria",
+      description: "Cobros, reclamos, recordatorios y ventas",
     },
   ];
 

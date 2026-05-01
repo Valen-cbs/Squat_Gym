@@ -1,8 +1,12 @@
 import { Link, useParams } from "react-router";
-import { Package, AlertTriangle, Edit, Plus } from "lucide-react";
+import { Package, AlertTriangle, Plus } from "lucide-react";
+import { useUser } from "../../context/UserContext";
+import { hasPermission } from "../../permissions";
 
 export default function DetalleProducto() {
+  const { user } = useUser();
   const { id } = useParams();
+  const canCreateRestockOrder = hasPermission(user?.role, "kiosk.createRestockOrder");
 
   const product = {
     id,
@@ -84,22 +88,21 @@ export default function DetalleProducto() {
         </div>
       </div>
 
-      <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2">
-        <Link
-          to={`/kiosco/reposicion?productId=${product.id}`}
-          className="flex items-center justify-center gap-3 rounded-lg bg-orange-600 p-4 text-white transition-colors hover:bg-orange-700"
-        >
-          <Plus className="h-5 w-5" />
-          <span className="font-medium">Solicitar reposicion</span>
-        </Link>
-        <Link
-          to={`/kiosco/producto/${id}/editar`}
-          className="flex items-center justify-center gap-3 rounded-lg bg-blue-600 p-4 text-white transition-colors hover:bg-blue-700"
-        >
-          <Edit className="h-5 w-5" />
-          <span className="font-medium">Editar producto</span>
-        </Link>
-      </div>
+      {canCreateRestockOrder ? (
+        <div className="mb-6">
+          <Link
+            to={`/kiosco/reposicion?productId=${product.id}`}
+            className="flex items-center justify-center gap-3 rounded-lg bg-orange-600 p-4 text-white transition-colors hover:bg-orange-700"
+          >
+            <Plus className="h-5 w-5" />
+            <span className="font-medium">Generar reposicion</span>
+          </Link>
+        </div>
+      ) : (
+        <div className="mb-6 rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
+          Vista de consulta: los pedidos de reposicion quedan asignados al encargado.
+        </div>
+      )}
     </div>
   );
 }

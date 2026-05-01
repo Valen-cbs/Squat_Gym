@@ -19,6 +19,7 @@ export default function GestionUsuarios() {
     { id: 1, name: "Juan Pérez", email: "juan.perez@squatgym.com", role: "Administrador", sede: "Central", status: "Activo", lastLogin: "21/04/2026 14:30" },
     { id: 2, name: "María González", email: "maria.gonzalez@squatgym.com", role: "Secretaría", sede: "Central", status: "Activo", lastLogin: "21/04/2026 13:15" },
     { id: 3, name: "Carlos Rodríguez", email: "carlos.rodriguez@squatgym.com", role: "Secretaría", sede: "Norte", status: "Activo", lastLogin: "21/04/2026 09:45" },
+    { id: 8, name: "Sofía Duarte", email: "sofia.duarte@squatgym.com", role: "Encargado", sede: "Central", status: "Activo", lastLogin: "21/04/2026 15:05" },
     { id: 4, name: "Ana Martínez", email: "ana.martinez@squatgym.com", role: "Instructor", sede: "Central", status: "Activo", lastLogin: "20/04/2026 18:20" },
     { id: 5, name: "Pedro Sánchez", email: "pedro.sanchez@squatgym.com", role: "Secretaría", sede: "Sur", status: "Activo", lastLogin: "21/04/2026 10:00" },
     { id: 6, name: "Laura Fernández", email: "laura.fernandez@squatgym.com", role: "Instructor", sede: "Norte", status: "Activo", lastLogin: "19/04/2026 16:30" },
@@ -34,6 +35,7 @@ export default function GestionUsuarios() {
 
   const roleColors: { [key: string]: string } = {
     "Administrador": "bg-red-100 text-red-700",
+    "Encargado": "bg-amber-100 text-amber-700",
     "Secretaría": "bg-blue-100 text-blue-700",
     "Instructor": "bg-green-100 text-green-700",
     "Mantenimiento": "bg-gray-100 text-gray-700"
@@ -86,6 +88,7 @@ export default function GestionUsuarios() {
           >
             <option value="all">Todos los roles</option>
             <option value="Administrador">Administrador</option>
+            <option value="Encargado">Encargado</option>
             <option value="Secretaría">Secretaría</option>
             <option value="Instructor">Instructor</option>
             <option value="Mantenimiento">Mantenimiento</option>
