@@ -1,28 +1,16 @@
-import { Link } from "react-router";
+﻿import { Link } from "react-router";
 import {
   DollarSign,
   ShoppingCart,
-<<<<<<< HEAD
-=======
-  Users,
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
   AlertCircle,
   ArrowRight,
   Tag,
   BarChart3,
   Bell,
-<<<<<<< HEAD
   ClipboardList,
   Send,
   Package,
   Users,
-=======
-  FileText,
-  ClipboardList,
-  Send,
-  Package,
-  Settings,
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
 } from "lucide-react";
 import { useUser } from "../context/UserContext";
 import { hasPermission } from "../permissions";
@@ -34,11 +22,7 @@ export default function Home() {
     : user?.name || "Usuario";
   const roleLabel =
     user?.role === "secretary" ? "Secretaria" :
-<<<<<<< HEAD
     user?.role === "manager" ? "Encargado de sucursal 1" :
-=======
-    user?.role === "manager" ? "Encargado" :
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
     user?.role === "admin" ? "Administrador" :
     "Usuario";
 
@@ -90,7 +74,6 @@ export default function Home() {
 
   const managerActions = [
     {
-<<<<<<< HEAD
       title: "Alumnos",
       description: "Consulta el listado general de alumnos de la sede y administra bajas.",
       icon: Users,
@@ -98,8 +81,6 @@ export default function Home() {
       features: ["Buscar alumnos", "Ver estado", "Borrar registros"],
     },
     {
-=======
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
       title: "Inscripciones y pagos",
       description: "Segui el movimiento comercial de tu sede y el trabajo de recepcion.",
       icon: DollarSign,
@@ -108,10 +89,10 @@ export default function Home() {
     },
     {
       title: "Alertas",
-      description: "Prioriza deudores, clases reprogramadas y stock critico desde un solo panel.",
+      description: "Prioriza deudores y stock critico desde un solo panel.",
       icon: Bell,
       link: "/encargado/alertas",
-      features: ["Alumnos deudores", "Clases reprogramadas", "Stock critico"],
+      features: ["Alumnos deudores", "Stock critico", "Alertas operativas"],
     },
     ...(canViewDebtors
       ? [{
@@ -125,23 +106,13 @@ export default function Home() {
     ...(canViewDailySales
       ? [{
           title: "Ventas del kiosco",
-          description: "Revisa ventas diarias por sede, turno y comprobante.",
+          description: "Consulta ventas diarias por turno o por rango de dias.",
           icon: ShoppingCart,
           link: "/kiosco",
-          features: ["Ventas por turno", "Ingresos del dia", "Detalle de tickets"],
+          features: ["Reporte por turno", "Reporte por dia", "Total general"],
         }]
       : []),
     {
-<<<<<<< HEAD
-=======
-      title: "Novedades internas",
-      description: "Registra incidentes, tareas operativas y eventos especiales de la sede.",
-      icon: FileText,
-      link: "/encargado/novedades",
-      features: ["Mantenimientos", "Incidentes", "Eventos especiales"],
-    },
-    {
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
       title: "Stock y reposicion",
       description: "Monitorea inventario, faltantes y proximos pedidos del kiosco.",
       icon: ShoppingCart,
@@ -154,16 +125,6 @@ export default function Home() {
 
   const adminActions = [
     {
-<<<<<<< HEAD
-=======
-      title: "Gestion de usuarios",
-      description: "Crea cuentas, define roles y mantene el acceso del equipo bajo control.",
-      icon: Users,
-      link: "/admin/usuarios",
-      features: ["Crear usuarios", "Asignar roles", "Gestionar permisos"],
-    },
-    {
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
       title: "Promociones y planes",
       description: "Configura campanas comerciales y propuestas especiales por sede.",
       icon: Tag,
@@ -180,22 +141,12 @@ export default function Home() {
     ...(canViewDailySales
       ? [{
           title: "Ventas del kiosco",
-          description: "Consulta ventas diarias por sede y turno.",
+          description: "Selecciona una sede y consulta ventas por turno o por rango de dias.",
           icon: ShoppingCart,
           link: "/kiosco",
-          features: ["Ventas por sede", "Turnos", "Tickets"],
+          features: ["Seleccion de sede", "Reporte por turno", "Reporte por dia"],
         }]
       : []),
-<<<<<<< HEAD
-=======
-    {
-      title: "Permisos y alertas",
-      description: "Revisa la matriz de roles y las acciones automaticas del sistema.",
-      icon: Settings,
-      link: "/admin/permisos",
-      features: ["Roles", "Permisos", "Reglas automaticas"],
-    },
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
   ];
 
   const quickActions =
@@ -208,7 +159,7 @@ export default function Home() {
       title: "Registrar Pago (Membresía)",
       description: "Ir directo al cobro de cuotas y buscar al alumno en el mismo paso.",
       icon: DollarSign,
-      link: "/cobranzas/buscar-alumno",
+      link: "/cobranzas/registrar-pago",
       features: ["Buscar alumno", "Aplicar descuento efectivo", "Emitir comprobante"],
     },
     {
@@ -244,7 +195,7 @@ export default function Home() {
         <h1 className="mt-2 text-2xl font-bold text-indigo-darkest sm:text-3xl">
           {roleLabel}: {displayName}
         </h1>
-        <p className="mt-1 text-sm text-indigo-dark sm:text-base">Sede: 1. French 414.</p>
+        <p className="mt-1 text-sm text-indigo-dark sm:text-base">Sede: Norte.</p>
       </section>
 
       <section>
@@ -260,7 +211,6 @@ export default function Home() {
               <Link
                 key={action.title}
                 to={action.link}
-<<<<<<< HEAD
                 className="app-action-card group p-4 sm:p-5"
               >
                 <div className="flex items-center justify-between gap-3">
@@ -274,29 +224,6 @@ export default function Home() {
                   </div>
                   <ArrowRight className="h-5 w-5 text-white/80 transition-transform group-hover:translate-x-1" />
                 </div>
-=======
-                className="app-action-card group p-6"
-              >
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/15">
-                    <action.icon className="h-7 w-7" />
-                  </div>
-                  <ArrowRight className="h-5 w-5 text-white/80 transition-transform group-hover:translate-x-1" />
-                </div>
-                <h3 className="mt-5 text-xl font-bold sm:text-2xl">{action.title}</h3>
-                <p className="mt-2 max-w-xl text-sm leading-6 text-white/90">{action.description}</p>
-                <div className="mt-4 max-h-0 overflow-hidden rounded-xl border border-white/20 bg-white/10 opacity-0 transition-all duration-300 group-hover:max-h-44 group-hover:p-3 group-hover:opacity-100 group-focus-visible:max-h-44 group-focus-visible:p-3 group-focus-visible:opacity-100">
-                  <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/75">Se puede hacer</p>
-                  <div className="grid gap-2 text-sm text-white/95">
-                    {action.features.map((feature) => (
-                      <span key={feature} className="flex items-center gap-2">
-                        <span className="h-1.5 w-1.5 rounded-full bg-white" />
-                        {feature}
-                      </span>
-                    ))}
-                  </div>
-                </div>
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
               </Link>
             ))}
           </div>
@@ -315,7 +242,6 @@ export default function Home() {
             <Link
               key={index}
               to={action.link}
-<<<<<<< HEAD
               className="app-action-card group p-4 sm:p-5"
             >
               <div className="flex items-center justify-between gap-3">
@@ -328,32 +254,6 @@ export default function Home() {
                   </span>
                 </div>
                 <ArrowRight className="h-5 w-5 text-white/80 transition-transform group-hover:translate-x-1" />
-=======
-              className="app-action-card group overflow-hidden sm:p-6"
-            >
-              <div className="flex flex-col gap-5">
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/15">
-                    <action.icon className="h-7 w-7" />
-                  </div>
-                  <ArrowRight className="h-5 w-5 text-white/80 transition-transform group-hover:translate-x-1" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold sm:text-2xl">{action.title}</h3>
-                  <p className="mt-2 text-sm leading-6 text-white/85">{action.description}</p>
-                </div>
-                <div className="max-h-0 overflow-hidden rounded-xl border border-white/20 bg-white/10 opacity-0 transition-all duration-300 group-hover:max-h-52 group-hover:p-3 group-hover:opacity-100 group-focus-visible:max-h-52 group-focus-visible:p-3 group-focus-visible:opacity-100">
-                  <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/75">Se puede hacer</p>
-                  <div className="grid gap-2 text-sm text-white/90">
-                  {action.features.map((feature, idx) => (
-                    <div key={idx} className="flex items-center gap-2">
-                      <span className="h-2 w-2 rounded-full bg-white/80" />
-                      <span>{feature}</span>
-                    </div>
-                  ))}
-                  </div>
-                </div>
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
               </div>
             </Link>
           ))}

@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, Navigate } from "react-router";
 import type { ComponentType } from "react";
 import Layout from "./components/Layout";
 import Login from "./components/Login";
@@ -11,19 +11,16 @@ import RegistrarPago from "./components/cobranzas/RegistrarPago";
 import ReciboGenerado from "./components/cobranzas/ReciboGenerado";
 import ListadoCobranzas from "./components/cobranzas/ListadoCobranzas";
 import ReclamosPago from "./components/cobranzas/ReclamosPago";
-<<<<<<< HEAD
 import ReclamoDetalle from "./components/cobranzas/ReclamoDetalle";
-=======
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
 import RecordatoriosVencimientos from "./components/cobranzas/RecordatoriosVencimientos";
 import KioscoPrincipal from "./components/kiosco/KioscoPrincipal";
 import RegistrarVenta from "./components/kiosco/RegistrarVenta";
 import DetalleVenta from "./components/kiosco/DetalleVenta";
+import DetalleVentasReporte from "./components/kiosco/DetalleVentasReporte";
 import StockProductos from "./components/kiosco/StockProductos";
 import DetalleProducto from "./components/kiosco/DetalleProducto";
 import PedidoReposicion from "./components/kiosco/PedidoReposicion";
 import DashboardAdmin from "./components/admin/DashboardAdmin";
-<<<<<<< HEAD
 import GestionPromociones from "./components/admin/GestionPromociones";
 import ReportesSedes from "./components/admin/ReportesSedes";
 import Auditoria from "./components/admin/Auditoria";
@@ -32,18 +29,9 @@ import InscripcionesPagos from "./components/encargado/InscripcionesPagos";
 import AlertasNotificaciones from "./components/encargado/AlertasNotificaciones";
 import StockReposicion from "./components/encargado/StockReposicion";
 import Alumnos from "./components/encargado/Alumnos";
-=======
 import GestionUsuarios from "./components/admin/GestionUsuarios";
-import GestionPromociones from "./components/admin/GestionPromociones";
-import ReportesSedes from "./components/admin/ReportesSedes";
-import Auditoria from "./components/admin/Auditoria";
 import ConfiguracionPermisos from "./components/admin/ConfiguracionPermisos";
-import DashboardEncargado from "./components/encargado/DashboardEncargado";
-import InscripcionesPagos from "./components/encargado/InscripcionesPagos";
-import AlertasNotificaciones from "./components/encargado/AlertasNotificaciones";
 import NovedadesInternas from "./components/encargado/NovedadesInternas";
-import StockReposicion from "./components/encargado/StockReposicion";
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
 import PermissionGuard, { RequireAuth } from "./components/PermissionGuard";
 import type { PermissionId } from "./permissions";
 
@@ -73,6 +61,7 @@ export const router = createBrowserRouter([
     Component: withAuth(Layout),
     children: [
       { index: true, Component: withAuth(Home) },
+      { path: "cobranzas/registrar-pago", Component: withPermission(["collections.registerPayment"], RegistrarPago) },
     ],
   },
   {
@@ -88,14 +77,12 @@ export const router = createBrowserRouter([
       { path: "buscar-alumno", Component: withPermission(["collections.registerPayment"], BusquedaAlumno) },
       { path: "deudores", Component: withPermission(["collections.viewDebtors"], Deudores) },
       { path: "estado-cuenta/:id", Component: withPermission(["collections.viewDebtors"], EstadoCuenta) },
+      { path: "registrar-pago", Component: withPermission(["collections.registerPayment"], RegistrarPago) },
       { path: "registrar-pago/:id", Component: withPermission(["collections.registerPayment"], RegistrarPago) },
       { path: "recibo/:id", Component: withPermission(["collections.registerPayment"], ReciboGenerado) },
       { path: "listado", Component: withPermission(["collections.managePaymentClaim"], ListadoCobranzas) },
       { path: "reclamos", Component: withPermission(["collections.managePaymentClaim"], ReclamosPago) },
-<<<<<<< HEAD
       { path: "reclamos/:id", Component: withPermission(["collections.managePaymentClaim"], ReclamoDetalle) },
-=======
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
       { path: "recordatorios", Component: withPermission(["collections.sendMassDueReminders"], RecordatoriosVencimientos) },
     ],
   },
@@ -110,6 +97,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, Component: withPermission(["kiosk.registerSale", "kiosk.viewStock", "kiosk.viewDailySales"], KioscoPrincipal) },
       { path: "nueva-venta", Component: withPermission(["kiosk.registerSale"], RegistrarVenta) },
+      { path: "detalle-ventas", Component: withPermission(["kiosk.viewDailySales"], DetalleVentasReporte) },
       { path: "venta/:id", Component: withPermission(["kiosk.registerSale", "kiosk.viewDailySales"], DetalleVenta) },
       { path: "stock", Component: withPermission(["kiosk.viewStock"], StockProductos) },
       { path: "producto/:id", Component: withPermission(["kiosk.viewStock"], DetalleProducto) },
@@ -121,29 +109,18 @@ export const router = createBrowserRouter([
     Component: withPermission([
       "collections.generateReport",
       "kiosk.viewDailySales",
-<<<<<<< HEAD
-      "admin.managePromotions",
-      "admin.audit",
-    ], Layout),
-    children: [
-      { index: true, Component: withPermission(["admin.managePromotions", "collections.generateReport", "admin.audit"], DashboardAdmin) },
-      { path: "promociones", Component: withPermission(["admin.managePromotions"], GestionPromociones) },
-      { path: "reportes", Component: withPermission(["collections.generateReport"], ReportesSedes) },
-      { path: "auditoria", Component: withPermission(["admin.audit"], Auditoria) },
-=======
       "admin.manageUsers",
       "admin.managePromotions",
       "admin.configurePermissions",
       "admin.audit",
     ], Layout),
     children: [
-      { index: true, Component: withPermission(["admin.manageUsers"], DashboardAdmin) },
+      { index: true, Component: withPermission(["admin.manageUsers", "admin.managePromotions", "collections.generateReport", "admin.audit"], DashboardAdmin) },
       { path: "usuarios", Component: withPermission(["admin.manageUsers"], GestionUsuarios) },
       { path: "promociones", Component: withPermission(["admin.managePromotions"], GestionPromociones) },
       { path: "reportes", Component: withPermission(["collections.generateReport"], ReportesSedes) },
       { path: "auditoria", Component: withPermission(["admin.audit"], Auditoria) },
       { path: "permisos", Component: withPermission(["admin.configurePermissions"], ConfiguracionPermisos) },
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
     ],
   },
   {
@@ -156,16 +133,15 @@ export const router = createBrowserRouter([
     ], Layout),
     children: [
       { index: true, Component: withPermission(["collections.viewDebtors"], DashboardEncargado) },
-<<<<<<< HEAD
       { path: "alumnos", Component: withPermission(["collections.viewDebtors"], Alumnos) },
       { path: "inscripciones", Component: withPermission(["collections.viewDebtors"], InscripcionesPagos) },
       { path: "alertas", Component: withPermission(["collections.viewDebtors"], AlertasNotificaciones) },
-=======
-      { path: "inscripciones", Component: withPermission(["collections.viewDebtors"], InscripcionesPagos) },
-      { path: "alertas", Component: withPermission(["collections.viewDebtors"], AlertasNotificaciones) },
       { path: "novedades", Component: withPermission(["collections.viewDebtors"], NovedadesInternas) },
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
       { path: "stock", Component: withPermission(["kiosk.createRestockOrder"], StockReposicion) },
     ],
+  },
+  {
+    path: "*",
+    Component: () => <Navigate to="/home" replace />,
   },
 ]);

@@ -1,16 +1,11 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { Link } from "react-router";
 import {
-  ArrowLeft,
   AlertTriangle,
   Users,
-  Calendar,
   Package,
   Bell,
-  CheckCircle,
-  XCircle
 } from "lucide-react";
-<<<<<<< HEAD
 import { getProductById } from "../../data/catalog";
 
 export default function AlertasNotificaciones() {
@@ -19,11 +14,6 @@ export default function AlertasNotificaciones() {
   const towel = getProductById(7)!;
   const bar = getProductById(2)!;
   const creatine = getProductById(10)!;
-=======
-
-export default function AlertasNotificaciones() {
-  const [filterType, setFilterType] = useState("all");
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
 
   const alertas = [
     {
@@ -42,29 +32,11 @@ export default function AlertasNotificaciones() {
       type: "stock",
       severity: "critical",
       title: "Stock crítico en kiosco",
-<<<<<<< HEAD
       message: `${energetic.name}: Solo ${energetic.stock} unidades disponibles`,
       date: "21/04/2026 13:45",
       status: "pending",
       icon: Package,
       productId: energetic.id
-=======
-      message: "Bebida Isotónica: Solo 2 unidades disponibles",
-      date: "21/04/2026 13:45",
-      status: "pending",
-      icon: Package,
-      productId: 1
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
-    },
-    {
-      id: 3,
-      type: "class",
-      severity: "medium",
-      title: "Clase reprogramada",
-      message: "CrossFit 18:00 movida a 19:00 por mantenimiento",
-      date: "21/04/2026 12:00",
-      status: "pending",
-      icon: Calendar
     },
     {
       id: 4,
@@ -82,29 +54,11 @@ export default function AlertasNotificaciones() {
       type: "stock",
       severity: "high",
       title: "Stock bajo en kiosco",
-<<<<<<< HEAD
       message: `${towel.name}: ${towel.stock} unidades (minimo: ${towel.minStock})`,
       date: "20/04/2026 16:30",
       status: "pending",
       icon: Package,
       productId: towel.id
-=======
-      message: "Toalla Deportiva: 3 unidades (mínimo: 5)",
-      date: "20/04/2026 16:30",
-      status: "pending",
-      icon: Package,
-      productId: 4
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
-    },
-    {
-      id: 6,
-      type: "class",
-      severity: "medium",
-      title: "Clase cancelada",
-      message: "Yoga 10:00 - Prof. ausente (enfermedad)",
-      date: "20/04/2026 09:00",
-      status: "resolved",
-      icon: Calendar
     },
     {
       id: 7,
@@ -122,11 +76,7 @@ export default function AlertasNotificaciones() {
       type: "stock",
       severity: "critical",
       title: "Producto agotado",
-<<<<<<< HEAD
       message: `${bar.name}: ${bar.stock} unidades disponibles`,
-=======
-      message: "Barrita Proteica: Sin stock disponible",
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
       date: "19/04/2026 11:20",
       status: "resolved",
       icon: Package,
@@ -137,11 +87,7 @@ export default function AlertasNotificaciones() {
       type: "stock",
       severity: "critical",
       title: "Diferencia de inventario detectada",
-<<<<<<< HEAD
       message: `${creatine.name}: stock real 8 unidades, sistema ${creatine.stock} unidades`,
-=======
-      message: "Creatina: stock real 8 unidades, sistema 12 unidades",
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
       date: "21/04/2026 15:10",
       status: "pending",
       icon: Package,
@@ -180,7 +126,7 @@ export default function AlertasNotificaciones() {
     <div className="p-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Alertas y Notificaciones</h1>
-        <p className="text-gray-500 mt-2">Control de deudores, clases reprogramadas y stock crítico</p>
+        <p className="text-gray-500 mt-2">Control de deudores y stock crítico</p>
       </div>
 
       {/* Stats */}
@@ -245,14 +191,6 @@ export default function AlertasNotificaciones() {
             }`}
           >
             Stock ({alertas.filter(a => a.type === "stock").length})
-          </button>
-          <button
-            onClick={() => setFilterType("class")}
-            className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-              filterType === "class" ? "bg-green-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-            }`}
-          >
-            Clases ({alertas.filter(a => a.type === "class").length})
           </button>
         </div>
       </div>

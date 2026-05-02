@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { useNavigate } from "react-router";
 import { User, Lock, Dumbbell, Shield, Briefcase, Users, ArrowRight } from "lucide-react";
 import { useUser } from "../context/UserContext";
@@ -20,7 +20,6 @@ export default function Login() {
     },
     {
       value: "manager" as const,
-<<<<<<< HEAD
       name: "Encargado de sucursal 1",
       icon: Briefcase,
       color: "from-amber-500 to-orange-500",
@@ -29,16 +28,6 @@ export default function Login() {
     {
       value: "secretary" as const,
       name: "Secretaria",
-=======
-      name: "Encargado de sucursal",
-      icon: Briefcase,
-      color: "from-amber-500 to-orange-500",
-      description: "Deudores, ventas, stock y reposicion",
-    },
-    {
-      value: "secretary" as const,
-      name: "Secretaría / recepción",
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
       icon: Users,
       color: "from-sky-500 to-blue-500",
       description: "Cobros, reclamos, recordatorios y ventas",

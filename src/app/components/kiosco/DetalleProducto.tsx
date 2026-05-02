@@ -1,33 +1,15 @@
-import { Link, useParams } from "react-router";
+﻿import { Link, useParams } from "react-router";
 import { Package, AlertTriangle, Plus } from "lucide-react";
 import { useUser } from "../../context/UserContext";
 import { hasPermission } from "../../permissions";
-<<<<<<< HEAD
 import { getProductById } from "../../data/catalog";
-=======
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
 
 export default function DetalleProducto() {
   const { user } = useUser();
   const { id } = useParams();
   const canCreateRestockOrder = hasPermission(user?.role, "kiosk.createRestockOrder");
 
-<<<<<<< HEAD
   const product = getProductById(id ?? 1) ?? getProductById(1)!;
-=======
-  const product = {
-    id,
-    name: "Bebida Isotonica",
-    category: "Bebidas",
-    price: 60,
-    cost: 35,
-    stock: 3,
-    minStock: 10,
-    supplier: "Distribuidora Deportiva SA",
-    barcode: "7790123456789",
-    status: "critical",
-  };
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
 
   return (
     <div className="app-page">
@@ -51,13 +33,9 @@ export default function DetalleProducto() {
             className={`inline-flex items-center gap-2 rounded-lg px-4 py-2 font-medium ${
               product.status === "critical"
                 ? "bg-red-100 text-red-700"
-<<<<<<< HEAD
                 : product.status === "warning"
                   ? "bg-orange-100 text-orange-700"
                   : "bg-green-100 text-green-700"
-=======
-                : "bg-green-100 text-green-700"
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
             }`}
           >
             {product.status === "critical" ? (
@@ -65,11 +43,7 @@ export default function DetalleProducto() {
             ) : (
               <Package className="h-5 w-5" />
             )}
-<<<<<<< HEAD
             {product.status === "critical" ? "STOCK CRITICO" : product.status === "warning" ? "STOCK BAJO" : "STOCK OK"}
-=======
-            {product.status === "critical" ? "STOCK CRITICO" : "STOCK OK"}
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
           </span>
         </div>
 

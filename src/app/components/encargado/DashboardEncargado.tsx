@@ -1,18 +1,13 @@
-import { Link } from "react-router";
+﻿import { Link } from "react-router";
 import {
   Users,
   Bell,
-<<<<<<< HEAD
-=======
-  FileText,
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
   Package,
   TrendingUp,
   AlertTriangle,
   DollarSign,
   ShoppingCart,
 } from "lucide-react";
-<<<<<<< HEAD
 import { getProductById } from "../../data/catalog";
 
 export default function DashboardEncargado() {
@@ -27,12 +22,6 @@ export default function DashboardEncargado() {
       link: "/encargado/alumnos",
     },
     {
-=======
-
-export default function DashboardEncargado() {
-  const quickActions = [
-    {
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
       title: "Inscripciones y pagos",
       description: "Consultar movimientos comerciales y el trabajo de recepcion.",
       icon: DollarSign,
@@ -42,10 +31,10 @@ export default function DashboardEncargado() {
     },
     {
       title: "Alertas y notificaciones",
-      description: "Ver deudores, cambios de clase y stock critico.",
+      description: "Ver deudores y stock critico.",
       icon: Bell,
       color: "from-amber-600 to-orange-500",
-      badge: "7 alertas",
+      badge: "5 alertas",
       link: "/encargado/alertas",
     },
     {
@@ -58,24 +47,13 @@ export default function DashboardEncargado() {
     },
     {
       title: "Ventas del kiosco",
-      description: "Revisar ventas diarias por sede y turno.",
+      description: "Reporte diario por turno o por rango de dias.",
       icon: ShoppingCart,
       color: "from-emerald-600 to-green-500",
       badge: "$4.250 hoy",
       link: "/kiosco",
     },
     {
-<<<<<<< HEAD
-=======
-      title: "Novedades internas",
-      description: "Registrar incidentes, tareas y eventos operativos.",
-      icon: FileText,
-      color: "from-violet-600 to-purple-500",
-      badge: "4 hoy",
-      link: "/encargado/novedades",
-    },
-    {
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
       title: "Stock y reposicion",
       description: "Control de inventario y pedidos del kiosco.",
       icon: Package,
@@ -96,11 +74,7 @@ export default function DashboardEncargado() {
     },
     {
       id: 2,
-<<<<<<< HEAD
       message: `Stock critico: ${criticalProduct.name} (${criticalProduct.stock} unidades)`,
-=======
-      message: "Stock critico: Bebida Isotonica (2 unidades)",
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
       time: "Hace 30 min",
       icon: AlertTriangle,
       containerClass: "bg-amber-100",
@@ -114,28 +88,13 @@ export default function DashboardEncargado() {
       containerClass: "bg-blue-100",
       iconClass: "text-blue-600",
     },
-<<<<<<< HEAD
-=======
-    {
-      id: 4,
-      message: "Nueva novedad: Reparacion aire acondicionado",
-      time: "Hace 2 horas",
-      icon: FileText,
-      containerClass: "bg-violet-100",
-      iconClass: "text-violet-600",
-    },
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
   ];
 
   return (
     <div className="app-page">
       <div className="app-page-header">
         <div>
-<<<<<<< HEAD
           <h1 className="app-page-title">Panel del encargado de sucursal 1</h1>
-=======
-          <h1 className="app-page-title">Panel del encargado</h1>
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
           <p className="app-page-copy">Una vista operativa mas liviana para controlar la sede desde escritorio o celular sin perder contexto.</p>
         </div>
       </div>

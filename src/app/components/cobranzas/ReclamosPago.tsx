@@ -1,8 +1,5 @@
-import { useState } from "react";
-<<<<<<< HEAD
+﻿import { useState } from "react";
 import { Link } from "react-router";
-=======
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
 import { CheckCircle, FileSearch, Search, ShieldCheck, XCircle } from "lucide-react";
 
 type ClaimStatus = "Pendiente" | "En revision" | "Resuelto";
@@ -164,7 +161,6 @@ export default function ReclamosPago() {
                       </span>
                     ) : (
                       <div className="flex flex-wrap gap-2">
-<<<<<<< HEAD
                         <Link
                           to={`/cobranzas/reclamos/${claim.id}`}
                           className="inline-flex items-center gap-2 rounded-lg border border-blue-200 px-3 py-2 text-sm font-medium text-blue-700 hover:bg-blue-50"
@@ -172,15 +168,6 @@ export default function ReclamosPago() {
                           <ShieldCheck className="h-4 w-4" />
                           Revisar
                         </Link>
-=======
-                        <button
-                          onClick={() => markInReview(claim.id)}
-                          className="inline-flex items-center gap-2 rounded-lg border border-blue-200 px-3 py-2 text-sm font-medium text-blue-700 hover:bg-blue-50"
-                        >
-                          <ShieldCheck className="h-4 w-4" />
-                          Verificar
-                        </button>
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
                         <button
                           onClick={() => resolveClaim(claim.id)}
                           className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-3 py-2 text-sm font-medium text-white hover:bg-green-700"

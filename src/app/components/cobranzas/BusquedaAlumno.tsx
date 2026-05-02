@@ -1,28 +1,11 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { Link } from "react-router";
-import { Search, User, Calendar, CheckCircle, AlertCircle } from "lucide-react";
-<<<<<<< HEAD
+import { Search, User, Calendar, CheckCircle, AlertCircle, CreditCard, FileText } from "lucide-react";
 import { alumnos } from "../../data/alumnos";
-=======
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
 
 export default function BusquedaAlumno() {
   const [searchTerm, setSearchTerm] = useState("");
 
-<<<<<<< HEAD
-=======
-  const alumnos = [
-    { id: 1, name: "Juan Perez", dni: "12345678", status: "Al dia", lastPayment: "01/04/2026", plan: "Musculacion" },
-    { id: 2, name: "Maria Gonzalez", dni: "23456789", status: "Al dia", lastPayment: "05/04/2026", plan: "Full Access" },
-    { id: 3, name: "Carlos Rodriguez", dni: "34567890", status: "Al dia", lastPayment: "10/04/2026", plan: "CrossFit" },
-    { id: 4, name: "Ana Martinez", dni: "45678901", status: "Al dia", lastPayment: "15/04/2026", plan: "Natacion" },
-    { id: 5, name: "Pedro Sanchez", dni: "56789012", status: "Al dia", lastPayment: "18/04/2026", plan: "Musculacion" },
-    { id: 6, name: "Roberto Silva", dni: "67890123", status: "Deudor", lastPayment: "15/02/2026", plan: "Full Access" },
-    { id: 7, name: "Laura Fernandez", dni: "78901234", status: "Deudor", lastPayment: "20/03/2026", plan: "Musculacion" },
-    { id: 8, name: "Diego Lopez", dni: "89012345", status: "Deudor", lastPayment: "10/01/2026", plan: "CrossFit" },
-  ];
-
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
   const filteredAlumnos = alumnos.filter((alumno) =>
     alumno.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     alumno.dni.includes(searchTerm)
@@ -105,16 +88,22 @@ export default function BusquedaAlumno() {
                     </span>
                   </td>
                   <td className="px-6 py-4">
-<<<<<<< HEAD
-                    {/* Acciones adicionales si es necesario en el futuro */}
-=======
-                    <Link
-                      to={`/cobranzas/registrar-pago/${alumno.id}`}
-                      className="text-sm font-medium text-blue-600 hover:text-blue-700 hover:underline"
-                    >
-                      Registrar pago
-                    </Link>
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
+                    <div className="flex flex-col gap-2 sm:flex-row">
+                      <Link
+                        to={`/cobranzas/estado-cuenta/${alumno.id}`}
+                        className="inline-flex items-center justify-center gap-2 rounded-lg border border-indigo-light px-3 py-2 text-sm font-medium text-indigo-primary transition-colors hover:bg-indigo-lightest"
+                      >
+                        <FileText className="h-4 w-4" />
+                        Estado
+                      </Link>
+                      <Link
+                        to={`/cobranzas/registrar-pago/${alumno.id}`}
+                        className="inline-flex items-center justify-center gap-2 rounded-lg bg-success-medium px-3 py-2 text-sm font-medium text-white transition-colors hover:opacity-90"
+                      >
+                        <CreditCard className="h-4 w-4" />
+                        Pago
+                      </Link>
+                    </div>
                   </td>
                 </tr>
               ))}

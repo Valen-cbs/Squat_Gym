@@ -1,28 +1,16 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { Link } from "react-router";
 import { Search, User, Calendar, AlertCircle } from "lucide-react";
 import { useUser } from "../../context/UserContext";
 import { hasPermission } from "../../permissions";
-<<<<<<< HEAD
 import { getAlumnosDeudores } from "../../data/alumnos";
-=======
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
 
 export default function Deudores() {
   const { user } = useUser();
   const [searchTerm, setSearchTerm] = useState("");
   const canRegisterPayment = hasPermission(user?.role, "collections.registerPayment");
 
-<<<<<<< HEAD
   const alumnos = getAlumnosDeudores();
-=======
-  const alumnos = [
-    { id: 6, name: "Roberto Silva", dni: "67890123", status: "Deudor", lastPayment: "15/02/2026", plan: "Full Access", debtAmount: 1700, overdueMonths: 2 },
-    { id: 7, name: "Laura Fernandez", dni: "78901234", status: "Deudor", lastPayment: "20/03/2026", plan: "Musculacion", debtAmount: 850, overdueMonths: 1 },
-    { id: 8, name: "Diego Lopez", dni: "89012345", status: "Deudor", lastPayment: "10/01/2026", plan: "CrossFit", debtAmount: 2550, overdueMonths: 3 },
-  ];
-
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
   const filteredAlumnos = alumnos.filter((alumno) =>
     alumno.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     alumno.dni.includes(searchTerm)
@@ -61,11 +49,7 @@ export default function Deudores() {
                 <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Plan</th>
                 <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Ultimo pago</th>
                 <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Deuda</th>
-<<<<<<< HEAD
                 <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Meses de atraso</th>
-=======
-                <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Estado</th>
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
                 <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Acciones</th>
               </tr>
             </thead>
@@ -94,16 +78,8 @@ export default function Deudores() {
                     </div>
                   </td>
                   <td className="px-6 py-4 text-sm font-bold text-error-dark">${alumno.debtAmount}</td>
-<<<<<<< HEAD
                   <td className="px-6 py-4 text-sm font-semibold text-gray-900">
                     {alumno.overdueMonths}
-=======
-                  <td className="px-6 py-4">
-                    <span className="inline-flex items-center gap-1.5 rounded-full bg-error-light px-3 py-1 text-sm font-medium text-error-dark">
-                      <AlertCircle className="h-4 w-4" />
-                      {alumno.overdueMonths} {alumno.overdueMonths === 1 ? "mes" : "meses"} de atraso
-                    </span>
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
                   </td>
                   <td className="px-6 py-4">
                     {canRegisterPayment ? (

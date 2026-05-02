@@ -1,62 +1,29 @@
-import { Link } from "react-router";
+﻿import { Link } from "react-router";
 import {
-<<<<<<< HEAD
   Tag,
   BarChart3,
   ShoppingCart,
-=======
-  Users,
-  Tag,
-  BarChart3,
-  ShoppingCart,
-  Settings,
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
   Activity,
   TrendingUp,
   AlertTriangle,
   CheckCircle,
 } from "lucide-react";
-<<<<<<< HEAD
 import { promotions } from "../../data/catalog";
 
 export default function DashboardAdmin() {
   const stats = [
     { label: "Promociones activas", value: String(promotions.filter((promotion) => promotion.status === "Activa").length), icon: Tag, color: "from-violet-500 to-purple-500" },
     { label: "Sedes operativas", value: "3", icon: BarChart3, color: "from-emerald-500 to-green-500" },
-=======
-
-export default function DashboardAdmin() {
-  const stats = [
-    { label: "Usuarios totales", value: "47", icon: Users, color: "from-sky-500 to-blue-500" },
-    { label: "Promociones activas", value: "8", icon: Tag, color: "from-violet-500 to-purple-500" },
-    { label: "Sedes operativas", value: "3", icon: BarChart3, color: "from-emerald-500 to-green-500" },
-    { label: "Alertas pendientes", value: "12", icon: AlertTriangle, color: "from-amber-500 to-orange-500" },
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
   ];
 
   const quickActions = [
     {
-<<<<<<< HEAD
-=======
-      title: "Gestion de usuarios",
-      description: "Crear, modificar y administrar accesos.",
-      icon: Users,
-      color: "from-blue-600 to-cyan-500",
-      link: "/admin/usuarios",
-      badge: "47 usuarios",
-    },
-    {
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
       title: "Promociones y planes",
       description: "Campanas, membresias y descuentos vigentes.",
       icon: Tag,
       color: "from-violet-600 to-fuchsia-500",
       link: "/admin/promociones",
-<<<<<<< HEAD
       badge: `${promotions.filter((promotion) => promotion.status === "Activa").length} activas`,
-=======
-      badge: "8 activas",
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
     },
     {
       title: "Reporte de cobranzas",
@@ -68,36 +35,18 @@ export default function DashboardAdmin() {
     },
     {
       title: "Ventas del kiosco",
-      description: "Consulta ventas diarias por sede y turno.",
+      description: "Selecciona sede y consulta por turno o por rango de dias.",
       icon: ShoppingCart,
       color: "from-amber-600 to-orange-500",
       link: "/kiosco",
-      badge: "Hoy",
+      badge: "Por sede",
     },
-<<<<<<< HEAD
   ];
 
   const recentActivity = [
     { id: 1, user: "Juan Perez", action: `Creo nueva promocion '${promotions[0].name}'`, time: "Hace 5 minutos", type: "create" },
     { id: 2, user: "Maria Gonzalez", action: "Actualizo fechas de promocion vigente", time: "Hace 15 minutos", type: "update" },
     { id: 3, user: "Carlos Rodriguez", action: "Genero reporte de sede Central", time: "Hace 1 hora", type: "report" },
-=======
-    {
-      title: "Permisos",
-      description: "Matriz de roles y acciones automaticas.",
-      icon: Settings,
-      color: "from-slate-700 to-slate-900",
-      link: "/admin/permisos",
-      badge: "Activos",
-    },
-  ];
-
-  const recentActivity = [
-    { id: 1, user: "Juan Perez", action: "Creo nueva promocion '2x1 Verano'", time: "Hace 5 minutos", type: "create" },
-    { id: 2, user: "Maria Gonzalez", action: "Modifico permisos de usuario 'Ana Lopez'", time: "Hace 15 minutos", type: "update" },
-    { id: 3, user: "Carlos Rodriguez", action: "Genero reporte de sede Central", time: "Hace 1 hora", type: "report" },
-    { id: 4, user: "Sistema", action: "Alerta automatica: stock critico en sede Norte", time: "Hace 2 horas", type: "alert" },
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
   ];
 
   const systemHealth = [

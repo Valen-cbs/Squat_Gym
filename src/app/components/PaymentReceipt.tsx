@@ -51,7 +51,7 @@ export default function PaymentReceipt({
         <p className="text-xs font-semibold uppercase tracking-[0.28em] text-indigo-primary">SquatGym</p>
         <h1 className="mt-2 text-3xl font-bold text-indigo-darkest">{title}</h1>
         <p className="mt-1 text-sm text-indigo-dark">{subtitle}</p>
-        <p className="mt-2 text-xs text-indigo-dark">Sede 1 - French 414</p>
+        <p className="mt-2 text-xs text-indigo-dark">Sede Norte</p>
       </div>
 
       <div className="my-6 flex items-start justify-between gap-4">
@@ -128,7 +128,7 @@ export default function PaymentReceipt({
         <p className="text-sm text-indigo-dark">Atendido por: {attendedBy}</p>
         <p className="mt-2 text-xs text-indigo-dark">{note}</p>
         <p className="mt-4 text-xs font-semibold text-indigo-primary">
-          SquatGym Sede 1 - French 414
+          SquatGym Sede Norte
         </p>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+﻿import { useMemo, useState } from "react";
 import { Outlet, Link, useLocation, useNavigate } from "react-router";
 import {
   DollarSign,
@@ -11,17 +11,9 @@ import {
   Tag,
   BarChart3,
   Bell,
-<<<<<<< HEAD
   Package,
   Menu,
   X,
-=======
-  FileText,
-  Package,
-  Menu,
-  X,
-  Settings,
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
   ClipboardList,
 } from "lucide-react";
 import { useUser } from "../context/UserContext";
@@ -64,18 +56,11 @@ export default function Layout() {
       groups.push({
         title: "Gestion de sucursal",
         items: [
-<<<<<<< HEAD
           { to: "/encargado/alumnos", label: "Alumnos", icon: Users },
-=======
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
           { to: "/encargado/inscripciones", label: "Inscripciones y pagos", icon: DollarSign },
           { to: "/encargado/alertas", label: "Alertas", icon: Bell },
           { to: "/cobranzas/deudores", label: "Alumnos con deuda", icon: Users },
           { to: "/kiosco", label: "Ventas kiosco", icon: ShoppingCart },
-<<<<<<< HEAD
-=======
-          { to: "/encargado/novedades", label: "Novedades internas", icon: FileText },
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
           { to: "/encargado/stock", label: "Stock y reposicion", icon: Package },
         ],
       });
@@ -85,19 +70,11 @@ export default function Layout() {
       groups.push({
         title: "Administracion general",
         items: [
-<<<<<<< HEAD
-=======
-          { to: "/admin/usuarios", label: "Usuarios", icon: Users },
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
           { to: "/admin/promociones", label: "Promociones", icon: Tag },
           { to: "/admin/reportes", label: "Reporte cobranzas", icon: BarChart3 },
           ...(hasPermission(user.role, "kiosk.viewDailySales")
             ? [{ to: "/kiosco", label: "Ventas kiosco", icon: ShoppingCart }]
             : []),
-<<<<<<< HEAD
-=======
-          { to: "/admin/permisos", label: "Permisos", icon: Settings },
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
         ],
       });
     }
@@ -126,7 +103,7 @@ export default function Layout() {
   const toggleDesktopSidebar = () => setDesktopSidebarOpen((current) => !current);
 
   const roleAccent = "from-indigo-primary to-indigo-dark";
-  const branchLabel = "Sede 1 - French 414";
+  const branchLabel = "Sede Norte";
 
   const SidebarContent = (
     <>

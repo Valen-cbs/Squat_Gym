@@ -1,12 +1,7 @@
-import { useState, useEffect } from "react";
-<<<<<<< HEAD
+﻿import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router";
 import { Plus, Trash2, Send, AlertTriangle } from "lucide-react";
 import { getSuggestedRestockQuantity, kioskProducts } from "../../data/catalog";
-=======
-import { Link, useNavigate, useSearchParams } from "react-router";
-import { ArrowLeft, Plus, Trash2, Send, AlertTriangle } from "lucide-react";
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
 
 type OrderItem = {
   id: number;
@@ -20,28 +15,12 @@ export default function PedidoReposicion() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [orderItems, setOrderItems] = useState<OrderItem[]>([]);
-<<<<<<< HEAD
   const [confirmedOrder, setConfirmedOrder] = useState<OrderItem[] | null>(null);
 
   const allProducts = kioskProducts.map((product) => ({
     ...product,
     suggested: getSuggestedRestockQuantity(product),
   }));
-=======
-
-  const allProducts = [
-    { id: 1, name: "Bebida Isotonica", category: "Bebidas", stock: 8, minStock: 10, suggested: 20 },
-    { id: 2, name: "Barrita Proteica", category: "Suplementos", stock: 22, minStock: 15, suggested: 20 },
-    { id: 3, name: "Agua Mineral", category: "Bebidas", stock: 35, minStock: 20, suggested: 30 },
-    { id: 4, name: "Toalla Deportiva", category: "Accesorios", stock: 2, minStock: 5, suggested: 10 },
-    { id: 5, name: "Snack Saludable", category: "Alimentos", stock: 28, minStock: 15, suggested: 25 },
-    { id: 6, name: "Bebida Energetica", category: "Bebidas", stock: 3, minStock: 10, suggested: 20 },
-    { id: 7, name: "Toalla Deportiva", category: "Accesorios", stock: 2, minStock: 5, suggested: 10 },
-    { id: 8, name: "Guantes de Entrenamiento", category: "Accesorios", stock: 6, minStock: 8, suggested: 15 },
-    { id: 9, name: "Shaker", category: "Accesorios", stock: 15, minStock: 8, suggested: 15 },
-    { id: 10, name: "Creatina", category: "Suplementos", stock: 12, minStock: 8, suggested: 15 },
-  ];
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
 
   const lowStockProducts = allProducts.filter(p => p.stock < p.minStock);
 
@@ -96,7 +75,6 @@ export default function PedidoReposicion() {
   };
 
   const handleSubmitOrder = () => {
-<<<<<<< HEAD
     setConfirmedOrder(orderItems);
   };
 
@@ -146,12 +124,6 @@ export default function PedidoReposicion() {
     );
   }
 
-=======
-    alert("Pedido de reposicion enviado exitosamente.");
-    navigate("/kiosco");
-  };
-
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
   return (
     <div className="app-page">
       <div className="mb-8">

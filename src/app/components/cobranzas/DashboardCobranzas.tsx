@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+﻿import { Link } from "react-router";
 import {
   DollarSign,
   AlertCircle,
@@ -9,10 +9,7 @@ import {
   ClipboardList,
   Send,
 } from "lucide-react";
-<<<<<<< HEAD
 import { getAlumnosDeudores } from "../../data/alumnos";
-=======
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
 
 export default function DashboardCobranzas() {
   const stats = [
@@ -44,20 +41,12 @@ export default function DashboardCobranzas() {
     { id: 5, name: "Pedro Sanchez", amount: 680, method: "Efectivo", date: "19/04/2026" },
   ];
 
-<<<<<<< HEAD
   const debtors = getAlumnosDeudores().map((debtor) => ({
     id: debtor.id,
     name: debtor.name,
     debt: debtor.debtAmount,
     months: debtor.overdueMonths,
   }));
-=======
-  const debtors = [
-    { id: 6, name: "Roberto Silva", debt: 1700, months: 2 },
-    { id: 7, name: "Laura Fernandez", debt: 850, months: 1 },
-    { id: 8, name: "Diego Lopez", debt: 2550, months: 3 },
-  ];
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
 
   return (
     <div className="app-page">

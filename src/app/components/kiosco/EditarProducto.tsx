@@ -1,17 +1,11 @@
-import { useState } from "react";
-<<<<<<< HEAD
+﻿import { useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { Save } from "lucide-react";
 import { getProductById } from "../../data/catalog";
-=======
-import { Link, useNavigate, useParams } from "react-router";
-import { ArrowLeft, Save } from "lucide-react";
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
 
 export default function EditarProducto() {
   const { id } = useParams();
   const navigate = useNavigate();
-<<<<<<< HEAD
   const product = getProductById(id ?? 1) ?? getProductById(1)!;
   const [form, setForm] = useState({
     name: product.name,
@@ -23,18 +17,6 @@ export default function EditarProducto() {
     maxStock: "50",
     supplier: product.supplier,
     barcode: product.barcode,
-=======
-  const [form, setForm] = useState({
-    name: "Bebida Isotonica",
-    category: "Bebidas",
-    price: "60",
-    cost: "35",
-    stock: "3",
-    minStock: "10",
-    maxStock: "50",
-    supplier: "Distribuidora Deportiva SA",
-    barcode: "7790123456789",
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
   });
 
   const updateField = (field: keyof typeof form, value: string) => {

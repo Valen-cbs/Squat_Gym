@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { Link } from "react-router";
 import {
   ArrowLeft,
@@ -12,10 +12,7 @@ import {
   XCircle,
   Edit
 } from "lucide-react";
-<<<<<<< HEAD
 import { promotions } from "../../data/catalog";
-=======
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
 
 export default function Auditoria() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -28,13 +25,8 @@ export default function Auditoria() {
       timestamp: "21/04/2026 14:35:22",
       user: "Juan Pérez",
       role: "Administrador",
-<<<<<<< HEAD
       action: "Creó nueva promoción",
       details: "Promoción: Plan trimestral - Sede Norte",
-=======
-      action: "Creó nuevo usuario",
-      details: "Usuario: María López (Secretaría - Sede Norte)",
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
       type: "create",
       severity: "info",
       ip: "192.168.1.45"
@@ -56,11 +48,7 @@ export default function Auditoria() {
       user: "Carlos Rodríguez",
       role: "Administrador",
       action: "Modificó promoción",
-<<<<<<< HEAD
       details: `Promoción: ${promotions[0].name} - Cambió fecha de fin`,
-=======
-      details: "Promoción: 2x1 Verano - Cambió fecha de fin",
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
       type: "update",
       severity: "warning",
       ip: "192.168.1.45"
@@ -81,11 +69,7 @@ export default function Auditoria() {
       timestamp: "21/04/2026 13:45:19",
       user: "Ana Martínez",
       role: "Secretaría",
-<<<<<<< HEAD
       action: "Intentó abrir un módulo restringido",
-=======
-      action: "Intentó acceder sin permisos",
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
       details: "Módulo: Configuración de sistema",
       type: "security",
       severity: "error",
@@ -107,13 +91,8 @@ export default function Auditoria() {
       timestamp: "21/04/2026 12:15:28",
       user: "Juan Pérez",
       role: "Administrador",
-<<<<<<< HEAD
       action: "Desactivó promoción",
       details: "Promoción: Descuento corporativo vencido",
-=======
-      action: "Eliminó usuario",
-      details: "Usuario: Roberto Silva (Inactivo)",
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
       type: "delete",
       severity: "warning",
       ip: "192.168.1.45"
@@ -183,11 +162,7 @@ export default function Auditoria() {
           <p className="text-2xl font-bold text-orange-600">{auditLogs.filter(l => l.severity === "warning").length}</p>
         </div>
         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-<<<<<<< HEAD
           <p className="text-sm text-gray-500 mb-1">Actores activos</p>
-=======
-          <p className="text-sm text-gray-500 mb-1">Usuarios activos</p>
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
           <p className="text-2xl font-bold text-blue-600">{new Set(auditLogs.map(l => l.user)).size}</p>
         </div>
       </div>
@@ -216,11 +191,7 @@ export default function Auditoria() {
             <option value="delete">Eliminación</option>
             <option value="payment">Pagos</option>
             <option value="sale">Ventas</option>
-<<<<<<< HEAD
             <option value="alert">Eventos del sistema</option>
-=======
-            <option value="alert">Alertas</option>
->>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
             <option value="security">Seguridad</option>
           </select>
           <select
