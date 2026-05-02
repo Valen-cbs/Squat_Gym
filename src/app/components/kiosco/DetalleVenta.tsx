@@ -3,7 +3,10 @@ import { CheckCircle, Printer, ShoppingCart } from "lucide-react";
 import PaymentReceipt from "../PaymentReceipt";
 import { useUser } from "../../context/UserContext";
 import { hasPermission } from "../../permissions";
+<<<<<<< HEAD
 import { kioskProducts } from "../../data/catalog";
+=======
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
 
 export default function DetalleVenta() {
   const { user } = useUser();
@@ -18,9 +21,15 @@ export default function DetalleVenta() {
       }
     | undefined;
   const fallbackItems = [
+<<<<<<< HEAD
     { id: kioskProducts[0].id, name: kioskProducts[0].name, quantity: 2, price: kioskProducts[0].price },
     { id: kioskProducts[1].id, name: kioskProducts[1].name, quantity: 1, price: kioskProducts[1].price },
     { id: kioskProducts[2].id, name: kioskProducts[2].name, quantity: 3, price: kioskProducts[2].price },
+=======
+    { id: 1, name: "Bebida Isotonica", quantity: 2, price: 60 },
+    { id: 2, name: "Barrita Proteica", quantity: 1, price: 70 },
+    { id: 3, name: "Agua Mineral", quantity: 3, price: 30 },
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
   ];
   const items = saleState?.items?.length ? saleState.items : fallbackItems;
   const total = saleState?.total ?? items.reduce((sum, item) => sum + item.price * item.quantity, 0);

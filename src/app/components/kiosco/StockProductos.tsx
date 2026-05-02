@@ -9,14 +9,32 @@ import {
 } from "lucide-react";
 import { useUser } from "../../context/UserContext";
 import { hasPermission } from "../../permissions";
+<<<<<<< HEAD
 import { kioskProducts } from "../../data/catalog";
+=======
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
 
 export default function StockProductos() {
   const { user } = useUser();
   const [searchTerm, setSearchTerm] = useState("");
   const canCreateRestockOrder = hasPermission(user?.role, "kiosk.createRestockOrder");
 
+<<<<<<< HEAD
   const products = kioskProducts;
+=======
+  const products = [
+    { id: 1, name: "Bebida Isotonica", category: "Bebidas", price: 60, stock: 15, minStock: 10, status: "ok" },
+    { id: 2, name: "Barrita Proteica", category: "Suplementos", price: 70, stock: 22, minStock: 15, status: "ok" },
+    { id: 3, name: "Agua Mineral", category: "Bebidas", price: 30, stock: 35, minStock: 20, status: "ok" },
+    { id: 4, name: "Batido de Proteina", category: "Suplementos", price: 80, stock: 18, minStock: 12, status: "ok" },
+    { id: 5, name: "Snack Saludable", category: "Alimentos", price: 40, stock: 28, minStock: 15, status: "ok" },
+    { id: 6, name: "Bebida Energetica", category: "Bebidas", price: 65, stock: 3, minStock: 10, status: "critical" },
+    { id: 7, name: "Toalla Deportiva", category: "Accesorios", price: 150, stock: 2, minStock: 5, status: "critical" },
+    { id: 8, name: "Guantes de Entrenamiento", category: "Accesorios", price: 250, stock: 6, minStock: 8, status: "warning" },
+    { id: 9, name: "Shaker", category: "Accesorios", price: 120, stock: 15, minStock: 8, status: "ok" },
+    { id: 10, name: "Creatina", category: "Suplementos", price: 180, stock: 12, minStock: 8, status: "ok" },
+  ];
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
 
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||

@@ -1,24 +1,43 @@
 import { useState } from "react";
+<<<<<<< HEAD
 import {
   Search,
+=======
+import { Link } from "react-router";
+import {
+  ArrowLeft,
+  Search,
+  Calendar,
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
   DollarSign,
   Users,
   TrendingUp,
   CheckCircle,
   XCircle
 } from "lucide-react";
+<<<<<<< HEAD
 import { getPlanPrice } from "../../data/catalog";
+=======
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
 
 export default function InscripcionesPagos() {
   const [activeTab, setActiveTab] = useState("inscripciones");
   const [searchTerm, setSearchTerm] = useState("");
 
   const inscripciones = [
+<<<<<<< HEAD
     { id: 1, name: "Roberto García", plan: "Full Access", date: "20/04/2026", secretary: "María González", status: "Activo", amount: getPlanPrice("Full Access") },
     { id: 2, name: "Lucía Fernández", plan: "Musculacion", date: "18/04/2026", secretary: "María González", status: "Activo", amount: getPlanPrice("Musculacion") },
     { id: 3, name: "Martín Ruiz", plan: "CrossFit", date: "15/04/2026", secretary: "Carlos Rodríguez", status: "Activo", amount: getPlanPrice("CrossFit") },
     { id: 4, name: "Sofía Morales", plan: "Natacion", date: "12/04/2026", secretary: "María González", status: "Activo", amount: getPlanPrice("Natacion") },
     { id: 5, name: "Diego Castro", plan: "Full Access", date: "10/04/2026", secretary: "Carlos Rodríguez", status: "Pendiente", amount: getPlanPrice("Full Access") },
+=======
+    { id: 1, name: "Roberto García", plan: "Full Access", date: "20/04/2026", secretary: "María González", status: "Activo", amount: 1200 },
+    { id: 2, name: "Lucía Fernández", plan: "Musculación", date: "18/04/2026", secretary: "María González", status: "Activo", amount: 850 },
+    { id: 3, name: "Martín Ruiz", plan: "CrossFit", date: "15/04/2026", secretary: "Carlos Rodríguez", status: "Activo", amount: 1500 },
+    { id: 4, name: "Sofía Morales", plan: "Natación", date: "12/04/2026", secretary: "María González", status: "Activo", amount: 950 },
+    { id: 5, name: "Diego Castro", plan: "Full Access", date: "10/04/2026", secretary: "Carlos Rodríguez", status: "Pendiente", amount: 1200 },
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
   ];
 
   const pagos = [
@@ -45,7 +64,11 @@ export default function InscripcionesPagos() {
       </div>
 
       {/* Stats */}
+<<<<<<< HEAD
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+=======
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
           <div className="flex items-center justify-between mb-2">
             <p className="text-sm text-gray-500">Inscripciones mes</p>
@@ -67,6 +90,16 @@ export default function InscripcionesPagos() {
           </div>
           <p className="text-2xl font-bold text-gray-900">${pagos.reduce((sum, p) => sum + p.amount, 0).toLocaleString()}</p>
         </div>
+<<<<<<< HEAD
+=======
+        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-sm text-gray-500">Ticket promedio</p>
+            <Calendar className="w-5 h-5 text-orange-500" />
+          </div>
+          <p className="text-2xl font-bold text-gray-900">${Math.round(pagos.reduce((sum, p) => sum + p.amount, 0) / pagos.length)}</p>
+        </div>
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
       </div>
 
       {/* Tabs */}

@@ -10,12 +10,70 @@ import {
 } from "lucide-react";
 import { useUser } from "../../context/UserContext";
 import { hasPermission } from "../../permissions";
+<<<<<<< HEAD
 import { getAlumnoById } from "../../data/alumnos";
+=======
+
+const alumnos = {
+  "1": {
+    id: "1",
+    name: "Juan Perez",
+    dni: "12345678",
+    email: "juan.perez@email.com",
+    phone: "+54 11 1234-5678",
+    plan: "Musculacion",
+    monthlyFee: 850,
+    status: "Al dia",
+    debtAmount: 0,
+    overdueMonths: 0,
+  },
+  "6": {
+    id: "6",
+    name: "Roberto Silva",
+    dni: "67890123",
+    email: "roberto.silva@email.com",
+    phone: "+54 11 3344-6677",
+    plan: "Full Access",
+    monthlyFee: 850,
+    status: "Deudor",
+    debtAmount: 1700,
+    overdueMonths: 2,
+  },
+  "7": {
+    id: "7",
+    name: "Laura Fernandez",
+    dni: "78901234",
+    email: "laura.fernandez@email.com",
+    phone: "+54 11 9988-7766",
+    plan: "Musculacion",
+    monthlyFee: 850,
+    status: "Deudor",
+    debtAmount: 850,
+    overdueMonths: 1,
+  },
+  "8": {
+    id: "8",
+    name: "Diego Lopez",
+    dni: "89012345",
+    email: "diego.lopez@email.com",
+    phone: "+54 11 2211-4433",
+    plan: "CrossFit",
+    monthlyFee: 850,
+    status: "Deudor",
+    debtAmount: 2550,
+    overdueMonths: 3,
+  },
+} as const;
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
 
 export default function EstadoCuenta() {
   const { user } = useUser();
   const { id } = useParams();
+<<<<<<< HEAD
   const alumno = getAlumnoById(id ?? "1") ?? getAlumnoById(1)!;
+=======
+  const alumno = alumnos[(id as keyof typeof alumnos) ?? "1"] ?? alumnos["1"];
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
   const canRegisterPayment = hasPermission(user?.role, "collections.registerPayment");
   const canSendReminder = hasPermission(user?.role, "collections.sendMassDueReminders");
 

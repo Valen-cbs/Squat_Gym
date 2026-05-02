@@ -10,6 +10,7 @@ import {
   CheckCircle,
   XCircle
 } from "lucide-react";
+<<<<<<< HEAD
 import { getProductById } from "../../data/catalog";
 
 export default function AlertasNotificaciones() {
@@ -18,6 +19,11 @@ export default function AlertasNotificaciones() {
   const towel = getProductById(7)!;
   const bar = getProductById(2)!;
   const creatine = getProductById(10)!;
+=======
+
+export default function AlertasNotificaciones() {
+  const [filterType, setFilterType] = useState("all");
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
 
   const alertas = [
     {
@@ -36,11 +42,19 @@ export default function AlertasNotificaciones() {
       type: "stock",
       severity: "critical",
       title: "Stock crítico en kiosco",
+<<<<<<< HEAD
       message: `${energetic.name}: Solo ${energetic.stock} unidades disponibles`,
       date: "21/04/2026 13:45",
       status: "pending",
       icon: Package,
       productId: energetic.id
+=======
+      message: "Bebida Isotónica: Solo 2 unidades disponibles",
+      date: "21/04/2026 13:45",
+      status: "pending",
+      icon: Package,
+      productId: 1
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
     },
     {
       id: 3,
@@ -68,11 +82,19 @@ export default function AlertasNotificaciones() {
       type: "stock",
       severity: "high",
       title: "Stock bajo en kiosco",
+<<<<<<< HEAD
       message: `${towel.name}: ${towel.stock} unidades (minimo: ${towel.minStock})`,
       date: "20/04/2026 16:30",
       status: "pending",
       icon: Package,
       productId: towel.id
+=======
+      message: "Toalla Deportiva: 3 unidades (mínimo: 5)",
+      date: "20/04/2026 16:30",
+      status: "pending",
+      icon: Package,
+      productId: 4
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
     },
     {
       id: 6,
@@ -100,7 +122,11 @@ export default function AlertasNotificaciones() {
       type: "stock",
       severity: "critical",
       title: "Producto agotado",
+<<<<<<< HEAD
       message: `${bar.name}: ${bar.stock} unidades disponibles`,
+=======
+      message: "Barrita Proteica: Sin stock disponible",
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
       date: "19/04/2026 11:20",
       status: "resolved",
       icon: Package,
@@ -111,7 +137,11 @@ export default function AlertasNotificaciones() {
       type: "stock",
       severity: "critical",
       title: "Diferencia de inventario detectada",
+<<<<<<< HEAD
       message: `${creatine.name}: stock real 8 unidades, sistema ${creatine.stock} unidades`,
+=======
+      message: "Creatina: stock real 8 unidades, sistema 12 unidades",
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
       date: "21/04/2026 15:10",
       status: "pending",
       icon: Package,

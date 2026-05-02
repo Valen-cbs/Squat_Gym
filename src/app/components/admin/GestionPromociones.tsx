@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 import { FormEvent, useMemo, useState } from "react";
 import {
+=======
+import { useState } from "react";
+import { Link } from "react-router";
+import {
+  ArrowLeft,
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
   Plus,
   Tag,
   Edit,
@@ -7,6 +14,7 @@ import {
   CheckCircle,
   XCircle,
   Calendar,
+<<<<<<< HEAD
   Percent,
   X,
 } from "lucide-react";
@@ -113,14 +121,45 @@ export default function GestionPromociones() {
       ? { kind: "plan", value: { ...current.value, ...changes } }
       : current);
   };
+=======
+  Percent
+} from "lucide-react";
+
+export default function GestionPromociones() {
+  const [activeTab, setActiveTab] = useState("promociones");
+
+  const promociones = [
+    { id: 1, name: "2x1 Verano", discount: 50, type: "Porcentaje", startDate: "01/12/2025", endDate: "28/02/2026", status: "Activa", uses: 45 },
+    { id: 2, name: "Pago Anual", discount: 15, type: "Porcentaje", startDate: "01/01/2026", endDate: "31/12/2026", status: "Activa", uses: 23 },
+    { id: 3, name: "Referido Amigo", discount: 150, type: "Monto fijo", startDate: "01/01/2026", endDate: "31/12/2026", status: "Activa", uses: 67 },
+    { id: 4, name: "Black Friday", discount: 30, type: "Porcentaje", startDate: "20/11/2025", endDate: "30/11/2025", status: "Expirada", uses: 89 },
+    { id: 5, name: "Estudiantes", discount: 10, type: "Porcentaje", startDate: "01/03/2026", endDate: "31/12/2026", status: "Activa", uses: 34 },
+  ];
+
+  const planes = [
+    { id: 1, name: "Musculación", price: 850, duration: "Mensual", benefits: "Acceso a sala de musculación", active: true, subscribers: 165 },
+    { id: 2, name: "Full Access", price: 1200, duration: "Mensual", benefits: "Acceso completo + clases", active: true, subscribers: 142 },
+    { id: 3, name: "CrossFit", price: 1500, duration: "Mensual", benefits: "Box CrossFit + entrenador", active: true, subscribers: 78 },
+    { id: 4, name: "Natación", price: 950, duration: "Mensual", benefits: "Pileta + clases de natación", active: true, subscribers: 56 },
+    { id: 5, name: "Plan Anual", price: 8500, duration: "Anual", benefits: "Full Access - 15% descuento", active: true, subscribers: 23 },
+    { id: 6, name: "Plan Corporativo", price: 750, duration: "Mensual", benefits: "Full Access empresas", active: false, subscribers: 12 },
+  ];
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
 
   return (
     <div className="p-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Promociones y Planes</h1>
+<<<<<<< HEAD
         <p className="text-gray-500 mt-2">Gestionar promociones especiales y planes de membresia</p>
       </div>
 
+=======
+        <p className="text-gray-500 mt-2">Gestionar promociones especiales y planes de membresía</p>
+      </div>
+
+      {/* Tabs */}
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 mb-6">
         <div className="border-b border-gray-200">
           <div className="flex gap-4 px-6">
@@ -147,7 +186,11 @@ export default function GestionPromociones() {
             >
               <div className="flex items-center gap-2">
                 <CheckCircle className="w-4 h-4" />
+<<<<<<< HEAD
                 Planes de Membresia
+=======
+                Planes de Membresía
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
               </div>
             </button>
           </div>
@@ -155,6 +198,7 @@ export default function GestionPromociones() {
 
         {activeTab === "promociones" ? (
           <div className="p-6">
+<<<<<<< HEAD
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
               <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
                 <p className="text-sm text-blue-600 mb-1">Promociones activas</p>
@@ -167,16 +211,37 @@ export default function GestionPromociones() {
               <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
                 <p className="text-sm text-purple-600 mb-1">Promociones cargadas</p>
                 <p className="text-2xl font-bold text-purple-700">{promotionsState.length}</p>
+=======
+            {/* Stats */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+              <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+                <p className="text-sm text-blue-600 mb-1">Promociones activas</p>
+                <p className="text-2xl font-bold text-blue-700">{promociones.filter(p => p.status === "Activa").length}</p>
+              </div>
+              <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+                <p className="text-sm text-green-600 mb-1">Total usos este mes</p>
+                <p className="text-2xl font-bold text-green-700">258</p>
+              </div>
+              <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+                <p className="text-sm text-purple-600 mb-1">Ahorro generado</p>
+                <p className="text-2xl font-bold text-purple-700">$45,680</p>
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
               </div>
             </div>
 
             <div className="flex justify-end mb-4">
+<<<<<<< HEAD
               <button
                 onClick={openNewPromotion}
                 className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
               >
                 <Plus className="w-4 h-4" />
                 Nueva Promocion
+=======
+              <button className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+                <Plus className="w-4 h-4" />
+                Nueva Promoción
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
               </button>
             </div>
 
@@ -194,7 +259,11 @@ export default function GestionPromociones() {
                   </tr>
                 </thead>
                 <tbody>
+<<<<<<< HEAD
                   {promotionsState.map((promo) => (
+=======
+                  {promociones.map((promo) => (
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
                     <tr key={promo.id} className="border-b border-gray-100 hover:bg-gray-50">
                       <td className="px-4 py-4 font-medium text-gray-900">{promo.name}</td>
                       <td className="px-4 py-4">
@@ -225,6 +294,7 @@ export default function GestionPromociones() {
                       <td className="px-4 py-4 text-sm font-medium text-gray-900">{promo.uses}</td>
                       <td className="px-4 py-4">
                         <div className="flex items-center gap-2">
+<<<<<<< HEAD
                           <button
                             onClick={() => setEditingItem({ kind: "promotion", value: promo })}
                             className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
@@ -237,6 +307,12 @@ export default function GestionPromociones() {
                             className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                             aria-label={`Eliminar ${promo.name}`}
                           >
+=======
+                          <button className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+                            <Edit className="w-4 h-4" />
+                          </button>
+                          <button className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
                             <Trash2 className="w-4 h-4" />
                           </button>
                         </div>
@@ -249,6 +325,7 @@ export default function GestionPromociones() {
           </div>
         ) : (
           <div className="p-6">
+<<<<<<< HEAD
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
               <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
                 <p className="text-sm text-blue-600 mb-1">Planes activos</p>
@@ -261,21 +338,44 @@ export default function GestionPromociones() {
               <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
                 <p className="text-sm text-purple-600 mb-1">Ingreso mensual</p>
                 <p className="text-2xl font-bold text-purple-700">${monthlyPlanIncome.toLocaleString("es-AR")}</p>
+=======
+            {/* Stats */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+              <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+                <p className="text-sm text-blue-600 mb-1">Planes activos</p>
+                <p className="text-2xl font-bold text-blue-700">{planes.filter(p => p.active).length}</p>
+              </div>
+              <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+                <p className="text-sm text-green-600 mb-1">Total suscriptores</p>
+                <p className="text-2xl font-bold text-green-700">{planes.reduce((sum, p) => sum + p.subscribers, 0)}</p>
+              </div>
+              <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+                <p className="text-sm text-purple-600 mb-1">Ingreso mensual</p>
+                <p className="text-2xl font-bold text-purple-700">$291,400</p>
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
               </div>
             </div>
 
             <div className="flex justify-end mb-4">
+<<<<<<< HEAD
               <button
                 onClick={openNewPlan}
                 className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
               >
+=======
+              <button className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
                 <Plus className="w-4 h-4" />
                 Nuevo Plan
               </button>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<<<<<<< HEAD
               {plans.map((plan) => (
+=======
+              {planes.map((plan) => (
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
                 <div key={plan.id} className={`border-2 rounded-xl p-6 ${
                   plan.active ? "border-blue-200 bg-blue-50" : "border-gray-200 bg-gray-50"
                 }`}>
@@ -297,6 +397,7 @@ export default function GestionPromociones() {
                     <p className="text-2xl font-bold text-gray-900">{plan.subscribers}</p>
                   </div>
                   <div className="flex gap-2">
+<<<<<<< HEAD
                     <button
                       onClick={() => setEditingItem({ kind: "plan", value: plan })}
                       className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
@@ -309,6 +410,13 @@ export default function GestionPromociones() {
                       className="px-4 py-2 text-red-600 border border-red-200 rounded-lg hover:bg-red-50 transition-colors"
                       aria-label={`Eliminar ${plan.name}`}
                     >
+=======
+                    <button className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                      <Edit className="w-4 h-4" />
+                      Editar
+                    </button>
+                    <button className="px-4 py-2 text-red-600 border border-red-200 rounded-lg hover:bg-red-50 transition-colors">
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>
@@ -318,6 +426,7 @@ export default function GestionPromociones() {
           </div>
         )}
       </div>
+<<<<<<< HEAD
 
       {editingItem && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 p-4">
@@ -493,6 +602,8 @@ export default function GestionPromociones() {
           </form>
         </div>
       )}
+=======
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
     </div>
   );
 }

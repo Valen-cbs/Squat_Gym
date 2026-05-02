@@ -1,8 +1,15 @@
+<<<<<<< HEAD
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { Plus, Trash2, ShoppingCart, Search, CreditCard } from "lucide-react";
 import PaymentMethodSelector, { paymentMethodLabels } from "../PaymentMethodSelector";
 import { kioskProducts } from "../../data/catalog";
+=======
+import { useMemo, useState } from "react";
+import { Link, useNavigate } from "react-router";
+import { Plus, Trash2, ShoppingCart, Search, CreditCard } from "lucide-react";
+import PaymentMethodSelector, { paymentMethodLabels } from "../PaymentMethodSelector";
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
 
 type Product = {
   id: number;
@@ -12,6 +19,7 @@ type Product = {
   category: string;
 };
 
+<<<<<<< HEAD
 const initialProducts: Product[] = kioskProducts.map(({ id, name, price, stock, category }) => ({
   id,
   name,
@@ -26,11 +34,14 @@ const syncProductsWithCatalog = (storedProducts: Product[]) =>
     return storedProduct ? { ...catalogProduct, stock: storedProduct.stock } : catalogProduct;
   });
 
+=======
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
 export default function RegistrarVenta() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("efectivo");
   const [cart, setCart] = useState<Array<{ id: number; name: string; price: number; quantity: number }>>([]);
+<<<<<<< HEAD
   const [products, setProducts] = useState<Product[]>(() => {
     if (typeof window === "undefined") {
       return initialProducts;
@@ -51,15 +62,33 @@ export default function RegistrarVenta() {
   useEffect(() => {
     window.localStorage.setItem("kiosk-products", JSON.stringify(products));
   }, [products]);
+=======
+
+  const products: Product[] = [
+    { id: 1, name: "Bebida Isotonica", price: 60, stock: 15, category: "Bebidas" },
+    { id: 2, name: "Barrita Proteica", price: 70, stock: 22, category: "Snacks" },
+    { id: 3, name: "Agua Mineral", price: 30, stock: 35, category: "Bebidas" },
+    { id: 4, name: "Batido de Proteina", price: 80, stock: 18, category: "Suplementos" },
+    { id: 5, name: "Snack Saludable", price: 40, stock: 28, category: "Snacks" },
+    { id: 6, name: "Toalla Deportiva", price: 150, stock: 12, category: "Accesorios" },
+    { id: 7, name: "Guantes de Entrenamiento", price: 250, stock: 8, category: "Accesorios" },
+    { id: 8, name: "Shaker", price: 120, stock: 15, category: "Accesorios" },
+  ];
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
 
   const filteredProducts = useMemo(
     () =>
       products.filter((product) =>
+<<<<<<< HEAD
         product.name.toLowerCase().includes(searchTerm.toLowerCase())
+=======
+        `${product.name} ${product.category}`.toLowerCase().includes(searchTerm.toLowerCase())
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
       ),
     [products, searchTerm]
   );
 
+<<<<<<< HEAD
   const addToCart = (product: Product) => {
     const existingItem = cart.find((item) => item.id === product.id);
     if (existingItem) {
@@ -67,6 +96,11 @@ export default function RegistrarVenta() {
         return;
       }
 
+=======
+  const addToCart = (product: Pick<Product, "id" | "name" | "price">) => {
+    const existingItem = cart.find((item) => item.id === product.id);
+    if (existingItem) {
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
       setCart((current) =>
         current.map((item) =>
           item.id === product.id
@@ -77,10 +111,13 @@ export default function RegistrarVenta() {
       return;
     }
 
+<<<<<<< HEAD
     if (product.stock <= 0) {
       return;
     }
 
+=======
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
     setCart((current) => [...current, { ...product, quantity: 1 }]);
   };
 
@@ -102,6 +139,7 @@ export default function RegistrarVenta() {
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   const handleConfirmSale = () => {
+<<<<<<< HEAD
     const updatedProducts = products.map((product) => {
       const cartItem = cart.find((item) => item.id === product.id);
       return cartItem
@@ -112,6 +150,8 @@ export default function RegistrarVenta() {
     setProducts(updatedProducts);
     setCart([]);
 
+=======
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
     navigate(`/kiosco/venta/${Date.now()}`, {
       state: {
         items: cart,
@@ -125,6 +165,10 @@ export default function RegistrarVenta() {
     <div className="app-page">
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">Nueva venta</h1>
+<<<<<<< HEAD
+=======
+        <p className="mt-2 text-sm text-gray-500 sm:text-base">Busca productos rapido, arma el carrito y elige como cobrar.</p>
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
       </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
@@ -133,7 +177,11 @@ export default function RegistrarVenta() {
             <div className="mb-4 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <h2 className="text-xl font-bold text-gray-900">Productos disponibles</h2>
+<<<<<<< HEAD
                 <p className="mt-1 text-sm text-gray-500">Encuentra un producto por nombre.</p>
+=======
+                <p className="mt-1 text-sm text-gray-500">Encuentra un producto por nombre o categoria.</p>
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
               </div>
               <div className="relative w-full sm:max-w-sm">
                 <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
@@ -163,6 +211,7 @@ export default function RegistrarVenta() {
                   </div>
                   <button
                     onClick={() => addToCart(product)}
+<<<<<<< HEAD
                     disabled={product.stock <= (cart.find((item) => item.id === product.id)?.quantity || 0)}
                     className={`mt-2 flex w-full items-center justify-center gap-2 rounded-lg py-2 text-white transition-colors ${
                       product.stock <= (cart.find((item) => item.id === product.id)?.quantity || 0)
@@ -172,6 +221,12 @@ export default function RegistrarVenta() {
                   >
                     <Plus className="h-4 w-4" />
                     {product.stock <= (cart.find((item) => item.id === product.id)?.quantity || 0) ? "Agotado" : "Agregar"}
+=======
+                    className="mt-2 flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 py-2 text-white transition-colors hover:bg-blue-700"
+                  >
+                    <Plus className="h-4 w-4" />
+                    Agregar
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
                   </button>
                 </div>
               ))}

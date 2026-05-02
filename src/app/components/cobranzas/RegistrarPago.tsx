@@ -2,12 +2,16 @@ import { useState } from "react";
 import { Link, useParams, useNavigate } from "react-router";
 import { CreditCard, Tag, Calendar, User } from "lucide-react";
 import PaymentMethodSelector, { paymentMethodLabels } from "../PaymentMethodSelector";
+<<<<<<< HEAD
 import { getAlumnoById } from "../../data/alumnos";
 import { getPlanPrice } from "../../data/catalog";
+=======
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
 
 export default function RegistrarPago() {
   const { id } = useParams();
   const navigate = useNavigate();
+<<<<<<< HEAD
   const alumno = getAlumnoById(id ?? "1") ?? {
     id: Number(id ?? 0),
     name: "Alumno desconocido",
@@ -21,6 +25,19 @@ export default function RegistrarPago() {
   );
   const [notes, setNotes] = useState("");
 
+=======
+  const [paymentMethod, setPaymentMethod] = useState("efectivo");
+  const [amount, setAmount] = useState("850");
+  const [notes, setNotes] = useState("");
+
+  const alumno = {
+    id,
+    name: "Juan Perez",
+    plan: "Musculacion",
+    monthlyFee: 850,
+  };
+
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     navigate(`/cobranzas/recibo/${Date.now()}`, {
@@ -46,11 +63,15 @@ export default function RegistrarPago() {
     <div className="app-page">
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">Registrar pago</h1>
+<<<<<<< HEAD
         <p className="mt-2 text-sm text-gray-500 sm:text-base">
           {alumno.debtAmount > 0
             ? `Monto de deuda actual: $${alumno.debtAmount}`
             : "Completa el formulario para registrar un nuevo pago."}
         </p>
+=======
+        <p className="mt-2 text-sm text-gray-500 sm:text-base">Completa el formulario para registrar un nuevo pago.</p>
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
       </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">

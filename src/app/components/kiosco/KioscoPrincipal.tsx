@@ -10,7 +10,10 @@ import {
 } from "lucide-react";
 import { useUser } from "../../context/UserContext";
 import { hasPermission } from "../../permissions";
+<<<<<<< HEAD
 import { kioskProducts } from "../../data/catalog";
+=======
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
 
 export default function KioscoPrincipal() {
   const { user } = useUser();
@@ -18,7 +21,10 @@ export default function KioscoPrincipal() {
   const canViewStock = hasPermission(user?.role, "kiosk.viewStock");
   const canCreateRestockOrder = hasPermission(user?.role, "kiosk.createRestockOrder");
   const canViewDailySales = hasPermission(user?.role, "kiosk.viewDailySales");
+<<<<<<< HEAD
   const lowStockProducts = kioskProducts.filter((product) => product.status !== "ok");
+=======
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
 
   const stats = [
     ...(canViewDailySales
@@ -29,8 +35,13 @@ export default function KioscoPrincipal() {
       : []),
     ...(canViewStock
       ? [
+<<<<<<< HEAD
           { label: "Stock critico", value: String(lowStockProducts.length), icon: AlertTriangle, color: "from-amber-500 to-orange-500" },
           { label: "Productos disponibles", value: String(kioskProducts.length), icon: Package, color: "from-violet-500 to-purple-500" },
+=======
+          { label: "Stock critico", value: "5", icon: AlertTriangle, color: "from-amber-500 to-orange-500" },
+          { label: "Productos disponibles", value: "24", icon: Package, color: "from-violet-500 to-purple-500" },
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
         ]
       : []),
   ];
@@ -72,6 +83,7 @@ export default function KioscoPrincipal() {
   ];
 
   const topProducts = [
+<<<<<<< HEAD
     { product: kioskProducts[0], sold: 23 },
     { product: kioskProducts[1], sold: 18 },
     { product: kioskProducts[2], sold: 15 },
@@ -91,6 +103,20 @@ export default function KioscoPrincipal() {
     min: product.minStock,
     status: product.status,
   }));
+=======
+    { id: 1, name: "Bebida Isotonica", sold: 23, revenue: 1380 },
+    { id: 2, name: "Barrita Proteica", sold: 18, revenue: 1260 },
+    { id: 3, name: "Agua Mineral", sold: 15, revenue: 450 },
+    { id: 4, name: "Batido de Proteina", sold: 12, revenue: 960 },
+    { id: 5, name: "Snack Saludable", sold: 8, revenue: 320 },
+  ];
+
+  const lowStock = [
+    { id: 6, name: "Bebida Isotonica", stock: 3, min: 10, status: "critical" },
+    { id: 7, name: "Toalla Deportiva", stock: 2, min: 5, status: "critical" },
+    { id: 8, name: "Guantes de Entrenamiento", stock: 6, min: 8, status: "warning" },
+  ];
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
 
   const dailySales = [
     { id: 101, branch: "Sede French 414", shift: "Manana", sales: 18, amount: 1560, cashier: "Malena Trangoni" },

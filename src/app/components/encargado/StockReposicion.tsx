@@ -1,5 +1,11 @@
 import { useState } from "react";
+<<<<<<< HEAD
 import {
+=======
+import { Link } from "react-router";
+import {
+  ArrowLeft,
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
   Package,
   AlertTriangle,
   CheckCircle,
@@ -7,6 +13,7 @@ import {
   ShoppingCart,
   Plus
 } from "lucide-react";
+<<<<<<< HEAD
 import { getSuggestedRestockQuantity, kioskProducts } from "../../data/catalog";
 
 export default function StockReposicion() {
@@ -14,6 +21,22 @@ export default function StockReposicion() {
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   const products = kioskProducts;
+=======
+
+export default function StockReposicion() {
+  const [showOrderForm, setShowOrderForm] = useState(false);
+
+  const products = [
+    { id: 1, name: "Bebida Isotónica", category: "Bebidas", stock: 2, minStock: 10, price: 60, status: "critical" },
+    { id: 2, name: "Barrita Proteica", category: "Suplementos", stock: 5, minStock: 15, price: 70, status: "warning" },
+    { id: 3, name: "Agua Mineral", category: "Bebidas", stock: 25, minStock: 20, price: 30, status: "ok" },
+    { id: 4, name: "Toalla Deportiva", category: "Accesorios", stock: 3, minStock: 5, price: 150, status: "critical" },
+    { id: 5, name: "Guantes Entrenamiento", category: "Accesorios", stock: 6, minStock: 8, price: 250, status: "warning" },
+    { id: 6, name: "Shaker", category: "Accesorios", stock: 12, minStock: 8, price: 120, status: "ok" },
+    { id: 7, name: "Batido de Proteína", category: "Suplementos", stock: 18, minStock: 12, price: 80, status: "ok" },
+    { id: 8, name: "Snack Saludable", category: "Alimentos", stock: 28, minStock: 15, price: 40, status: "ok" },
+  ];
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
 
   const recentOrders = [
     { id: 1, date: "18/04/2026", items: 5, total: 2450, status: "Entregado", deliveryDate: "20/04/2026" },
@@ -23,6 +46,7 @@ export default function StockReposicion() {
 
   const criticalCount = products.filter(p => p.status === "critical").length;
   const warningCount = products.filter(p => p.status === "warning").length;
+<<<<<<< HEAD
   const suggestedProducts = products.filter((product) => product.status !== "ok");
   const suggestedUnits = suggestedProducts.reduce((sum, product) => sum + getSuggestedRestockQuantity(product), 0);
 
@@ -79,6 +103,8 @@ export default function StockReposicion() {
     );
   }
 
+=======
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
 
   return (
     <div className="p-8">
@@ -162,7 +188,11 @@ export default function StockReposicion() {
               Selecciona los productos que necesitas reponer. El sistema sugiere cantidades basadas en el stock mínimo.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-96 overflow-y-auto">
+<<<<<<< HEAD
               {suggestedProducts.map((product) => (
+=======
+              {products.filter(p => p.status !== "ok").map((product) => (
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
                 <div key={product.id} className={`border-2 rounded-lg p-4 ${
                   product.status === "critical" ? "border-red-300 bg-red-50" : "border-orange-300 bg-orange-50"
                 }`}>
@@ -184,7 +214,11 @@ export default function StockReposicion() {
                     <label className="text-sm text-gray-700">Cantidad:</label>
                     <input
                       type="number"
+<<<<<<< HEAD
                       defaultValue={getSuggestedRestockQuantity(product)}
+=======
+                      defaultValue={product.minStock * 2}
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
                       min="0"
                       className="w-20 px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-500"
                     />
@@ -193,10 +227,14 @@ export default function StockReposicion() {
               ))}
             </div>
             <div className="flex gap-3 pt-4 border-t">
+<<<<<<< HEAD
               <button
                 onClick={() => setShowConfirmation(true)}
                 className="px-6 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors"
               >
+=======
+              <button className="px-6 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors">
+>>>>>>> 32e609cb88a310c31f7697a1311adf161a87661a
                 Enviar Pedido
               </button>
               <button
