@@ -1,0 +1,29 @@
+@import 'tailwindcss' source(none);
+@source '../**/*.{js,ts,jsx,tsx}';
+
+@import 'tw-animate-css';
+
+@theme {
+  /* Paleta Primaria - Índigo */
+  --color-indigo-primary: #3C3DCC;
+  --color-indigo-darkest: #141433;
+  --color-indigo-dark: #505073;
+  --color-indigo-medium: #8787A8;
+  --color-indigo-light: #D9D9F2;
+  --color-indigo-lightest: #F5F5FA;
+
+  /* Estado: Error / Peligro */
+  --color-error-dark: #732222;
+  --color-error-medium: #B33E3E;
+  --color-error-light: #F29191;
+
+  /* Estado: Advertencia */
+  --color-warning-dark: #8C480E;
+  --color-warning-medium: #CC6F20;
+  --color-warning-light: #F5B957;
+
+  /* Estado: Éxito */
+  --color-success-dark: #29663D;
+  --color-success-medium: #41A663;
+  --color-success-light: #9AEBBC;
+}
