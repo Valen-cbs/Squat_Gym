@@ -7,6 +7,7 @@ import {
   CheckCircle,
   AlertCircle,
 } from "lucide-react";
+import { toast } from "sonner";
 import { useUser } from "../../context/UserContext";
 import { hasPermission } from "../../permissions";
 import { getAlumnoById } from "../../data/alumnos";
@@ -17,6 +18,13 @@ export default function EstadoCuenta() {
   const alumno = getAlumnoById(id ?? "1") ?? getAlumnoById(1)!;
   const canViewReceipt = hasPermission(user?.role, "collections.registerPayment");
   const canSendReminder = hasPermission(user?.role, "collections.sendMassDueReminders");
+
+  const handleSendReminder = () => {
+    toast.success("Recordatorio enviado con éxito al alumno", {
+      description: `Se envió una alerta de vencimiento de cuota a ${alumno.name}`,
+      duration: 4000,
+    });
+  };
 
   const paymentHistory = [
     { id: 1, date: "01/04/2026", amount: 850, method: "Efectivo", receipt: "REC-001234" },
@@ -105,7 +113,7 @@ export default function EstadoCuenta() {
 
       {canSendReminder && alumno.status === "Deudor" && (
         <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2">
-          <button className="flex items-center justify-center gap-3 rounded-lg bg-blue-600 p-4 text-white transition-colors hover:bg-blue-700">
+          <button onClick={handleSendReminder} className="flex items-center justify-center gap-3 rounded-lg bg-blue-600 p-4 text-white transition-colors hover:bg-blue-700">
             <Mail className="h-5 w-5" />
             <span className="font-medium">Enviar recordatorio</span>
           </button>
