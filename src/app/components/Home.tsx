@@ -22,7 +22,7 @@ export default function Home() {
     : user?.name || "Usuario";
   const roleLabel =
     user?.role === "secretary" ? "Secretaria" :
-    user?.role === "manager" ? "Encargado de sucursal 1" :
+    user?.role === "manager" ? "Encargado de sede norte" :
     user?.role === "admin" ? "Administrador" :
     "Usuario";
 
