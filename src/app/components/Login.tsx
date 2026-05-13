@@ -20,7 +20,7 @@ export default function Login() {
     },
     {
       value: "manager" as const,
-      name: "Encargado de sucursal 1",
+      name: "Encargado de sede norte",
       icon: Briefcase,
       color: "from-amber-500 to-orange-500",
       description: "Alumnos, deudores, ventas, stock y reposicion",

@@ -2,7 +2,7 @@
 
 export const roleLabels: Record<Role, string> = {
   admin: "Administrador",
-  manager: "Encargado de sucursal 1",
+  manager: "Encargado de sede norte",
   secretary: "Secretaria",
 };
 
@@ -35,7 +35,7 @@ export const permissionCatalog = {
   "collections.viewDebtors": {
     module: "Gestion de Cobranzas",
     label: "Consultar alumnos con deuda",
-    actor: "Encargado de sucursal 1 / Secretaria",
+    actor: "Encargado de sede norte / Secretaria",
   },
   "collections.managePaymentClaim": {
     module: "Gestion de Cobranzas",
@@ -65,12 +65,12 @@ export const permissionCatalog = {
   "kiosk.viewStock": {
     module: "Administracion de Kiosco",
     label: "Consultar stock actual",
-    actor: "Encargado de sucursal 1 / Secretaria",
+    actor: "Encargado de sede norte / Secretaria",
   },
   "kiosk.createRestockOrder": {
     module: "Administracion de Kiosco",
     label: "Generar pedido de reposicion",
-    actor: "Encargado de sucursal 1",
+    actor: "Encargado de sede norte",
   },
   "kiosk.receiveLowStockAlert": {
     module: "Administracion de Kiosco",
@@ -85,7 +85,7 @@ export const permissionCatalog = {
   "kiosk.viewDailySales": {
     module: "Administracion de Kiosco",
     label: "Consultar ventas diarias por sede",
-    actor: "Encargado de sucursal 1 / Administrador",
+    actor: "Encargado de sede norte / Administrador",
   },
   "kiosk.notifyInventoryMismatch": {
     module: "Administracion de Kiosco",

@@ -1,4 +1,4 @@
-﻿import { Link } from "react-router";
+import { Link } from "react-router";
 import {
   Users,
   Bell,
@@ -94,7 +94,7 @@ export default function DashboardEncargado() {
     <div className="app-page">
       <div className="app-page-header">
         <div>
-          <h1 className="app-page-title">Panel del encargado de sucursal 1</h1>
+          <h1 className="app-page-title">Panel del encargado de sede norte</h1>
           <p className="app-page-copy">Una vista operativa mas liviana para controlar la sede desde escritorio o celular sin perder contexto.</p>
         </div>
       </div>
