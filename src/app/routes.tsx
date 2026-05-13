@@ -21,7 +21,7 @@ import StockProductos from "./components/kiosco/StockProductos";
 import DetalleProducto from "./components/kiosco/DetalleProducto";
 import PedidoReposicion from "./components/kiosco/PedidoReposicion";
 import DashboardAdmin from "./components/admin/DashboardAdmin";
-import GestionPromociones from "./components/admin/GestionPromociones";
+import GestionPromociones, { GestionPlanes } from "./components/admin/GestionPromociones";
 import ReportesSedes from "./components/admin/ReportesSedes";
 import Auditoria from "./components/admin/Auditoria";
 import DashboardEncargado from "./components/encargado/DashboardEncargado";
@@ -118,6 +118,7 @@ export const router = createBrowserRouter([
       { index: true, Component: withPermission(["admin.manageUsers", "admin.managePromotions", "collections.generateReport", "admin.audit"], DashboardAdmin) },
       { path: "usuarios", Component: withPermission(["admin.manageUsers"], GestionUsuarios) },
       { path: "promociones", Component: withPermission(["admin.managePromotions"], GestionPromociones) },
+      { path: "planes", Component: withPermission(["admin.managePromotions"], GestionPlanes) },
       { path: "reportes", Component: withPermission(["collections.generateReport"], ReportesSedes) },
       { path: "auditoria", Component: withPermission(["admin.audit"], Auditoria) },
       { path: "permisos", Component: withPermission(["admin.configurePermissions"], ConfiguracionPermisos) },

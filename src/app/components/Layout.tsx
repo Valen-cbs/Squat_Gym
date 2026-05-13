@@ -71,6 +71,7 @@ export default function Layout() {
         title: "Administracion general",
         items: [
           { to: "/admin/promociones", label: "Promociones", icon: Tag },
+          { to: "/admin/planes", label: "Planes", icon: ClipboardList },
           { to: "/admin/reportes", label: "Reporte cobranzas", icon: BarChart3 },
           ...(hasPermission(user.role, "kiosk.viewDailySales")
             ? [{ to: "/kiosco", label: "Ventas kiosco", icon: ShoppingCart }]

@@ -125,11 +125,18 @@ export default function Home() {
 
   const adminActions = [
     {
-      title: "Promociones y planes",
-      description: "Configura campanas comerciales y propuestas especiales por sede.",
+      title: "Promociones",
+      description: "Configura campanas comerciales y descuentos por sede.",
       icon: Tag,
       link: "/admin/promociones",
-      features: ["Promociones activas", "Planes de membresia", "Descuentos"],
+      features: ["Promociones activas", "Vigencias", "Descuentos"],
+    },
+    {
+      title: "Planes",
+      description: "Gestiona planes de membresia, precios y beneficios.",
+      icon: ClipboardList,
+      link: "/admin/planes",
+      features: ["Planes activos", "Precios", "Beneficios"],
     },
     {
       title: "Reporte de cobranzas",

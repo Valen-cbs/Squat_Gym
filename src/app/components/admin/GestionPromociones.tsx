@@ -1,13 +1,9 @@
 ﻿import { FormEvent, useMemo, useState } from "react";
 import {
   Plus,
-  Tag,
   Edit,
   Trash2,
-  CheckCircle,
-  XCircle,
   Calendar,
-  Percent,
   X,
 } from "lucide-react";
 import { membershipPlans, promotions, type MembershipPlan, type Promotion } from "../../data/catalog";
@@ -17,11 +13,19 @@ type EditingItem =
   | { kind: "plan"; value: MembershipPlan }
   | null;
 
-export default function GestionPromociones() {
-  const [activeTab, setActiveTab] = useState("promociones");
+type GestionPromocionesProps = {
+  section?: "promociones" | "planes";
+};
+
+export function GestionPlanes() {
+  return <GestionPromociones section="planes" />;
+}
+
+export default function GestionPromociones({ section = "promociones" }: GestionPromocionesProps) {
   const [promotionsState, setPromotions] = useState<Promotion[]>(promotions);
   const [plans, setPlans] = useState<MembershipPlan[]>(membershipPlans);
   const [editingItem, setEditingItem] = useState<EditingItem>(null);
+  const isPromotionsSection = section === "promociones";
 
   const monthlyPlanIncome = useMemo(
     () => plans.reduce((sum, plan) => sum + (plan.active ? plan.price * plan.subscribers : 0), 0),
@@ -117,43 +121,18 @@ export default function GestionPromociones() {
   return (
     <div className="p-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Promociones y Planes</h1>
-        <p className="text-gray-500 mt-2">Gestionar promociones especiales y planes de membresia</p>
+        <h1 className="text-3xl font-bold text-gray-900">
+          {isPromotionsSection ? "Promociones" : "Planes de Membresia"}
+        </h1>
+        <p className="text-gray-500 mt-2">
+          {isPromotionsSection
+            ? "Gestionar promociones especiales, descuentos y vigencias."
+            : "Gestionar planes disponibles y beneficios de membresia."}
+        </p>
       </div>
 
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 mb-6">
-        <div className="border-b border-gray-200">
-          <div className="flex gap-4 px-6">
-            <button
-              onClick={() => setActiveTab("promociones")}
-              className={`px-4 py-4 font-medium border-b-2 transition-colors ${
-                activeTab === "promociones"
-                  ? "border-blue-600 text-blue-600"
-                  : "border-transparent text-gray-500 hover:text-gray-700"
-              }`}
-            >
-              <div className="flex items-center gap-2">
-                <Tag className="w-4 h-4" />
-                Promociones
-              </div>
-            </button>
-            <button
-              onClick={() => setActiveTab("planes")}
-              className={`px-4 py-4 font-medium border-b-2 transition-colors ${
-                activeTab === "planes"
-                  ? "border-blue-600 text-blue-600"
-                  : "border-transparent text-gray-500 hover:text-gray-700"
-              }`}
-            >
-              <div className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4" />
-                Planes de Membresia
-              </div>
-            </button>
-          </div>
-        </div>
-
-        {activeTab === "promociones" ? (
+        {isPromotionsSection ? (
           <div className="p-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
               <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
@@ -181,16 +160,23 @@ export default function GestionPromociones() {
             </div>
 
             <div className="overflow-x-auto">
-              <table className="w-full">
+              <table className="w-full min-w-[980px] table-fixed">
+                <colgroup>
+                  <col className="w-[22%]" />
+                  <col className="w-[14%]" />
+                  <col className="w-[14%]" />
+                  <col className="w-[30%]" />
+                  <col className="w-[8%]" />
+                  <col className="w-[12%]" />
+                </colgroup>
                 <thead>
                   <tr className="border-b border-gray-200">
                     <th className="text-left px-4 py-3 text-sm font-medium text-gray-500">Nombre</th>
                     <th className="text-left px-4 py-3 text-sm font-medium text-gray-500">Descuento</th>
                     <th className="text-left px-4 py-3 text-sm font-medium text-gray-500">Tipo</th>
                     <th className="text-left px-4 py-3 text-sm font-medium text-gray-500">Vigencia</th>
-                    <th className="text-left px-4 py-3 text-sm font-medium text-gray-500">Estado</th>
-                    <th className="text-left px-4 py-3 text-sm font-medium text-gray-500">Usos</th>
-                    <th className="text-left px-4 py-3 text-sm font-medium text-gray-500">Acciones</th>
+                    <th className="px-4 py-3 text-center text-sm font-medium text-gray-500">Usos</th>
+                    <th className="px-4 py-3 text-center text-sm font-medium text-gray-500">Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -198,8 +184,7 @@ export default function GestionPromociones() {
                     <tr key={promo.id} className="border-b border-gray-100 hover:bg-gray-50">
                       <td className="px-4 py-4 font-medium text-gray-900">{promo.name}</td>
                       <td className="px-4 py-4">
-                        <span className="inline-flex items-center gap-1 text-green-600 font-bold">
-                          <Percent className="w-4 h-4" />
+                        <span className="inline-flex items-center rounded-full bg-green-50 px-3 py-1 text-sm font-bold text-green-700">
                           {promo.discount}{promo.type === "Porcentaje" ? "%" : "$"}
                         </span>
                       </td>
@@ -210,21 +195,9 @@ export default function GestionPromociones() {
                           {promo.startDate} - {promo.endDate}
                         </div>
                       </td>
+                      <td className="px-4 py-4 text-center text-sm font-semibold text-gray-900">{promo.uses}</td>
                       <td className="px-4 py-4">
-                        <span className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium ${
-                          promo.status === "Activa" ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-700"
-                        }`}>
-                          {promo.status === "Activa" ? (
-                            <CheckCircle className="w-3 h-3" />
-                          ) : (
-                            <XCircle className="w-3 h-3" />
-                          )}
-                          {promo.status}
-                        </span>
-                      </td>
-                      <td className="px-4 py-4 text-sm font-medium text-gray-900">{promo.uses}</td>
-                      <td className="px-4 py-4">
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center justify-center gap-2">
                           <button
                             onClick={() => setEditingItem({ kind: "promotion", value: promo })}
                             className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
@@ -389,27 +362,6 @@ export default function GestionPromociones() {
                     className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </label>
-                <label className="text-sm font-medium text-gray-700">
-                  Estado
-                  <select
-                    value={editingItem.value.status}
-                    onChange={(event) => updateEditingPromotion({ status: event.target.value as Promotion["status"] })}
-                    className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  >
-                    <option value="Activa">Activa</option>
-                    <option value="Expirada">Expirada</option>
-                  </select>
-                </label>
-                <label className="text-sm font-medium text-gray-700">
-                  Usos
-                  <input
-                    min="0"
-                    type="number"
-                    value={editingItem.value.uses}
-                    onChange={(event) => updateEditingPromotion({ uses: Number(event.target.value) })}
-                    className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </label>
               </div>
             ) : (
               <div className="grid gap-4 sm:grid-cols-2">
@@ -450,27 +402,6 @@ export default function GestionPromociones() {
                     onChange={(event) => updateEditingPlan({ benefits: event.target.value })}
                     className="mt-1 min-h-24 w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
-                </label>
-                <label className="text-sm font-medium text-gray-700">
-                  Suscriptores
-                  <input
-                    min="0"
-                    type="number"
-                    value={editingItem.value.subscribers}
-                    onChange={(event) => updateEditingPlan({ subscribers: Number(event.target.value) })}
-                    className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </label>
-                <label className="text-sm font-medium text-gray-700">
-                  Estado
-                  <select
-                    value={editingItem.value.active ? "active" : "inactive"}
-                    onChange={(event) => updateEditingPlan({ active: event.target.value === "active" })}
-                    className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  >
-                    <option value="active">Activo</option>
-                    <option value="inactive">Inactivo</option>
-                  </select>
                 </label>
               </div>
             )}

@@ -73,12 +73,6 @@ export default function KioscoPrincipal() {
           { label: "Productos vendidos", value: "57", icon: ShoppingCart, color: "from-sky-500 to-blue-500" },
         ]
       : []),
-    ...(canViewStock
-      ? [
-          { label: "Stock critico", value: String(lowStockProducts.length), icon: AlertTriangle, color: "from-amber-500 to-orange-500" },
-          { label: "Productos disponibles", value: String(kioskProducts.length), icon: Package, color: "from-violet-500 to-purple-500" },
-        ]
-      : []),
   ];
 
   const actionCards = [
@@ -176,7 +170,6 @@ export default function KioscoPrincipal() {
       <div className="app-page-header">
         <div>
           <h1 className="app-page-title">Kiosco principal</h1>
-          <p className="app-page-copy">Accesos ajustados al rol activo para ventas, inventario y control diario.</p>
         </div>
       </div>
 

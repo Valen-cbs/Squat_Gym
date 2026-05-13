@@ -7,8 +7,9 @@ import {
   TrendingUp,
   AlertTriangle,
   CheckCircle,
+  ClipboardList,
 } from "lucide-react";
-import { promotions } from "../../data/catalog";
+import { membershipPlans, promotions } from "../../data/catalog";
 
 export default function DashboardAdmin() {
   const stats = [
@@ -18,12 +19,20 @@ export default function DashboardAdmin() {
 
   const quickActions = [
     {
-      title: "Promociones y planes",
-      description: "Campanas, membresias y descuentos vigentes.",
+      title: "Promociones",
+      description: "Campanas y descuentos vigentes.",
       icon: Tag,
       color: "from-violet-600 to-fuchsia-500",
       link: "/admin/promociones",
       badge: `${promotions.filter((promotion) => promotion.status === "Activa").length} activas`,
+    },
+    {
+      title: "Planes",
+      description: "Planes de membresia, precios y beneficios.",
+      icon: ClipboardList,
+      color: "from-blue-600 to-cyan-500",
+      link: "/admin/planes",
+      badge: `${membershipPlans.filter((plan) => plan.active).length} activos`,
     },
     {
       title: "Reporte de cobranzas",

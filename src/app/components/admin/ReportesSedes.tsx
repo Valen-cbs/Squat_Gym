@@ -56,7 +56,6 @@ export default function ReportesSedes() {
       <div className="app-page-header">
         <div>
           <h1 className="app-page-title">Reporte de cobranzas</h1>
-          <p className="app-page-copy">Pagos recibidos, pendientes y deudas consolidadas por sede y periodo.</p>
         </div>
         <div className="flex flex-col gap-3 sm:flex-row">
           <select
@@ -202,9 +201,6 @@ export default function ReportesSedes() {
               </tr>
             </tfoot>
           </table>
-        </div>
-        <div className="border-t border-slate-200 px-5 py-4 text-sm text-slate-500 sm:px-6">
-          Pagos procesados en el periodo: {totalPayments}. El reporte consolida pagos recibidos, pendientes y deuda vencida por sede.
         </div>
       </div>
     </div>
