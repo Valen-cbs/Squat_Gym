@@ -31,7 +31,7 @@ export default function PageBackButton({ pathname }: { pathname: string }) {
           className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:text-slate-950"
         >
           <ArrowLeft className="h-4 w-4" />
-          Volver atras
+          Volver
         </button>
       </div>
     </div>
