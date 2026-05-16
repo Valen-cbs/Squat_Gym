@@ -1,5 +1,6 @@
 ﻿import { Link } from "react-router";
 import {
+  ArrowRight,
   Tag,
   BarChart3,
   ShoppingCart,
@@ -22,7 +23,6 @@ export default function DashboardAdmin() {
       title: "Promociones",
       description: "Campanas y descuentos vigentes.",
       icon: Tag,
-      color: "from-violet-600 to-fuchsia-500",
       link: "/admin/promociones",
       badge: `${promotions.filter((promotion) => promotion.status === "Activa").length} activas`,
     },
@@ -30,7 +30,6 @@ export default function DashboardAdmin() {
       title: "Planes",
       description: "Planes de membresia, precios y beneficios.",
       icon: ClipboardList,
-      color: "from-blue-600 to-cyan-500",
       link: "/admin/planes",
       badge: `${membershipPlans.filter((plan) => plan.active).length} activos`,
     },
@@ -38,7 +37,6 @@ export default function DashboardAdmin() {
       title: "Reporte de cobranzas",
       description: "Pagos recibidos, pendientes y deuda por sede.",
       icon: BarChart3,
-      color: "from-emerald-600 to-green-500",
       link: "/admin/reportes",
       badge: "3 sedes",
     },
@@ -46,7 +44,6 @@ export default function DashboardAdmin() {
       title: "Ventas del kiosco",
       description: "Selecciona sede y consulta por turno o por rango de dias.",
       icon: ShoppingCart,
-      color: "from-amber-600 to-orange-500",
       link: "/kiosco",
       badge: "Por sede",
     },
@@ -94,16 +91,18 @@ export default function DashboardAdmin() {
           <Link
             key={index}
             to={action.link}
-            className={`rounded-[28px] bg-gradient-to-br ${action.color} p-5 text-white shadow-xl transition-transform duration-200 hover:-translate-y-1 sm:p-6`}
+            className="app-action-card group"
           >
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/15">
+            <div className="app-action-content">
+              <div className="app-action-icon">
                 <action.icon className="h-6 w-6" />
               </div>
-              <span className="rounded-full bg-white/15 px-3 py-1 text-xs font-semibold">{action.badge}</span>
+              <div className="min-w-0">
+                <h3 className="app-action-label">{action.title}</h3>
+                <p className="mt-1 text-sm leading-5 text-white/80">{action.badge}</p>
+              </div>
             </div>
-            <h3 className="mt-5 text-xl font-bold">{action.title}</h3>
-            <p className="mt-2 text-sm leading-6 text-white/85">{action.description}</p>
+            <ArrowRight className="app-action-arrow" />
           </Link>
         ))}
       </div>

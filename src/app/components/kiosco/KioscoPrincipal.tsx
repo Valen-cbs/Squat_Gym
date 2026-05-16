@@ -8,11 +8,9 @@ import {
   DollarSign,
   Package,
   ShoppingCart,
-  AlertTriangle,
 } from "lucide-react";
 import { useUser } from "../../context/UserContext";
 import { hasPermission } from "../../permissions";
-import { kioskProducts } from "../../data/catalog";
 
 const branches = ["Sede Norte", "Sede Sur"];
 const shifts = ["Manana", "Tarde", "Noche"];
@@ -57,7 +55,6 @@ export default function KioscoPrincipal() {
   const canViewStock = hasPermission(user?.role, "kiosk.viewStock");
   const canCreateRestockOrder = hasPermission(user?.role, "kiosk.createRestockOrder");
   const canViewDailySales = hasPermission(user?.role, "kiosk.viewDailySales");
-  const lowStockProducts = kioskProducts.filter((product) => product.status !== "ok");
   const [reportMode, setReportMode] = useState<ReportMode>("shift");
   const [selectedBranch, setSelectedBranch] = useState("Sede Norte");
   const [reportDate, setReportDate] = useState("2026-04-21");
@@ -82,7 +79,6 @@ export default function KioscoPrincipal() {
             to: "/kiosco/nueva-venta",
             title: "Nueva venta",
             icon: ShoppingCart,
-            color: "from-blue-600 to-cyan-500",
           },
         ]
       : []),
@@ -92,7 +88,6 @@ export default function KioscoPrincipal() {
             to: "/kiosco/stock",
             title: "Ver stock",
             icon: Package,
-            color: "from-violet-600 to-fuchsia-500",
           },
         ]
       : []),
@@ -103,7 +98,6 @@ export default function KioscoPrincipal() {
             title: "Generar reposicion",
             description: "Crear pedido de productos con stock bajo.",
             icon: BoxIcon,
-            color: "from-amber-600 to-orange-500",
           },
         ]
       : []),
@@ -148,14 +142,6 @@ export default function KioscoPrincipal() {
     { sales: 0, amount: 0 }
   );
 
-  const lowStock = lowStockProducts.map((product) => ({
-    id: product.id,
-    name: product.name,
-    stock: product.stock,
-    min: product.minStock,
-    status: product.status,
-  }));
-
   const actionGridClass =
     actionCards.length === 1
       ? "mx-auto max-w-xl grid-cols-1"
@@ -195,11 +181,18 @@ export default function KioscoPrincipal() {
             <Link
               key={action.to}
               to={action.to}
-              className={`min-h-36 rounded-[24px] bg-gradient-to-br ${action.color} p-5 text-white shadow-lg`}
+              className="app-action-card group"
             >
-              <action.icon className="h-8 w-8" />
-              <p className="mt-4 text-xl font-bold">{action.title}</p>
-              <p className="mt-1 text-sm text-white/85">{action.description}</p>
+              <div className="app-action-content">
+                <div className="app-action-icon">
+                  <action.icon className="h-6 w-6" />
+                </div>
+                <div className="min-w-0">
+                  <p className="app-action-label">{action.title}</p>
+                  {action.description && <p className="mt-1 text-sm leading-5 text-white/80">{action.description}</p>}
+                </div>
+              </div>
+              <ArrowRight className="app-action-arrow" />
             </Link>
           ))}
         </div>
@@ -347,58 +340,6 @@ export default function KioscoPrincipal() {
                 </tfoot>
               </table>
             </div>
-          </div>
-        </div>
-      )}
-
-      {canViewStock && (
-        <div className="mt-6 app-panel">
-          <div className="border-b border-slate-200 px-5 py-4 sm:px-6">
-            <div className="flex items-center gap-2">
-              <AlertTriangle className="h-5 w-5 text-amber-500" />
-              <h2 className="text-xl font-bold text-slate-900">Alertas de stock</h2>
-            </div>
-          </div>
-          <div className="space-y-3 px-5 py-5 sm:px-6">
-            {lowStock.map((product) => (
-              <div
-                key={product.id}
-                className={`rounded-2xl border p-4 ${
-                  product.status === "critical"
-                    ? "border-red-200 bg-red-50/80"
-                    : "border-amber-200 bg-amber-50/80"
-                }`}
-              >
-                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                  <div>
-                    <p className="font-medium text-slate-900">{product.name}</p>
-                    <p className="mt-1 text-sm text-slate-600">
-                      Stock actual: <span className="font-semibold">{product.stock}</span> | Minimo: {product.min}
-                    </p>
-                  </div>
-                  <div className="flex items-center justify-between gap-4 sm:block sm:text-right">
-                    <span
-                      className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ${
-                        product.status === "critical"
-                          ? "bg-red-100 text-red-700"
-                          : "bg-amber-100 text-amber-700"
-                      }`}
-                    >
-                      {product.status === "critical" ? "Critico" : "Advertencia"}
-                    </span>
-                    <div className="mt-2">
-                      <Link
-                        to={`/kiosco/producto/${product.id}`}
-                        className="inline-flex items-center gap-1 text-sm font-semibold text-blue-700"
-                      >
-                        Ver detalle
-                        <ArrowRight className="h-4 w-4" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       )}

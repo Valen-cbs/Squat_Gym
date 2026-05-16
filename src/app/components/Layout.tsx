@@ -11,6 +11,7 @@ import {
   Tag,
   BarChart3,
   Bell,
+  AlertCircle,
   Package,
   Menu,
   X,
@@ -26,6 +27,8 @@ export default function Layout() {
   const { user, setUser } = useUser();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [desktopSidebarOpen, setDesktopSidebarOpen] = useState(true);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [readNotificationIds, setReadNotificationIds] = useState<string[]>([]);
 
   const handleLogout = () => {
     setUser(null);
@@ -105,6 +108,118 @@ export default function Layout() {
 
   const roleAccent = "from-indigo-primary to-indigo-dark";
   const branchLabel = "Sede Norte";
+  const notifications = useMemo(() => {
+    const items = [];
+
+    if (hasPermission(user?.role, "collections.viewDebtors")) {
+      items.push({
+        id: "debtors",
+        title: "Alumnos con deuda",
+        message: "3 alumnos requieren seguimiento de cobranza.",
+        to: "/cobranzas/deudores",
+        icon: Users,
+      });
+    }
+
+    if (hasPermission(user?.role, "collections.managePaymentClaim")) {
+      items.push({
+        id: "claims",
+        title: "Reclamos de pago",
+        message: "Hay reclamos pendientes para revisar.",
+        to: "/cobranzas/reclamos",
+        icon: ClipboardList,
+      });
+    }
+
+    if (hasPermission(user?.role, "kiosk.viewStock") || hasPermission(user?.role, "kiosk.createRestockOrder")) {
+      items.push({
+        id: "stock",
+        title: "Stock crítico",
+        message: "4 productos del kiosco están bajo mínimo.",
+        to: user?.role === "manager" ? "/encargado/stock" : "/kiosco/stock",
+        icon: Package,
+      });
+    }
+
+    if (hasPermission(user?.role, "kiosk.viewDailySales")) {
+      items.push({
+        id: "sales",
+        title: "Ventas del kiosco",
+        message: "El reporte diario está disponible para consultar.",
+        to: "/kiosco",
+        icon: ShoppingCart,
+      });
+    }
+
+    return items;
+  }, [user?.role]);
+  const unreadNotificationCount = notifications.filter((notification) => !readNotificationIds.includes(notification.id)).length;
+
+  const renderNotificationsButton = () => (
+    <div className="relative ml-auto">
+      <button
+        type="button"
+        onClick={() => setNotificationsOpen((current) => !current)}
+        className="relative inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-indigo-light bg-white text-indigo-primary shadow-sm transition-colors hover:bg-indigo-lightest"
+        aria-label="Abrir notificaciones"
+        aria-expanded={notificationsOpen}
+      >
+        <Bell className="h-5 w-5" />
+        {unreadNotificationCount > 0 && (
+          <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-error-medium px-1 text-[11px] font-bold leading-none text-white">
+            {unreadNotificationCount}
+          </span>
+        )}
+      </button>
+
+      {notificationsOpen && (
+        <div className="absolute right-0 top-13 z-50 w-[min(22rem,calc(100vw-2rem))] overflow-hidden rounded-2xl border border-indigo-light bg-white shadow-2xl shadow-indigo-primary/10">
+          <div className="flex items-center gap-2 border-b border-indigo-light px-4 py-3">
+            <Bell className="h-4 w-4 text-indigo-primary" />
+            <p className="font-semibold text-indigo-darkest">Notificaciones</p>
+          </div>
+          <div className="max-h-96 overflow-y-auto p-2">
+            {notifications.length > 0 ? (
+              notifications.map((notification) => (
+                <Link
+                  key={notification.id}
+                  to={notification.to}
+                  onClick={() => {
+                    setReadNotificationIds((current) =>
+                      current.includes(notification.id) ? current : [...current, notification.id],
+                    );
+                    setNotificationsOpen(false);
+                    closeMobileMenu();
+                  }}
+                  className={`flex gap-3 rounded-xl px-3 py-3 transition-colors hover:bg-indigo-lightest ${
+                    readNotificationIds.includes(notification.id) ? "opacity-60" : ""
+                  }`}
+                >
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-indigo-lightest text-indigo-primary">
+                    <notification.icon className="h-5 w-5" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="font-medium text-indigo-darkest">{notification.title}</p>
+                    <p className="mt-0.5 text-sm leading-5 text-indigo-dark">{notification.message}</p>
+                  </div>
+                </Link>
+              ))
+            ) : (
+              <div className="flex items-start gap-3 px-3 py-4">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-success-light text-success-dark">
+                  <AlertCircle className="h-5 w-5" />
+                </div>
+                <div>
+                  <p className="font-medium text-indigo-darkest">Sin novedades</p>
+                  <p className="mt-0.5 text-sm text-indigo-dark">No hay notificaciones pendientes.</p>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
 
   const SidebarContent = (
     <>
@@ -219,6 +334,7 @@ export default function Layout() {
               <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">SquatGym</p>
               <p className="text-base font-semibold text-slate-900">{user?.roleName || "Panel"}</p>
             </div>
+            {renderNotificationsButton()}
           </div>
         </header>
 
@@ -244,6 +360,16 @@ export default function Layout() {
             </aside>
           </div>
         )}
+
+        <header className="sticky top-0 z-20 hidden border-b border-white/70 bg-white/80 px-8 py-3 backdrop-blur lg:block">
+          <div className="mx-auto flex w-full max-w-7xl items-center gap-4">
+            <div>
+              <p className="text-sm font-medium text-indigo-dark">{branchLabel}</p>
+              <p className="text-base font-semibold text-indigo-darkest">{user?.roleName || "Panel"}</p>
+            </div>
+            {renderNotificationsButton()}
+          </div>
+        </header>
 
         <main className="flex-1 overflow-x-hidden overflow-y-auto">
           <PageBackButton pathname={location.pathname} />

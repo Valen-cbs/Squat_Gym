@@ -20,7 +20,6 @@ export default function Deudores() {
     <div className="app-page">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Deudores</h1>
-        <p className="mt-2 text-gray-500">Listado de alumnos con deuda para seguimiento y cobranza.</p>
       </div>
 
       <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6 shadow-sm">

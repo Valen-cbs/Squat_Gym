@@ -10,6 +10,7 @@ import {
 import { getAlumnosDeudores } from "../../data/alumnos";
 
 export default function DashboardCobranzas() {
+  const pendingPayments = getAlumnosDeudores().length;
   const stats = [
     {
       label: "Cobranzas del mes",
@@ -25,7 +26,7 @@ export default function DashboardCobranzas() {
     },
     {
       label: "Pendientes de pago",
-      value: "23",
+      value: String(pendingPayments),
       icon: AlertCircle,
       tone: "border-warning-medium bg-warning-light text-warning-dark",
     },
@@ -38,13 +39,6 @@ export default function DashboardCobranzas() {
     { id: 4, name: "Ana Martinez", amount: 850, method: "QR", date: "20/04/2026" },
     { id: 5, name: "Pedro Sanchez", amount: 680, method: "Efectivo", date: "19/04/2026" },
   ];
-
-  const debtors = getAlumnosDeudores().map((debtor) => ({
-    id: debtor.id,
-    name: debtor.name,
-    debt: debtor.debtAmount,
-    months: debtor.overdueMonths,
-  }));
 
   return (
     <div className="app-page">
@@ -70,33 +64,35 @@ export default function DashboardCobranzas() {
         ))}
       </div>
 
-      <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
+      <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
         <Link
           to="/cobranzas/buscar-alumno"
-          className="app-action-card"
+          className="app-action-card group"
         >
-          <Search className="h-8 w-8" />
-          <p className="mt-4 text-xl font-bold">Buscar alumno</p>
-        </Link>
-
-        <Link
-          to="/cobranzas/deudores"
-          className="app-action-card"
-        >
-          <AlertCircle className="h-8 w-8" />
-          <p className="mt-4 text-xl font-bold">Alumnos con deuda</p>
+          <div className="app-action-content">
+            <div className="app-action-icon">
+              <Search className="h-6 w-6" />
+            </div>
+            <span className="app-action-label">Buscar alumno</span>
+          </div>
+          <ArrowRight className="app-action-arrow" />
         </Link>
 
         <Link
           to="/cobranzas/listado"
-          className="app-action-card"
+          className="app-action-card group"
         >
-          <FileText className="h-8 w-8" />
-          <p className="mt-4 text-xl font-bold">Listado de cobranzas</p>
+          <div className="app-action-content">
+            <div className="app-action-icon">
+              <FileText className="h-6 w-6" />
+            </div>
+            <span className="app-action-label">Listado de cobranzas</span>
+          </div>
+          <ArrowRight className="app-action-arrow" />
         </Link>
       </div>
 
-      <div className="mt-6 grid grid-cols-1 gap-6 xl:grid-cols-2">
+      <div className="mt-6">
         <div className="app-panel overflow-hidden">
           <div className="border-b border-indigo-light px-5 py-4 sm:px-6">
             <h2 className="text-xl font-bold text-indigo-darkest">Ultimos pagos recibidos</h2>
@@ -134,39 +130,6 @@ export default function DashboardCobranzas() {
                   <p className="font-bold text-success-dark">${payment.amount}</p>
                 </div>
                 <p className="mt-3 text-sm text-indigo-dark">{payment.date}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="app-panel overflow-hidden">
-          <div className="border-b border-indigo-light px-5 py-4 sm:px-6">
-            <div className="flex items-center gap-2">
-              <AlertCircle className="h-5 w-5 text-error-dark" />
-              <h2 className="text-xl font-bold text-indigo-darkest">Alumnos con deuda</h2>
-            </div>
-          </div>
-          <div className="space-y-3 px-5 py-5 sm:px-6">
-            {debtors.map((debtor) => (
-              <div key={debtor.id} className="rounded-2xl border border-error-medium bg-error-light/35 p-4">
-                <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-                  <div className="min-w-0">
-                    <p className="font-medium text-indigo-darkest">{debtor.name}</p>
-                    <p className="text-sm text-error-dark">
-                      {debtor.months} {debtor.months === 1 ? "mes" : "meses"} de atraso
-                    </p>
-                  </div>
-                  <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 md:flex-col md:items-end md:text-right">
-                    <p className="font-bold text-error-dark">${debtor.debt}</p>
-                    <Link
-                      to={`/cobranzas/estado-cuenta/${debtor.id}`}
-                      className="inline-flex items-center gap-1 text-sm font-semibold text-indigo-primary"
-                    >
-                      Ver detalle
-                      <ArrowRight className="h-4 w-4" />
-                    </Link>
-                  </div>
-                </div>
               </div>
             ))}
           </div>

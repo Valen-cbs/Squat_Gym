@@ -161,37 +161,20 @@ export default function Home() {
 
   const secretaryPriorityActions = [
     {
-      title: "Registrar Pago (Membresía)",
+      title: "Registrar pago (membresía)",
       description: "Ir directo al cobro de cuotas y buscar al alumno en el mismo paso.",
       icon: DollarSign,
       link: "/cobranzas/registrar-pago",
       features: ["Buscar alumno", "Aplicar descuento efectivo", "Emitir comprobante"],
     },
     {
-      title: "REGISTRAR VENTA DE KIOSCO",
+      title: "Registrar venta de kiosco",
       description: "Abrir una nueva venta con el catalogo listo para buscar productos rapido.",
       icon: ShoppingCart,
       link: "/kiosco/nueva-venta",
       features: ["Buscar producto", "Armar carrito", "Emitir ticket"],
     },
   ];
-
-  const recentAlerts = [
-    ...(canViewDebtors
-      ? [{ id: 1, type: "debt", message: "3 alumnos deudores", severity: "high" }]
-      : []),
-    ...(canViewStock || canCreateRestockOrder
-      ? [{ id: 2, type: "stock", message: "4 productos con stock critico", severity: "high" }]
-      : []),
-  ];
-
-  const getAlertLink = (type: string) => {
-    if (type === "stock") {
-      return user?.role === "manager" ? "/encargado/stock" : "/kiosco/stock";
-    }
-
-    return "/cobranzas/deudores";
-  };
 
   return (
     <div className="app-page">
@@ -216,19 +199,15 @@ export default function Home() {
               <Link
                 key={action.title}
                 to={action.link}
-                className="app-action-card group p-4 sm:p-5"
+                className="app-action-card group"
               >
-                <div className="flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/15">
-                      <action.icon className="h-5 w-5" />
-                    </div>
-                    <span className="text-sm font-semibold uppercase tracking-[0.18em] text-white">
-                      {action.title}
-                    </span>
+                <div className="app-action-content">
+                  <div className="app-action-icon">
+                    <action.icon className="h-6 w-6" />
                   </div>
-                  <ArrowRight className="h-5 w-5 text-white/80 transition-transform group-hover:translate-x-1" />
+                  <span className="app-action-label">{action.title}</span>
                 </div>
+                <ArrowRight className="app-action-arrow" />
               </Link>
             ))}
           </div>
@@ -247,66 +226,19 @@ export default function Home() {
             <Link
               key={index}
               to={action.link}
-              className="app-action-card group p-4 sm:p-5"
+              className="app-action-card group"
             >
-              <div className="flex items-center justify-between gap-3">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/15">
-                    <action.icon className="h-5 w-5" />
-                  </div>
-                  <span className="text-sm font-semibold uppercase tracking-[0.18em] text-white">
-                    {action.title}
-                  </span>
+              <div className="app-action-content">
+                <div className="app-action-icon">
+                  <action.icon className="h-6 w-6" />
                 </div>
-                <ArrowRight className="h-5 w-5 text-white/80 transition-transform group-hover:translate-x-1" />
+                <span className="app-action-label">{action.title}</span>
               </div>
+              <ArrowRight className="app-action-arrow" />
             </Link>
           ))}
         </div>
       </section>
-
-      {recentAlerts.length > 0 && (
-      <section className="mt-6 app-panel">
-        <div className="border-b border-indigo-light px-5 py-5 sm:px-6">
-          <div className="flex items-center gap-2">
-            <AlertCircle className="h-5 w-5 text-warning-dark" />
-            <h2 className="text-xl font-bold text-indigo-darkest">Alertas</h2>
-          </div>
-        </div>
-        <div className="space-y-3 px-5 py-5 sm:px-6">
-          {recentAlerts.map((alert) => (
-            <div
-              key={alert.id}
-              className={`rounded-2xl border p-4 sm:p-5 ${
-                alert.severity === "high"
-                  ? "border-warning-medium bg-warning-light/35"
-                  : "border-indigo-light bg-indigo-lightest"
-              }`}
-            >
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <div className="flex items-start gap-3">
-                  <AlertCircle
-                    className={`mt-0.5 h-5 w-5 shrink-0 ${
-                      alert.severity === "high" ? "text-warning-dark" : "text-indigo-primary"
-                    }`}
-                  />
-                  <p className="font-medium text-indigo-darkest">{alert.message}</p>
-                </div>
-                <Link
-                  to={getAlertLink(alert.type)}
-                  className={`inline-flex items-center gap-2 text-sm font-semibold ${
-                    alert.severity === "high" ? "text-warning-dark" : "text-indigo-primary"
-                  }`}
-                >
-                  Ver
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-      )}
     </div>
   );
 }

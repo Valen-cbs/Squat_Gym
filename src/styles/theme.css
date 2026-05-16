@@ -223,7 +223,23 @@
   }
 
   .app-action-card {
-    @apply rounded-2xl bg-indigo-primary p-5 text-white shadow-lg shadow-indigo-primary/20 transition-transform duration-200 hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-primary;
+    @apply flex min-h-[6.5rem] items-center justify-between gap-4 rounded-[18px] bg-indigo-primary px-5 py-5 text-white shadow-xl shadow-indigo-primary/20 transition-transform duration-200 hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-primary sm:px-6;
+  }
+
+  .app-action-content {
+    @apply flex min-w-0 items-center gap-4;
+  }
+
+  .app-action-icon {
+    @apply flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/15 text-white;
+  }
+
+  .app-action-label {
+    @apply text-base font-semibold leading-6 tracking-normal text-white;
+  }
+
+  .app-action-arrow {
+    @apply h-5 w-5 shrink-0 text-white/85 transition-transform group-hover:translate-x-1;
   }
 
   .app-stat-grid {

@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import {
+  ArrowRight,
   Users,
   Bell,
   Package,
@@ -17,7 +18,6 @@ export default function DashboardEncargado() {
       title: "Alumnos",
       description: "Listado general de alumnos y bajas de la sede.",
       icon: Users,
-      color: "from-slate-700 to-slate-900",
       badge: "General",
       link: "/encargado/alumnos",
     },
@@ -25,7 +25,6 @@ export default function DashboardEncargado() {
       title: "Inscripciones y pagos",
       description: "Consultar movimientos comerciales y el trabajo de recepcion.",
       icon: DollarSign,
-      color: "from-blue-600 to-cyan-500",
       badge: "23 este mes",
       link: "/encargado/inscripciones",
     },
@@ -33,7 +32,6 @@ export default function DashboardEncargado() {
       title: "Alertas y notificaciones",
       description: "Ver deudores y stock critico.",
       icon: Bell,
-      color: "from-amber-600 to-orange-500",
       badge: "5 alertas",
       link: "/encargado/alertas",
     },
@@ -41,7 +39,6 @@ export default function DashboardEncargado() {
       title: "Alumnos con deuda",
       description: "Consultar montos pendientes y fechas de atraso.",
       icon: Users,
-      color: "from-rose-600 to-red-500",
       badge: "3 deudores",
       link: "/cobranzas/deudores",
     },
@@ -49,7 +46,6 @@ export default function DashboardEncargado() {
       title: "Ventas del kiosco",
       description: "Reporte diario por turno o por rango de dias.",
       icon: ShoppingCart,
-      color: "from-emerald-600 to-green-500",
       badge: "$4.250 hoy",
       link: "/kiosco",
     },
@@ -57,7 +53,6 @@ export default function DashboardEncargado() {
       title: "Stock y reposicion",
       description: "Control de inventario y pedidos del kiosco.",
       icon: Package,
-      color: "from-rose-600 to-red-500",
       badge: "3 criticos",
       link: "/encargado/stock",
     },
@@ -104,16 +99,18 @@ export default function DashboardEncargado() {
           <Link
             key={index}
             to={action.link}
-            className={`rounded-[28px] bg-gradient-to-br ${action.color} p-5 text-white shadow-xl transition-transform duration-200 hover:-translate-y-1 sm:p-6`}
+            className="app-action-card group"
           >
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/15">
+            <div className="app-action-content">
+              <div className="app-action-icon">
                 <action.icon className="h-6 w-6" />
               </div>
-              <span className="rounded-full bg-white/15 px-3 py-1 text-xs font-semibold">{action.badge}</span>
+              <div className="min-w-0">
+                <h3 className="app-action-label">{action.title}</h3>
+                <p className="mt-1 text-sm leading-5 text-white/80">{action.badge}</p>
+              </div>
             </div>
-            <h3 className="mt-5 text-xl font-bold">{action.title}</h3>
-            <p className="mt-2 text-sm leading-6 text-white/85">{action.description}</p>
+            <ArrowRight className="app-action-arrow" />
           </Link>
         ))}
       </div>

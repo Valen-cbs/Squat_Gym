@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link, useLocation, useParams } from "react-router";
 import { CheckCircle, Download, Printer, Send } from "lucide-react";
 import PaymentReceipt from "../PaymentReceipt";
@@ -5,6 +6,7 @@ import PaymentReceipt from "../PaymentReceipt";
 export default function ReciboGenerado() {
   const { id } = useParams();
   const location = useLocation();
+  const [emailSent, setEmailSent] = useState(false);
   const paymentState = location.state as
     | {
         alumno?: { name: string; dni?: string; plan: string };
@@ -52,9 +54,17 @@ export default function ReciboGenerado() {
           <Download className="h-5 w-5" />
           <span className="font-medium">Descargar PDF</span>
         </button>
-        <button className="flex items-center justify-center gap-3 rounded-lg bg-indigo-primary p-4 text-white transition-colors hover:opacity-90">
-          <Send className="h-5 w-5" />
-          <span className="font-medium">Enviar por Email</span>
+        <button
+          type="button"
+          onClick={() => setEmailSent(true)}
+          className={`flex items-center justify-center gap-3 rounded-lg p-4 text-white transition-colors hover:opacity-90 ${
+            emailSent ? "bg-success-medium" : "bg-indigo-primary"
+          }`}
+        >
+          {emailSent ? <CheckCircle className="h-5 w-5" /> : <Send className="h-5 w-5" />}
+          <span className="font-medium">
+            {emailSent ? "Comprobante enviado correctamente" : "Enviar por Email"}
+          </span>
         </button>
       </div>
 

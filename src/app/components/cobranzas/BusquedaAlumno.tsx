@@ -1,15 +1,24 @@
 ﻿import { useState } from "react";
 import { Link } from "react-router";
-import { Search, User, Calendar, CheckCircle, AlertCircle, CreditCard, FileText } from "lucide-react";
+import { Search, User, Calendar, CheckCircle, AlertCircle, CreditCard, FileText, SlidersHorizontal } from "lucide-react";
 import { alumnos } from "../../data/alumnos";
 
 export default function BusquedaAlumno() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [planFilter, setPlanFilter] = useState("all");
+  const planOptions = Array.from(new Set(alumnos.map((alumno) => alumno.plan)));
 
-  const filteredAlumnos = alumnos.filter((alumno) =>
-    alumno.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    alumno.dni.includes(searchTerm)
-  );
+  const filteredAlumnos = alumnos.filter((alumno) => {
+    const matchesSearch =
+      alumno.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      alumno.dni.includes(searchTerm);
+    const matchesStatus = statusFilter === "all" || alumno.status === statusFilter;
+    const matchesPlan = planFilter === "all" || alumno.plan === planFilter;
+
+    return matchesSearch && matchesStatus && matchesPlan;
+  });
 
   return (
     <div className="app-page">
@@ -23,12 +32,50 @@ export default function BusquedaAlumno() {
           <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
           <input
             type="text"
-            placeholder="Buscar por nombre o DNI..."
+            placeholder="Buscar Alumno..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full rounded-lg border border-gray-300 py-3 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full rounded-lg border border-gray-300 py-3 pl-12 pr-16 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
+          <button
+            type="button"
+            onClick={() => setFiltersOpen((current) => !current)}
+            className="absolute right-2 top-1/2 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-lg text-indigo-primary transition-colors hover:bg-indigo-lightest"
+            aria-label="Abrir filtros"
+            aria-expanded={filtersOpen}
+          >
+            <SlidersHorizontal className="h-5 w-5" />
+          </button>
         </div>
+        {filtersOpen && (
+          <div className="mt-4 grid gap-4 rounded-lg border border-indigo-light bg-indigo-lightest/60 p-4 sm:grid-cols-2">
+            <div>
+              <label className="mb-2 block text-sm font-medium text-indigo-darkest">Estado</label>
+              <select
+                value={statusFilter}
+                onChange={(event) => setStatusFilter(event.target.value)}
+                className="w-full rounded-lg border border-indigo-light bg-white px-3 py-2.5 text-sm text-indigo-darkest focus:outline-none focus:ring-2 focus:ring-indigo-primary"
+              >
+                <option value="all">Todos</option>
+                <option value="Al dia">Al día</option>
+                <option value="Deudor">Deudor</option>
+              </select>
+            </div>
+            <div>
+              <label className="mb-2 block text-sm font-medium text-indigo-darkest">Plan</label>
+              <select
+                value={planFilter}
+                onChange={(event) => setPlanFilter(event.target.value)}
+                className="w-full rounded-lg border border-indigo-light bg-white px-3 py-2.5 text-sm text-indigo-darkest focus:outline-none focus:ring-2 focus:ring-indigo-primary"
+              >
+                <option value="all">Todos</option>
+                {planOptions.map((plan) => (
+                  <option key={plan} value={plan}>{plan}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
@@ -55,12 +102,7 @@ export default function BusquedaAlumno() {
                       <div className="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-light">
                         <User className="h-5 w-5 text-indigo-primary" />
                       </div>
-                      <Link
-                        to={`/cobranzas/registrar-pago/${alumno.id}`}
-                        className="font-medium text-gray-900 transition-colors hover:text-indigo-primary hover:underline"
-                      >
-                        {alumno.name}
-                      </Link>
+                      <span className="font-medium text-gray-900">{alumno.name}</span>
                     </div>
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-600">{alumno.dni}</td>
@@ -94,7 +136,7 @@ export default function BusquedaAlumno() {
                         className="inline-flex items-center justify-center gap-2 rounded-lg border border-indigo-light px-3 py-2 text-sm font-medium text-indigo-primary transition-colors hover:bg-indigo-lightest"
                       >
                         <FileText className="h-4 w-4" />
-                        Estado
+                        Detalle
                       </Link>
                       <Link
                         to={`/cobranzas/registrar-pago/${alumno.id}`}
