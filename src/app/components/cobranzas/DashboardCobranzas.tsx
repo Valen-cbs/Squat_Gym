@@ -6,8 +6,6 @@ import {
   FileText,
   ArrowRight,
   CheckCircle2,
-  ClipboardList,
-  Send,
 } from "lucide-react";
 import { getAlumnosDeudores } from "../../data/alumnos";
 
@@ -53,7 +51,6 @@ export default function DashboardCobranzas() {
       <div className="app-page-header">
         <div>
           <h1 className="app-page-title">Panel de cobranzas</h1>
-          <p className="app-page-copy">Seguimiento de pagos, cuentas corrientes y alumnos con deuda desde una vista mas compacta para mobile.</p>
         </div>
       </div>
 
@@ -73,14 +70,13 @@ export default function DashboardCobranzas() {
         ))}
       </div>
 
-      <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
         <Link
           to="/cobranzas/buscar-alumno"
           className="app-action-card"
         >
           <Search className="h-8 w-8" />
           <p className="mt-4 text-xl font-bold">Buscar alumno</p>
-          <p className="mt-1 text-sm text-white/90">Consultar estado de cuenta y pagos pendientes.</p>
         </Link>
 
         <Link
@@ -89,25 +85,6 @@ export default function DashboardCobranzas() {
         >
           <AlertCircle className="h-8 w-8" />
           <p className="mt-4 text-xl font-bold">Alumnos con deuda</p>
-          <p className="mt-1 text-sm text-white/90">Ver montos, fechas de atraso y detalle de cuenta.</p>
-        </Link>
-
-        <Link
-          to="/cobranzas/reclamos"
-          className="app-action-card"
-        >
-          <ClipboardList className="h-8 w-8" />
-          <p className="mt-4 text-xl font-bold">Reclamos de pago</p>
-          <p className="mt-1 text-sm text-white/90">Resolver pagos informados que no figuran registrados.</p>
-        </Link>
-
-        <Link
-          to="/cobranzas/recordatorios"
-          className="app-action-card"
-        >
-          <Send className="h-8 w-8" />
-          <p className="mt-4 text-xl font-bold">Recordatorios</p>
-          <p className="mt-1 text-sm text-white/90">Enviar avisos masivos de vencimiento.</p>
         </Link>
 
         <Link
@@ -116,7 +93,6 @@ export default function DashboardCobranzas() {
         >
           <FileText className="h-8 w-8" />
           <p className="mt-4 text-xl font-bold">Listado de cobranzas</p>
-          <p className="mt-1 text-sm text-white/90">Visualiza los registros de cobros del periodo.</p>
         </Link>
       </div>
 
@@ -125,31 +101,45 @@ export default function DashboardCobranzas() {
           <div className="border-b border-indigo-light px-5 py-4 sm:px-6">
             <h2 className="text-xl font-bold text-indigo-darkest">Ultimos pagos recibidos</h2>
           </div>
-          <div className="app-table-scroll px-5 py-4 sm:px-6">
-            <table className="app-table w-full">
+          <div className="hidden px-4 py-4 lg:block lg:px-6">
+            <table className="w-full table-fixed">
               <thead>
                 <tr className="border-b border-indigo-light">
-                  <th className="py-3 text-left text-sm font-medium text-indigo-dark">Alumno</th>
-                  <th className="py-3 text-left text-sm font-medium text-indigo-dark">Monto</th>
-                  <th className="py-3 text-left text-sm font-medium text-indigo-dark">Metodo</th>
-                  <th className="py-3 text-left text-sm font-medium text-indigo-dark">Fecha</th>
+                  <th className="w-[34%] py-3 pr-3 text-left text-sm font-medium text-indigo-dark">Alumno</th>
+                  <th className="w-[18%] py-3 px-2 text-left text-sm font-medium text-indigo-dark">Monto</th>
+                  <th className="w-[24%] py-3 px-2 text-left text-sm font-medium text-indigo-dark">Metodo</th>
+                  <th className="w-[24%] py-3 pl-2 text-right text-sm font-medium text-indigo-dark">Fecha</th>
                 </tr>
               </thead>
               <tbody>
                 {recentPayments.map((payment) => (
                   <tr key={payment.id} className="border-b border-indigo-light odd:bg-indigo-lightest/60">
-                    <td className="py-3 text-sm text-indigo-darkest">{payment.name}</td>
-                    <td className="py-3 text-sm font-medium text-success-dark">${payment.amount}</td>
-                    <td className="py-3 text-sm text-indigo-dark">{payment.method}</td>
-                    <td className="py-3 text-sm text-indigo-dark">{payment.date}</td>
+                    <td className="py-3 pr-3 text-sm text-indigo-darkest">{payment.name}</td>
+                    <td className="py-3 px-2 text-sm font-medium text-success-dark">${payment.amount}</td>
+                    <td className="py-3 px-2 text-sm text-indigo-dark">{payment.method}</td>
+                    <td className="py-3 pl-2 text-right text-sm text-indigo-dark">{payment.date}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
+          <div className="space-y-3 px-5 py-4 lg:hidden">
+            {recentPayments.map((payment) => (
+              <div key={payment.id} className="rounded-xl border border-indigo-light bg-indigo-lightest/60 p-4">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <p className="font-medium text-indigo-darkest">{payment.name}</p>
+                    <p className="mt-1 text-sm text-indigo-dark">{payment.method}</p>
+                  </div>
+                  <p className="font-bold text-success-dark">${payment.amount}</p>
+                </div>
+                <p className="mt-3 text-sm text-indigo-dark">{payment.date}</p>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div className="app-panel">
+        <div className="app-panel overflow-hidden">
           <div className="border-b border-indigo-light px-5 py-4 sm:px-6">
             <div className="flex items-center gap-2">
               <AlertCircle className="h-5 w-5 text-error-dark" />
@@ -159,14 +149,14 @@ export default function DashboardCobranzas() {
           <div className="space-y-3 px-5 py-5 sm:px-6">
             {debtors.map((debtor) => (
               <div key={debtor.id} className="rounded-2xl border border-error-medium bg-error-light/35 p-4">
-                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                  <div>
+                <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                  <div className="min-w-0">
                     <p className="font-medium text-indigo-darkest">{debtor.name}</p>
                     <p className="text-sm text-error-dark">
                       {debtor.months} {debtor.months === 1 ? "mes" : "meses"} de atraso
                     </p>
                   </div>
-                  <div className="flex items-center justify-between gap-4 sm:block sm:text-right">
+                  <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 md:flex-col md:items-end md:text-right">
                     <p className="font-bold text-error-dark">${debtor.debt}</p>
                     <Link
                       to={`/cobranzas/estado-cuenta/${debtor.id}`}

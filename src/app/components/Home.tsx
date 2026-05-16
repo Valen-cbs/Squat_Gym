@@ -17,9 +17,7 @@ import { hasPermission } from "../permissions";
 
 export default function Home() {
   const { user } = useUser();
-  const displayName = user?.role === "secretary" && (!user.name || user.name === "Usuario")
-    ? "Malena Trangoni"
-    : user?.name || "Usuario";
+  const displayName = "Usuario";
   const roleLabel =
     user?.role === "secretary" ? "Secretaria" :
     user?.role === "manager" ? "Encargado de sede norte" :

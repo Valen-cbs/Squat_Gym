@@ -6,7 +6,6 @@ import {
   Download,
   Filter,
   Search,
-  CheckCircle,
   XCircle
 } from "lucide-react";
 
@@ -124,7 +123,6 @@ export default function ListadoCobranzas() {
                 <th className="text-left px-6 py-4 text-sm font-medium text-gray-500">Alumno</th>
                 <th className="text-left px-6 py-4 text-sm font-medium text-gray-500">Monto</th>
                 <th className="text-left px-6 py-4 text-sm font-medium text-gray-500">Método</th>
-                <th className="text-left px-6 py-4 text-sm font-medium text-gray-500">Estado</th>
                 <th className="text-left px-6 py-4 text-sm font-medium text-gray-500">Detalle</th>
               </tr>
             </thead>
@@ -141,12 +139,6 @@ export default function ListadoCobranzas() {
                   <td className="px-6 py-4 text-sm text-gray-900 font-medium">{cobranza.alumno}</td>
                   <td className="px-6 py-4 text-sm font-bold text-gray-900">${cobranza.amount}</td>
                   <td className="px-6 py-4 text-sm text-gray-600">{cobranza.method}</td>
-                  <td className="px-6 py-4">
-                    <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium bg-success-light text-success-dark">
-                      <CheckCircle className="w-3 h-3" />
-                      {cobranza.status}
-                    </span>
-                  </td>
                   <td className="px-6 py-4">
                     <Link
                       to={`/cobranzas/recibo/${cobranza.id}`}

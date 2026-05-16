@@ -81,7 +81,6 @@ export default function KioscoPrincipal() {
           {
             to: "/kiosco/nueva-venta",
             title: "Nueva venta",
-            description: "Registrar productos vendidos y emitir ticket.",
             icon: ShoppingCart,
             color: "from-blue-600 to-cyan-500",
           },
@@ -92,7 +91,6 @@ export default function KioscoPrincipal() {
           {
             to: "/kiosco/stock",
             title: "Ver stock",
-            description: "Consultar inventario y faltantes.",
             icon: Package,
             color: "from-violet-600 to-fuchsia-500",
           },

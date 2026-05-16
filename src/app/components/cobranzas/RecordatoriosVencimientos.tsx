@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { BellRing, CheckCircle, Clock, Mail, Search, Send } from "lucide-react";
+import { Link } from "react-router";
+import { CreditCard, FileText, Search } from "lucide-react";
 
 type DueStudent = {
   id: number;
@@ -13,7 +14,6 @@ type DueStudent = {
 
 export default function RecordatoriosVencimientos() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [sent, setSent] = useState(false);
 
   const students: DueStudent[] = [
     { id: 1, alumno: "Juan Perez", dni: "12345678", dueDate: "03/05/2026", amount: 850, status: "Proximo a vencer", channel: "Email + WhatsApp" },
@@ -26,56 +26,11 @@ export default function RecordatoriosVencimientos() {
     `${student.alumno} ${student.dni} ${student.status}`.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const dueSoonCount = students.filter((student) => student.status === "Proximo a vencer").length;
-  const overdueCount = students.filter((student) => student.status === "Vencido").length;
-  const totalAmount = students.reduce((sum, student) => sum + student.amount, 0);
-
   return (
     <div className="app-page">
       <div className="app-page-header">
         <div>
           <h1 className="app-page-title">Recordatorios de vencimiento</h1>
-          <p className="app-page-copy">
-            Envio masivo a alumnos con cuotas proximas a vencer o ya vencidas.
-          </p>
-        </div>
-        <button
-          onClick={() => setSent(true)}
-          className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
-        >
-          <Send className="h-4 w-4" />
-          Enviar recordatorios
-        </button>
-      </div>
-
-      {sent && (
-        <div className="mb-6 flex items-center gap-3 rounded-xl border border-green-200 bg-green-50 p-4 text-green-800">
-          <CheckCircle className="h-5 w-5" />
-          <p className="font-medium">Recordatorios enviados a {students.length} alumnos seleccionados.</p>
-        </div>
-      )}
-
-      <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-3">
-        <div className="app-panel p-5">
-          <div className="flex items-center justify-between">
-            <p className="text-sm text-slate-500">Proximos a vencer</p>
-            <Clock className="h-5 w-5 text-blue-600" />
-          </div>
-          <p className="mt-2 text-3xl font-bold text-slate-950">{dueSoonCount}</p>
-        </div>
-        <div className="app-panel p-5">
-          <div className="flex items-center justify-between">
-            <p className="text-sm text-slate-500">Vencidos</p>
-            <BellRing className="h-5 w-5 text-orange-600" />
-          </div>
-          <p className="mt-2 text-3xl font-bold text-orange-600">{overdueCount}</p>
-        </div>
-        <div className="app-panel p-5">
-          <div className="flex items-center justify-between">
-            <p className="text-sm text-slate-500">Monto involucrado</p>
-            <Mail className="h-5 w-5 text-green-600" />
-          </div>
-          <p className="mt-2 text-3xl font-bold text-slate-950">${totalAmount.toLocaleString()}</p>
         </div>
       </div>
 
@@ -101,10 +56,9 @@ export default function RecordatoriosVencimientos() {
             <thead>
               <tr className="border-b border-slate-200 bg-slate-50">
                 <th className="px-6 py-4 text-left text-sm font-medium text-slate-500">Alumno</th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-slate-500">Vencimiento</th>
                 <th className="px-6 py-4 text-left text-sm font-medium text-slate-500">Monto</th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-slate-500">Estado</th>
                 <th className="px-6 py-4 text-left text-sm font-medium text-slate-500">Canal</th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-slate-500">Acciones</th>
               </tr>
             </thead>
             <tbody>
@@ -114,20 +68,26 @@ export default function RecordatoriosVencimientos() {
                     <p className="font-medium text-slate-900">{student.alumno}</p>
                     <p className="text-sm text-slate-500">DNI {student.dni}</p>
                   </td>
-                  <td className="px-6 py-4 text-sm text-slate-600">{student.dueDate}</td>
                   <td className="px-6 py-4 text-sm font-bold text-slate-900">${student.amount}</td>
-                  <td className="px-6 py-4">
-                    <span
-                      className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${
-                        student.status === "Vencido"
-                          ? "bg-orange-100 text-orange-700"
-                          : "bg-blue-100 text-blue-700"
-                      }`}
-                    >
-                      {student.status}
-                    </span>
-                  </td>
                   <td className="px-6 py-4 text-sm text-slate-600">{student.channel}</td>
+                  <td className="px-6 py-4">
+                    <div className="flex flex-col gap-2 sm:flex-row">
+                      <Link
+                        to={`/cobranzas/estado-cuenta/${student.id}`}
+                        className="inline-flex items-center justify-center gap-2 rounded-lg border border-indigo-light px-3 py-2 text-sm font-medium text-indigo-primary transition-colors hover:bg-indigo-lightest"
+                      >
+                        <FileText className="h-4 w-4" />
+                        Estado
+                      </Link>
+                      <Link
+                        to={`/cobranzas/registrar-pago/${student.id}`}
+                        className="inline-flex items-center justify-center gap-2 rounded-lg bg-success-medium px-3 py-2 text-sm font-medium text-white transition-colors hover:opacity-90"
+                      >
+                        <CreditCard className="h-4 w-4" />
+                        Pago
+                      </Link>
+                    </div>
+                  </td>
                 </tr>
               ))}
             </tbody>

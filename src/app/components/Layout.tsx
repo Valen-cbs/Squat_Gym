@@ -207,18 +207,18 @@ export default function Layout() {
         }`}
       >
         <header className="sticky top-0 z-30 border-b border-white/70 bg-white/80 px-4 py-3 backdrop-blur sm:px-6 lg:hidden">
-          <div className="flex items-center justify-between gap-3">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">SquatGym</p>
-              <p className="text-base font-semibold text-slate-900">{user?.roleName || "Panel"}</p>
-            </div>
+          <div className="flex items-center gap-3">
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700 shadow-sm"
+              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700 shadow-sm"
               aria-label="Abrir navegacion"
             >
               <Menu className="h-5 w-5" />
             </button>
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">SquatGym</p>
+              <p className="text-base font-semibold text-slate-900">{user?.roleName || "Panel"}</p>
+            </div>
           </div>
         </header>
 
@@ -229,7 +229,7 @@ export default function Layout() {
               onClick={closeMobileMenu}
               aria-label="Cerrar navegacion"
             />
-            <aside className="relative flex h-full w-[88vw] max-w-xs flex-col bg-white shadow-2xl">
+            <aside className="absolute inset-y-0 left-0 flex h-full w-[88vw] max-w-xs flex-col bg-white shadow-2xl">
               <div className="flex items-center justify-between border-b border-slate-200 px-4 py-3">
                 <p className="font-semibold text-slate-900">Navegacion</p>
                 <button
