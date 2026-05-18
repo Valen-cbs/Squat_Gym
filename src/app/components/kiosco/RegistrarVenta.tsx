@@ -1,6 +1,6 @@
 ﻿import { useEffect, useMemo, useState } from "react";
-import { Link, useNavigate } from "react-router";
-import { Plus, Trash2, ShoppingCart, Search, CreditCard, ArrowDown } from "lucide-react";
+import { useNavigate } from "react-router";
+import { Plus, Trash2, ShoppingCart, Search, CreditCard } from "lucide-react";
 import PaymentMethodSelector, { paymentMethodLabels } from "../PaymentMethodSelector";
 import { kioskProducts } from "../../data/catalog";
 
@@ -100,6 +100,7 @@ export default function RegistrarVenta() {
   };
 
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const cartItemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   const handleConfirmSale = () => {
     const updatedProducts = products.map((product) => {
@@ -127,8 +128,8 @@ export default function RegistrarVenta() {
         <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">Nueva venta</h1>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-        <div className="space-y-4 lg:col-span-2">
+      <div className={`grid grid-cols-1 gap-6 ${cart.length > 0 ? "lg:grid-cols-3" : ""}`}>
+        <div className={`space-y-4 ${cart.length > 0 ? "lg:col-span-2" : ""}`}>
           <div className="app-panel p-5 sm:p-6">
             <div className="mb-4 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
@@ -184,105 +185,90 @@ export default function RegistrarVenta() {
           </div>
         </div>
 
-        <div id="carrito" className="scroll-mt-6 lg:col-span-1">
-          <div className="app-panel p-5 sm:p-6 lg:sticky lg:top-8">
-            <div className="mb-4 flex items-center gap-2">
-              <ShoppingCart className="h-5 w-5 text-gray-900" />
-              <h2 className="text-xl font-bold text-gray-900">Carrito</h2>
-            </div>
-
-            {cart.length === 0 ? (
-              <div className="py-8 text-center">
-                <ShoppingCart className="mx-auto mb-2 h-12 w-12 text-gray-300" />
-                <p className="text-gray-500">No hay productos en el carrito</p>
+        {cart.length > 0 && (
+          <div id="carrito" className="scroll-mt-6 lg:col-span-1">
+            <div className="app-panel p-5 sm:p-6 lg:sticky lg:top-8">
+              <div className="mb-4 flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2">
+                  <ShoppingCart className="h-5 w-5 text-gray-900" />
+                  <h2 className="text-xl font-bold text-gray-900">Carrito</h2>
+                </div>
+                <span className="rounded-full bg-indigo-lightest px-3 py-1 text-sm font-semibold text-indigo-primary">
+                  {cartItemCount} {cartItemCount === 1 ? "item" : "items"}
+                </span>
               </div>
-            ) : (
-              <>
-                <div className="mb-6 max-h-80 space-y-3 overflow-y-auto">
-                  {cart.map((item) => (
-                    <div key={item.id} className="rounded-lg border border-gray-200 p-3">
-                      <div className="mb-2 flex items-start justify-between">
-                        <p className="text-sm font-medium text-gray-900">{item.name}</p>
+
+              <div className="mb-6 max-h-72 space-y-3 overflow-y-auto pr-1 sm:max-h-80">
+                {cart.map((item) => (
+                  <div key={item.id} className="rounded-lg border border-gray-200 p-3">
+                    <div className="mb-2 flex items-start justify-between gap-3">
+                      <p className="text-sm font-medium text-gray-900">{item.name}</p>
+                      <button
+                        onClick={() => removeFromCart(item.id)}
+                        className="shrink-0 text-red-600 hover:text-red-700"
+                        aria-label={`Quitar ${item.name}`}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                    </div>
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="flex items-center gap-2">
                         <button
-                          onClick={() => removeFromCart(item.id)}
-                          className="text-red-600 hover:text-red-700"
+                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                          className="flex h-8 w-8 items-center justify-center rounded bg-gray-100 font-semibold hover:bg-gray-200"
+                          aria-label={`Restar ${item.name}`}
                         >
-                          <Trash2 className="h-4 w-4" />
+                          -
+                        </button>
+                        <span className="w-8 text-center font-medium">{item.quantity}</span>
+                        <button
+                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                          className="flex h-8 w-8 items-center justify-center rounded bg-gray-100 font-semibold hover:bg-gray-200"
+                          aria-label={`Sumar ${item.name}`}
+                        >
+                          +
                         </button>
                       </div>
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <button
-                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                            className="h-7 w-7 rounded bg-gray-100 hover:bg-gray-200"
-                          >
-                            -
-                          </button>
-                          <span className="w-8 text-center font-medium">{item.quantity}</span>
-                          <button
-                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                            className="h-7 w-7 rounded bg-gray-100 hover:bg-gray-200"
-                          >
-                            +
-                          </button>
-                        </div>
-                        <p className="font-bold text-gray-900">${item.price * item.quantity}</p>
-                      </div>
+                      <p className="font-bold text-gray-900">${item.price * item.quantity}</p>
                     </div>
-                  ))}
-                </div>
-
-                <div className="mb-6">
-                  <PaymentMethodSelector
-                    title="Medio de pago"
-                    value={paymentMethod}
-                    onChange={setPaymentMethod}
-                  />
-                </div>
-
-                <div className="mb-4 border-t border-gray-200 pt-4">
-                  <div className="mb-2 flex items-center justify-between">
-                    <span className="text-gray-600">Subtotal:</span>
-                    <span className="font-medium text-gray-900">${total}</span>
                   </div>
-                  <div className="mb-2 flex items-center justify-between text-sm text-gray-600">
-                    <span>Medio de pago:</span>
-                    <span>{paymentMethodLabels[paymentMethod]}</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="font-bold text-gray-900">Total:</span>
-                    <span className="text-2xl font-bold text-gray-900">${total}</span>
-                  </div>
-                </div>
+                ))}
+              </div>
 
-                <button
-                  onClick={handleConfirmSale}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-green-600 py-3 font-medium text-white transition-colors hover:bg-green-700"
-                >
-                  <CreditCard className="h-5 w-5" />
-                  Confirmar venta
-                </button>
-              </>
-            )}
+              <div className="mb-6">
+                <PaymentMethodSelector
+                  title="Medio de pago"
+                  value={paymentMethod}
+                  onChange={setPaymentMethod}
+                />
+              </div>
+
+              <div className="mb-4 border-t border-gray-200 pt-4">
+                <div className="mb-2 flex items-center justify-between">
+                  <span className="text-gray-600">Subtotal:</span>
+                  <span className="font-medium text-gray-900">${total}</span>
+                </div>
+                <div className="mb-2 flex items-center justify-between text-sm text-gray-600">
+                  <span>Medio de pago:</span>
+                  <span>{paymentMethodLabels[paymentMethod]}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-gray-900">Total:</span>
+                  <span className="text-2xl font-bold text-gray-900">${total}</span>
+                </div>
+              </div>
+
+              <button
+                onClick={handleConfirmSale}
+                className="flex w-full items-center justify-center gap-2 rounded-lg bg-green-600 py-3 font-medium text-white transition-colors hover:bg-green-700"
+              >
+                <CreditCard className="h-5 w-5" />
+                Confirmar venta
+              </button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
-
-      {cart.length > 0 && (
-        <a
-          href="#carrito"
-          className="fixed bottom-4 left-4 right-4 z-40 flex items-center justify-between rounded-lg bg-indigo-primary px-4 py-3 font-medium text-white shadow-lg shadow-indigo-primary/30 lg:hidden"
-        >
-          <span className="flex items-center gap-2">
-            <ShoppingCart className="h-5 w-5" />
-            Ver carrito ({cart.reduce((sum, item) => sum + item.quantity, 0)})
-          </span>
-          <span className="flex items-center gap-2">
-            ${total}
-            <ArrowDown className="h-4 w-4" />
-          </span>
-        </a>
-      )}
     </div>
   );
 }
