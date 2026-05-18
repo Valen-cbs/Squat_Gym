@@ -33,7 +33,7 @@ export default function DetalleVenta() {
     items,
     total,
     paymentMethod: saleState?.paymentMethod || "Efectivo",
-    attendedBy: "Secretaria: Malena Trangoni",
+    attendedBy: user?.role === "secretary" ? "Secretaria" : undefined,
   };
 
   return (

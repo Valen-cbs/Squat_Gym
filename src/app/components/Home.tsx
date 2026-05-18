@@ -213,31 +213,31 @@ export default function Home() {
           </div>
         )}
 
-        <div
-          className={`grid gap-4 ${
-            quickActions.length > 4
-              ? "grid-cols-1 md:grid-cols-2 2xl:grid-cols-3"
-              : user?.role === "secretary"
-                ? "mx-auto max-w-5xl grid-cols-1 md:grid-cols-2"
+        {user?.role !== "secretary" && (
+          <div
+            className={`grid gap-4 ${
+              quickActions.length > 4
+                ? "grid-cols-1 md:grid-cols-2 2xl:grid-cols-3"
                 : "grid-cols-1 md:grid-cols-2 xl:grid-cols-4"
-          }`}
-        >
-          {quickActions.map((action, index) => (
-            <Link
-              key={index}
-              to={action.link}
-              className="app-action-card group"
-            >
-              <div className="app-action-content">
-                <div className="app-action-icon">
-                  <action.icon className="h-6 w-6" />
+            }`}
+          >
+            {quickActions.map((action, index) => (
+              <Link
+                key={index}
+                to={action.link}
+                className="app-action-card group"
+              >
+                <div className="app-action-content">
+                  <div className="app-action-icon">
+                    <action.icon className="h-6 w-6" />
+                  </div>
+                  <span className="app-action-label">{action.title}</span>
                 </div>
-                <span className="app-action-label">{action.title}</span>
-              </div>
-              <ArrowRight className="app-action-arrow" />
-            </Link>
-          ))}
-        </div>
+                <ArrowRight className="app-action-arrow" />
+              </Link>
+            ))}
+          </div>
+        )}
       </section>
     </div>
   );

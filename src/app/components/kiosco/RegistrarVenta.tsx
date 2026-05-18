@@ -1,6 +1,6 @@
 ﻿import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router";
-import { Plus, Trash2, ShoppingCart, Search, CreditCard } from "lucide-react";
+import { Plus, Trash2, ShoppingCart, Search, CreditCard, ArrowDown } from "lucide-react";
 import PaymentMethodSelector, { paymentMethodLabels } from "../PaymentMethodSelector";
 import { kioskProducts } from "../../data/catalog";
 
@@ -133,7 +133,6 @@ export default function RegistrarVenta() {
             <div className="mb-4 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <h2 className="text-xl font-bold text-gray-900">Productos disponibles</h2>
-                <p className="mt-1 text-sm text-gray-500">Encuentra un producto por nombre.</p>
               </div>
               <div className="relative w-full sm:max-w-sm">
                 <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
@@ -185,7 +184,7 @@ export default function RegistrarVenta() {
           </div>
         </div>
 
-        <div className="lg:col-span-1">
+        <div id="carrito" className="scroll-mt-6 lg:col-span-1">
           <div className="app-panel p-5 sm:p-6 lg:sticky lg:top-8">
             <div className="mb-4 flex items-center gap-2">
               <ShoppingCart className="h-5 w-5 text-gray-900" />
@@ -268,6 +267,22 @@ export default function RegistrarVenta() {
           </div>
         </div>
       </div>
+
+      {cart.length > 0 && (
+        <a
+          href="#carrito"
+          className="fixed bottom-4 left-4 right-4 z-40 flex items-center justify-between rounded-lg bg-indigo-primary px-4 py-3 font-medium text-white shadow-lg shadow-indigo-primary/30 lg:hidden"
+        >
+          <span className="flex items-center gap-2">
+            <ShoppingCart className="h-5 w-5" />
+            Ver carrito ({cart.reduce((sum, item) => sum + item.quantity, 0)})
+          </span>
+          <span className="flex items-center gap-2">
+            ${total}
+            <ArrowDown className="h-4 w-4" />
+          </span>
+        </a>
+      )}
     </div>
   );
 }
