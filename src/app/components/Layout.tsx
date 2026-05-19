@@ -20,6 +20,7 @@ import {
 import { useUser } from "../context/UserContext";
 import PageBackButton from "./PageBackButton";
 import { hasPermission } from "../permissions";
+import { getAlumnosDeudores } from "../data/alumnos";
 
 export default function Layout() {
   const location = useLocation();
@@ -108,6 +109,7 @@ export default function Layout() {
 
   const roleAccent = "from-indigo-primary to-indigo-dark";
   const branchLabel = "Sede Norte";
+  const debtorsCount = getAlumnosDeudores().length;
   const notifications = useMemo(() => {
     const items = [];
 
@@ -115,7 +117,7 @@ export default function Layout() {
       items.push({
         id: "debtors",
         title: "Alumnos con deuda",
-        message: "3 alumnos requieren seguimiento de cobranza.",
+        message: `${debtorsCount} alumnos requieren seguimiento de cobranza.`,
         to: "/cobranzas/deudores",
         icon: Users,
       });
@@ -152,7 +154,7 @@ export default function Layout() {
     }
 
     return items;
-  }, [user?.role]);
+  }, [user?.role, debtorsCount]);
   const unreadNotificationCount = notifications.filter((notification) => !readNotificationIds.includes(notification.id)).length;
 
   const renderNotificationsButton = () => (

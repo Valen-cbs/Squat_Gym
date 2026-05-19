@@ -1,29 +1,21 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import { CreditCard, FileText, Search } from "lucide-react";
+import { getAlumnosDeudores } from "../../data/alumnos";
 
-type DueStudent = {
-  id: number;
-  alumno: string;
-  dni: string;
-  dueDate: string;
-  amount: number;
-  status: "Proximo a vencer" | "Vencido";
-  channel: string;
+const reminderChannels: Record<number, string> = {
+  6: "WhatsApp",
+  7: "Email + WhatsApp",
+  8: "Email",
+  9: "Email + WhatsApp",
 };
 
 export default function RecordatoriosVencimientos() {
   const [searchTerm, setSearchTerm] = useState("");
 
-  const students: DueStudent[] = [
-    { id: 1, alumno: "Juan Perez", dni: "12345678", dueDate: "03/05/2026", amount: 850, status: "Proximo a vencer", channel: "Email + WhatsApp" },
-    { id: 2, alumno: "Maria Gonzalez", dni: "23456789", dueDate: "04/05/2026", amount: 850, status: "Proximo a vencer", channel: "Email" },
-    { id: 3, alumno: "Laura Fernandez", dni: "78901234", dueDate: "28/04/2026", amount: 850, status: "Vencido", channel: "Email + WhatsApp" },
-    { id: 4, alumno: "Roberto Silva", dni: "67890123", dueDate: "26/04/2026", amount: 1700, status: "Vencido", channel: "WhatsApp" },
-  ];
-
+  const students = getAlumnosDeudores();
   const filteredStudents = students.filter((student) =>
-    `${student.alumno} ${student.dni} ${student.status}`.toLowerCase().includes(searchTerm.toLowerCase())
+    `${student.name} ${student.dni} ${student.status}`.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -65,11 +57,11 @@ export default function RecordatoriosVencimientos() {
               {filteredStudents.map((student) => (
                 <tr key={student.id} className="border-b border-slate-100 hover:bg-slate-50">
                   <td className="px-6 py-4">
-                    <p className="font-medium text-slate-900">{student.alumno}</p>
+                    <p className="font-medium text-slate-900">{student.name}</p>
                     <p className="text-sm text-slate-500">DNI {student.dni}</p>
                   </td>
-                  <td className="px-6 py-4 text-sm font-bold text-slate-900">${student.amount}</td>
-                  <td className="px-6 py-4 text-sm text-slate-600">{student.channel}</td>
+                  <td className="px-6 py-4 text-sm font-bold text-slate-900">${student.debtAmount}</td>
+                  <td className="px-6 py-4 text-sm text-slate-600">{reminderChannels[student.id] || "Email"}</td>
                   <td className="px-6 py-4">
                     <div className="flex flex-col gap-2 sm:flex-row">
                       <Link

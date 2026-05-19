@@ -119,6 +119,19 @@ export const alumnos: Alumno[] = [
     overdueMonths: 3,
     lastPayment: "10/01/2026",
   },
+  {
+    id: 9,
+    name: "Camila Ruiz",
+    dni: "90123456",
+    email: "camila.ruiz@email.com",
+    phone: "+54 11 6677-8899",
+    plan: "Natacion",
+    monthlyFee: getPlanPrice("Natacion"),
+    status: "Deudor",
+    debtAmount: getPlanPrice("Natacion") * 2,
+    overdueMonths: 2,
+    lastPayment: "12/02/2026",
+  },
 ];
 
 export function getAlumnoById(id: string | number) {

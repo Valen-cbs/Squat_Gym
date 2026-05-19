@@ -10,9 +10,11 @@ import {
   ShoppingCart,
 } from "lucide-react";
 import { getProductById } from "../../data/catalog";
+import { getAlumnosDeudores } from "../../data/alumnos";
 
 export default function DashboardEncargado() {
   const criticalProduct = getProductById(7)!;
+  const debtorsCount = getAlumnosDeudores().length;
   const quickActions = [
     {
       title: "Alumnos",
@@ -39,7 +41,7 @@ export default function DashboardEncargado() {
       title: "Alumnos con deuda",
       description: "Consultar montos pendientes y fechas de atraso.",
       icon: Users,
-      badge: "3 deudores",
+      badge: `${debtorsCount} deudores`,
       link: "/cobranzas/deudores",
     },
     {
