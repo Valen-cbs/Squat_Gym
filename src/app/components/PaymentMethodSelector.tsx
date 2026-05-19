@@ -26,20 +26,20 @@ export default function PaymentMethodSelector({
   return (
     <div>
       <label className="mb-3 block text-sm font-medium text-gray-700">{title}</label>
-      <div className="grid grid-cols-2 gap-3 xl:grid-cols-4">
+      <div className="grid grid-cols-2 gap-2 sm:gap-3 lg:grid-cols-4">
         {paymentMethods.map((method) => (
           <button
             key={method.id}
             type="button"
             onClick={() => onChange(method.id)}
-            className={`flex flex-col items-center gap-2 rounded-lg border-2 p-4 transition-colors ${
+            className={`flex min-h-14 items-center justify-center gap-2 rounded-lg border-2 px-3 py-2.5 text-center transition-colors ${
               value === method.id
                 ? "border-blue-500 bg-blue-50 text-blue-700"
                 : "border-gray-200 hover:border-gray-300"
             }`}
           >
-            <method.icon className="h-6 w-6" />
-            <span className="text-sm font-medium">{method.label}</span>
+            <method.icon className="h-5 w-5 shrink-0" />
+            <span className="text-sm font-medium leading-tight">{method.label}</span>
           </button>
         ))}
       </div>
