@@ -20,7 +20,6 @@ import {
 import { useUser } from "../context/UserContext";
 import PageBackButton from "./PageBackButton";
 import { hasPermission } from "../permissions";
-import { getAlumnosDeudores } from "../data/alumnos";
 
 export default function Layout() {
   const location = useLocation();
@@ -101,7 +100,6 @@ export default function Layout() {
 
   const roleAccent = "from-indigo-primary to-indigo-dark";
   const branchLabel = user?.role === "admin" ? "Vista general" : "Sede Norte";
-  const debtorsCount = getAlumnosDeudores().length;
   const notifications = useMemo(() => {
     const items = [];
 
@@ -109,8 +107,8 @@ export default function Layout() {
       items.push({
         id: "debtors",
         title: "Alumnos con deuda",
-        message: `${debtorsCount} alumnos requieren seguimiento de cobranza.`,
-        to: "/cobranzas/deudores",
+        message: "4 alumnos requieren seguimiento de cobranza",
+        to: "/cobranzas",
         icon: Users,
       });
     }
@@ -146,7 +144,7 @@ export default function Layout() {
     }
 
     return items;
-  }, [user?.role, debtorsCount]);
+  }, [user?.role]);
   const unreadNotificationCount = notifications.filter((notification) => !readNotificationIds.includes(notification.id)).length;
 
   const renderNotificationsButton = () => (
@@ -274,8 +272,8 @@ export default function Layout() {
               )}
             </div>
             <div className="min-w-0 flex-1">
-              <p className="font-medium text-slate-900">{user?.name || "Usuario"}</p>
-              <p className="text-sm text-slate-500">{user?.roleName || "Rol no asignado"}</p>
+              <p className="font-medium text-slate-900">{user?.roleName || "Rol no asignado"}</p>
+              <p className="text-sm text-slate-500">{branchLabel}</p>
             </div>
             <Link
               to="/perfil"

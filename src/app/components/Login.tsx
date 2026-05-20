@@ -1,50 +1,61 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router";
-import { User, Lock, Dumbbell, Shield, Briefcase, Users, ArrowRight } from "lucide-react";
+import { ArrowRight, Dumbbell, Lock, User } from "lucide-react";
 import { useUser } from "../context/UserContext";
+import type { Role } from "../permissions";
+
+type LoginRole = {
+  input: string;
+  value: Role;
+  name: string;
+  redirectTo: string;
+};
+
+const roles: LoginRole[] = [
+  {
+    input: "secretaria",
+    value: "secretary",
+    name: "Secretaria",
+    redirectTo: "/cobranzas",
+  },
+  {
+    input: "administrador",
+    value: "admin",
+    name: "Administrador",
+    redirectTo: "/admin",
+  },
+  {
+    input: "encargado",
+    value: "manager",
+    name: "Encargado de sede norte",
+    redirectTo: "/encargado",
+  },
+];
 
 export default function Login() {
   const navigate = useNavigate();
   const { setUser } = useUser();
-  const [email, setEmail] = useState("");
+  const [roleInput, setRoleInput] = useState("");
   const [password, setPassword] = useState("");
-  const [selectedRole, setSelectedRole] = useState<"admin" | "manager" | "secretary">("secretary");
-
-  const roles = [
-    {
-      value: "admin" as const,
-      name: "Administrador general",
-      icon: Shield,
-      color: "from-blue-600 to-indigo-600",
-      description: "Acceso completo al sistema",
-    },
-    {
-      value: "manager" as const,
-      name: "Encargado de sede norte",
-      icon: Briefcase,
-      color: "from-amber-500 to-orange-500",
-      description: "Alumnos, deudores, ventas, stock y reposicion",
-    },
-    {
-      value: "secretary" as const,
-      name: "Secretaria",
-      icon: Users,
-      color: "from-sky-500 to-blue-500",
-      description: "Cobros, reclamos, kiosco y ventas",
-    },
-  ];
+  const [loginError, setLoginError] = useState("");
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    const role = roles.find((item) => item.value === selectedRole);
-    if (role) {
-      setUser({
-        name: email || "Usuario",
-        role: selectedRole,
-        roleName: role.name,
-      });
+    const requestedRole = roleInput.trim().toLowerCase();
+    const role = roles.find((item) => item.input === requestedRole);
+
+    if (!role) {
+      setLoginError("Ingresá una de estas opciones: secretaria, administrador o encargado.");
+      return;
     }
-    navigate("/home");
+
+    setLoginError("");
+    setUser({
+      name: role.name,
+      role: role.value,
+      roleName: role.name,
+    });
+    navigate(role.redirectTo);
   };
 
   return (
@@ -64,58 +75,30 @@ export default function Login() {
           <section className="w-full px-5 py-6 sm:px-8 sm:py-8">
             <div className="mb-6 sm:mb-8">
               <h2 className="text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">Iniciar sesión</h2>
-              <p className="mt-2 text-sm text-slate-500 sm:text-base">Seleccioná un rol e ingresá al sistema.</p>
+              <p className="mt-2 text-sm text-slate-500 sm:text-base">Escribí el rol e ingresá al sistema.</p>
             </div>
 
             <form onSubmit={handleLogin} className="space-y-6">
-              <div>
-                <label className="mb-3 block text-sm font-medium text-slate-700">
-                  Seleccioná tu rol
-                </label>
-                <div className="grid gap-3">
-                  {roles.map((role) => (
-                    <button
-                      key={role.value}
-                      type="button"
-                      onClick={() => setSelectedRole(role.value)}
-                      className={`w-full rounded-2xl border p-4 text-left transition-all sm:p-5 ${
-                        selectedRole === role.value
-                          ? "border-blue-500 bg-blue-50 shadow-sm shadow-blue-100"
-                          : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50"
-                      }`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br ${role.color} text-white shadow-sm`}>
-                          <role.icon className="h-5 w-5" />
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <p className="font-semibold text-slate-900">{role.name}</p>
-                          <p className="text-sm text-slate-500">{role.description}</p>
-                        </div>
-                        <div className={`h-5 w-5 rounded-full border-2 ${
-                          selectedRole === role.value ? "border-blue-500 bg-blue-500" : "border-slate-300"
-                        }`} />
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
               <div className="grid gap-5">
                 <div>
                   <label className="mb-2 block text-sm font-medium text-slate-700">
-                    Usuario o correo
+                    Usuario
                   </label>
                   <div className="relative">
                     <User className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
                     <input
                       type="text"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="Ingresa tu usuario o correo"
+                      value={roleInput}
+                      onChange={(e) => {
+                        setRoleInput(e.target.value);
+                        setLoginError("");
+                      }}
+                      placeholder="secretaria, administrador o encargado"
+                      required
                       className="w-full rounded-2xl border border-slate-300 bg-slate-50 py-3 pl-10 pr-4 text-slate-900 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100"
                     />
                   </div>
+                  <p className="mt-2 text-sm text-slate-500">Opciones: secretaria, administrador, encargado.</p>
                 </div>
 
                 <div>
@@ -129,11 +112,18 @@ export default function Login() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="Ingresa tu contraseña"
+                      required
                       className="w-full rounded-2xl border border-slate-300 bg-slate-50 py-3 pl-10 pr-4 text-slate-900 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100"
                     />
                   </div>
                 </div>
               </div>
+
+              {loginError && (
+                <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+                  {loginError}
+                </p>
+              )}
 
               <button
                 type="submit"
@@ -144,12 +134,9 @@ export default function Login() {
               </button>
             </form>
 
-            <div className="mt-6 rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-center text-sm text-blue-800">
-              Modo prototipo: elegí un rol y entrá sin credenciales reales.
-            </div>
 
             <div className="mt-6 border-t border-slate-200 pt-5 text-center text-sm text-slate-500">
-              SquatGym © 2026 · Gestión administrativa
+              SquatGym © 2026
             </div>
           </section>
         </div>

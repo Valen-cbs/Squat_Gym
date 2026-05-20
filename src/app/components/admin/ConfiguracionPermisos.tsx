@@ -4,6 +4,16 @@ import { Bell, CalendarDays, Check, MessageSquare, Plus, Trash2, Users, X } from
 type NotificationChannel = "Mail" | "Interna";
 type NotificationScheduleMode = "Fecha puntual" | "Rango de fechas" | "Permanente";
 type NotificationFrequency = "Una vez" | "Diaria" | "Semanal" | "Quincenal" | "Mensual";
+type InternalDestination =
+  | "/cobranzas"
+  | "/cobranzas/deudores"
+  | "/cobranzas/reclamos"
+  | "/encargado"
+  | "/encargado/stock"
+  | "/kiosco"
+  | "/kiosco/stock"
+  | "/admin/reportes"
+  | "/admin/notificaciones";
 type NotificationRecipient =
   | "Alumno deudor"
   | "Secretaria"
@@ -19,6 +29,7 @@ type NotificationSetting = {
   channel: NotificationChannel;
   recipients: NotificationRecipient;
   message: string;
+  internalDestination: InternalDestination;
   enabled: boolean;
   scheduleMode: NotificationScheduleMode;
   singleDate: string;
@@ -38,6 +49,17 @@ const recipientOptions: NotificationRecipient[] = [
 
 const scheduleModes: NotificationScheduleMode[] = ["Fecha puntual", "Rango de fechas", "Permanente"];
 const frequencyOptions: NotificationFrequency[] = ["Una vez", "Diaria", "Semanal", "Quincenal", "Mensual"];
+const internalDestinationOptions: Array<{ value: InternalDestination; label: string }> = [
+  { value: "/cobranzas", label: "Cobranzas - Secretaria" },
+  { value: "/cobranzas/deudores", label: "Alumnos con deuda" },
+  { value: "/cobranzas/reclamos", label: "Reclamos de pago" },
+  { value: "/encargado", label: "Panel encargado" },
+  { value: "/encargado/stock", label: "Stock - Encargado" },
+  { value: "/kiosco", label: "Kiosco" },
+  { value: "/kiosco/stock", label: "Stock del kiosco" },
+  { value: "/admin/reportes", label: "Reportes del administrador" },
+  { value: "/admin/notificaciones", label: "Configuracion de notificaciones" },
+];
 
 const initialSettings: NotificationSetting[] = [
   {
@@ -45,9 +67,9 @@ const initialSettings: NotificationSetting[] = [
     title: "Alumnos con deuda",
     trigger: "Listado de alumnos que se encuentran en estado deudor.",
     channel: "Interna",
-    recipients: "Secretaria y encargado",
-    message:
-      "Hay alumnos con deuda para revisar. Consultar el listado actualizado y gestionar el seguimiento correspondiente.",
+    recipients: "Secretaria",
+    message: "4 alumnos requieren seguimiento de cobranza",
+    internalDestination: "/cobranzas",
     enabled: true,
     scheduleMode: "Rango de fechas",
     singleDate: "2026-05-20",
@@ -64,6 +86,7 @@ const defaultAlert = (position: number): NotificationSetting => ({
   channel: "Interna",
   recipients: "Secretaria y encargado",
   message: "Escribir el mensaje que recibiran los destinatarios.",
+  internalDestination: "/cobranzas",
   enabled: true,
   scheduleMode: "Fecha puntual",
   singleDate: "2026-05-20",
@@ -362,6 +385,27 @@ export default function ConfiguracionPermisos() {
                   </label>
                 </div>
 
+                {setting.channel === "Interna" && (
+                  <label>
+                    <span className="mb-2 block text-sm font-medium text-slate-700">
+                      Pantalla destino al hacer click
+                    </span>
+                    <select
+                      value={setting.internalDestination}
+                      onChange={(event) =>
+                        updateSetting(setting.id, { internalDestination: event.target.value as InternalDestination })
+                      }
+                      className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      {internalDestinationOptions.map((destination) => (
+                        <option key={destination.value} value={destination.value}>
+                          {destination.label}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                )}
+
                 <ScheduleControls setting={setting} onChange={(patch) => updateSetting(setting.id, patch)} />
               </div>
 
@@ -466,6 +510,27 @@ export default function ConfiguracionPermisos() {
                   </select>
                 </label>
               </div>
+
+              {draftAlert.channel === "Interna" && (
+                <label>
+                  <span className="mb-2 block text-sm font-medium text-slate-700">
+                    Pantalla destino al hacer click
+                  </span>
+                  <select
+                    value={draftAlert.internalDestination}
+                    onChange={(event) =>
+                      updateDraftAlert({ internalDestination: event.target.value as InternalDestination })
+                    }
+                    className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    {internalDestinationOptions.map((destination) => (
+                      <option key={destination.value} value={destination.value}>
+                        {destination.label}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              )}
 
               <ScheduleControls setting={draftAlert} onChange={updateDraftAlert} />
 

@@ -14,7 +14,6 @@ import { hasPermission } from "../permissions";
 
 export default function Home() {
   const { user } = useUser();
-  const displayName = "Usuario";
   const roleLabel =
     user?.role === "secretary" ? "Secretaria" :
     user?.role === "manager" ? "Encargado de sede norte" :
@@ -127,7 +126,7 @@ export default function Home() {
       <section className="mb-6 rounded-2xl border border-indigo-light bg-white/90 p-5 shadow-sm shadow-indigo-light/50 sm:p-6">
         <p className="text-sm font-semibold uppercase tracking-[0.22em] text-indigo-primary">Bienvenido!</p>
         <h1 className="mt-2 text-2xl font-bold text-indigo-darkest sm:text-3xl">
-          {roleLabel}: {displayName}
+          {roleLabel}
         </h1>
         <p className="mt-1 text-sm text-indigo-dark sm:text-base">{scopeLabel}</p>
       </section>
