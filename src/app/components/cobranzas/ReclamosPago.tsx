@@ -44,15 +44,23 @@ export default function ReclamosPago() {
           </div>
         </div>
         <div className="app-table-scroll">
-          <table className="app-table w-full">
+          <table className="app-table w-full table-fixed">
+            <colgroup>
+              <col className="w-[28%]" />
+              <col className="w-[16%]" />
+              <col className="w-[12%]" />
+              <col className="w-[14%]" />
+              <col className="w-[14%]" />
+              <col className="w-[16%]" />
+            </colgroup>
             <thead>
               <tr className="border-b border-slate-200 bg-slate-50">
                 <th className="px-6 py-4 text-left text-sm font-medium text-slate-500">Alumno</th>
                 <th className="px-6 py-4 text-left text-sm font-medium text-slate-500">Fecha informada</th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-slate-500">Monto</th>
+                <th className="px-6 py-4 text-right text-sm font-medium text-slate-500">Monto</th>
                 <th className="px-6 py-4 text-left text-sm font-medium text-slate-500">Medio</th>
                 <th className="px-6 py-4 text-left text-sm font-medium text-slate-500">Operacion</th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-slate-500">Accion</th>
+                <th className="px-6 py-4 text-center text-sm font-medium text-slate-500">Accion</th>
               </tr>
             </thead>
             <tbody>
@@ -63,21 +71,21 @@ export default function ReclamosPago() {
                     <p className="text-sm text-slate-500">DNI {claim.dni}</p>
                   </td>
                   <td className="px-6 py-4 text-sm text-slate-600">{claim.reportedDate}</td>
-                  <td className="px-6 py-4 text-sm font-bold text-slate-900">${claim.amount}</td>
+                  <td className="px-6 py-4 text-right text-sm font-bold text-slate-900">${claim.amount}</td>
                   <td className="px-6 py-4 text-sm text-slate-600">{claim.method}</td>
                   <td className="px-6 py-4 text-sm font-mono text-slate-700">{claim.operationNumber}</td>
                   <td className="px-6 py-4">
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-col items-stretch justify-center gap-2 xl:flex-row">
                       <Link
                         to={`/cobranzas/reclamos/${claim.id}`}
-                        className="inline-flex items-center gap-2 rounded-lg border border-blue-200 px-3 py-2 text-sm font-medium text-blue-700 hover:bg-blue-50"
+                        className="inline-flex items-center justify-center gap-2 rounded-lg border border-blue-200 px-3 py-2 text-sm font-medium text-blue-700 hover:bg-blue-50"
                       >
                         <ShieldCheck className="h-4 w-4" />
                         Revisar
                       </Link>
                       <button
                         onClick={() => resolveClaim(claim.id)}
-                        className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-3 py-2 text-sm font-medium text-white hover:bg-green-700"
+                        className="inline-flex items-center justify-center gap-2 rounded-lg bg-green-600 px-3 py-2 text-sm font-medium text-white hover:bg-green-700"
                       >
                         <CheckCircle className="h-4 w-4" />
                         Resuelto

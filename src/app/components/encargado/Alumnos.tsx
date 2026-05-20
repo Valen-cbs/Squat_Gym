@@ -1,27 +1,26 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import { AlertCircle, CheckCircle, Search, Trash2, User, X } from "lucide-react";
+import { AlertCircle, CheckCircle, Search, SlidersHorizontal, User } from "lucide-react";
 import { alumnos as initialAlumnos, type Alumno } from "../../data/alumnos";
 
 export default function Alumnos() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [planFilter, setPlanFilter] = useState("all");
   const [alumnos, setAlumnos] = useState<Alumno[]>(initialAlumnos);
-  const [studentToDelete, setStudentToDelete] = useState<Alumno | null>(null);
+  const planOptions = Array.from(new Set(alumnos.map((alumno) => alumno.plan)));
 
-  const filteredAlumnos = alumnos.filter((alumno) =>
-    alumno.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    alumno.dni.includes(searchTerm) ||
-    alumno.plan.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredAlumnos = alumnos.filter((alumno) => {
+    const matchesSearch =
+      alumno.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      alumno.dni.includes(searchTerm) ||
+      alumno.plan.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus = statusFilter === "all" || alumno.status === statusFilter;
+    const matchesPlan = planFilter === "all" || alumno.plan === planFilter;
 
-  const deleteStudent = () => {
-    if (!studentToDelete) {
-      return;
-    }
-
-    setAlumnos((current) => current.filter((alumno) => alumno.id !== studentToDelete.id));
-    setStudentToDelete(null);
-  };
+    return matchesSearch && matchesStatus && matchesPlan;
+  });
 
   return (
     <div className="app-page">
@@ -38,9 +37,47 @@ export default function Alumnos() {
             placeholder="Buscar por nombre, DNI o plan..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full rounded-lg border border-gray-300 py-3 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full rounded-lg border border-gray-300 py-3 pl-12 pr-16 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
+          <button
+            type="button"
+            onClick={() => setFiltersOpen((current) => !current)}
+            className="absolute right-2 top-1/2 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-lg text-indigo-primary transition-colors hover:bg-indigo-lightest"
+            aria-label="Abrir filtros"
+            aria-expanded={filtersOpen}
+          >
+            <SlidersHorizontal className="h-5 w-5" />
+          </button>
         </div>
+        {filtersOpen && (
+          <div className="mt-4 grid gap-4 rounded-lg border border-indigo-light bg-indigo-lightest/60 p-4 sm:grid-cols-2">
+            <div>
+              <label className="mb-2 block text-sm font-medium text-indigo-darkest">Estado</label>
+              <select
+                value={statusFilter}
+                onChange={(event) => setStatusFilter(event.target.value)}
+                className="w-full rounded-lg border border-indigo-light bg-white px-3 py-2.5 text-sm text-indigo-darkest focus:outline-none focus:ring-2 focus:ring-indigo-primary"
+              >
+                <option value="all">Todos</option>
+                <option value="Al dia">Al dia</option>
+                <option value="Deudor">Deudor</option>
+              </select>
+            </div>
+            <div>
+              <label className="mb-2 block text-sm font-medium text-indigo-darkest">Plan</label>
+              <select
+                value={planFilter}
+                onChange={(event) => setPlanFilter(event.target.value)}
+                className="w-full rounded-lg border border-indigo-light bg-white px-3 py-2.5 text-sm text-indigo-darkest focus:outline-none focus:ring-2 focus:ring-indigo-primary"
+              >
+                <option value="all">Todos</option>
+                {planOptions.map((plan) => (
+                  <option key={plan} value={plan}>{plan}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
@@ -56,7 +93,6 @@ export default function Alumnos() {
                 <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Plan</th>
                 <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Cuota</th>
                 <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Estado</th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Acciones</th>
               </tr>
             </thead>
             <tbody>
@@ -94,57 +130,12 @@ export default function Alumnos() {
                       {alumno.status}
                     </span>
                   </td>
-                  <td className="px-6 py-4">
-                    <button
-                      onClick={() => setStudentToDelete(alumno)}
-                      className="inline-flex items-center gap-2 rounded-lg border border-red-200 px-3 py-2 text-sm font-medium text-red-600 transition-colors hover:bg-red-50"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                      Borrar
-                    </button>
-                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       </div>
-
-      {studentToDelete && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 p-4">
-          <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <h2 className="text-xl font-bold text-gray-900">Borrar alumno</h2>
-                <p className="mt-2 text-sm text-gray-600">
-                  Vas a borrar a {studentToDelete.name} del listado de alumnos.
-                </p>
-              </div>
-              <button
-                onClick={() => setStudentToDelete(null)}
-                className="rounded-lg p-2 text-gray-500 hover:bg-gray-100"
-                aria-label="Cerrar"
-              >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-            <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
-              <button
-                onClick={() => setStudentToDelete(null)}
-                className="rounded-lg border border-gray-300 px-4 py-2 font-medium text-gray-700 hover:bg-gray-50"
-              >
-                Cancelar
-              </button>
-              <button
-                onClick={deleteStudent}
-                className="rounded-lg bg-red-600 px-4 py-2 font-medium text-white hover:bg-red-700"
-              >
-                Borrar alumno
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

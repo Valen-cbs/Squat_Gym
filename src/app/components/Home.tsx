@@ -81,15 +81,6 @@ export default function Home() {
       link: "/encargado/alertas",
       features: ["Alumnos deudores", "Stock bajo", "Alertas operativas"],
     },
-    ...(canViewDebtors
-      ? [{
-          title: "Alumnos con deuda",
-          description: "Consulta el listado de alumnos deudores de tu sede.",
-          icon: AlertCircle,
-          link: "/cobranzas/deudores",
-          features: ["Montos", "Fechas de atraso", "Detalle de cuenta"],
-        }]
-      : []),
     ...(canViewDailySales
       ? [{
           title: "Ventas del kiosco",

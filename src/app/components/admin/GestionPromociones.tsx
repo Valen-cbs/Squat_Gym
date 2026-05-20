@@ -17,6 +17,26 @@ type GestionPromocionesProps = {
   section?: "promociones" | "planes";
 };
 
+const toDateInputValue = (date: string) => {
+  const [day, month, year] = date.split("/");
+
+  if (!day || !month || !year) {
+    return date;
+  }
+
+  return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+};
+
+const fromDateInputValue = (date: string) => {
+  const [year, month, day] = date.split("-");
+
+  if (!day || !month || !year) {
+    return date;
+  }
+
+  return `${day}/${month}/${year}`;
+};
+
 export function GestionPlanes() {
   return <GestionPromociones section="planes" />;
 }
@@ -346,9 +366,9 @@ export default function GestionPromociones({ section = "promociones" }: GestionP
                   Desde
                   <input
                     required
-                    value={editingItem.value.startDate}
-                    onChange={(event) => updateEditingPromotion({ startDate: event.target.value })}
-                    placeholder="dd/mm/aaaa"
+                    type="date"
+                    value={toDateInputValue(editingItem.value.startDate)}
+                    onChange={(event) => updateEditingPromotion({ startDate: fromDateInputValue(event.target.value) })}
                     className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </label>
@@ -356,9 +376,9 @@ export default function GestionPromociones({ section = "promociones" }: GestionP
                   Hasta
                   <input
                     required
-                    value={editingItem.value.endDate}
-                    onChange={(event) => updateEditingPromotion({ endDate: event.target.value })}
-                    placeholder="dd/mm/aaaa"
+                    type="date"
+                    value={toDateInputValue(editingItem.value.endDate)}
+                    onChange={(event) => updateEditingPromotion({ endDate: fromDateInputValue(event.target.value) })}
                     className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </label>
