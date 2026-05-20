@@ -65,13 +65,11 @@ export default function Login() {
               <Dumbbell className="h-9 w-9 sm:h-10 sm:w-10" />
             </div>
             <h1 className="mt-6 text-3xl font-bold tracking-tight sm:text-4xl">SquatGym</h1>
-            <p className="mt-3 text-base text-slate-300 sm:text-lg">Sistema administrativo</p>
           </section>
 
           <section className="w-full px-5 py-6 sm:px-8 sm:py-8">
             <div className="mb-6 sm:mb-8">
               <h2 className="text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">Iniciar sesión</h2>
-              <p className="mt-2 text-sm text-slate-500 sm:text-base">Escribí el rol e ingresá al sistema.</p>
             </div>
 
             <form onSubmit={handleLogin} className="space-y-6">
