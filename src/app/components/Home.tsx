@@ -114,6 +114,13 @@ export default function Home() {
     user?.role === "admin" ? adminActions :
     user?.role === "manager" ? managerActions :
     secretaryActions;
+  const quickActionsGridClass = user?.role === "manager"
+    ? "mx-auto mb-6 grid max-w-5xl gap-4 lg:grid-cols-2"
+    : `grid gap-4 ${
+        quickActions.length > 4
+          ? "grid-cols-1 md:grid-cols-2 2xl:grid-cols-3"
+          : "grid-cols-1 md:grid-cols-2 xl:grid-cols-4"
+      }`;
 
   const secretaryPriorityActions = [
     {
@@ -170,13 +177,7 @@ export default function Home() {
         )}
 
         {user?.role !== "secretary" && (
-          <div
-            className={`grid gap-4 ${
-              quickActions.length > 4
-                ? "grid-cols-1 md:grid-cols-2 2xl:grid-cols-3"
-                : "grid-cols-1 md:grid-cols-2 xl:grid-cols-4"
-            }`}
-          >
+          <div className={quickActionsGridClass}>
             {quickActions.map((action, index) => (
               <Link
                 key={index}
