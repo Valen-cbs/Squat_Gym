@@ -16,14 +16,14 @@ export default function GestionUsuarios() {
   const [filterRole, setFilterRole] = useState("all");
 
   const users = [
-    { id: 1, name: "Juan Pérez", email: "juan.perez@squatgym.com", role: "Administrador", sede: "Central", status: "Activo", lastLogin: "21/04/2026 14:30" },
-    { id: 2, name: "María González", email: "maria.gonzalez@squatgym.com", role: "Secretaría", sede: "Central", status: "Activo", lastLogin: "21/04/2026 13:15" },
+    { id: 1, name: "Juan Pérez", email: "juan.perez@squatgym.com", role: "Administrador", sede: "Norte", status: "Activo", lastLogin: "21/04/2026 14:30" },
+    { id: 2, name: "María González", email: "maria.gonzalez@squatgym.com", role: "Secretaría", sede: "Norte", status: "Activo", lastLogin: "21/04/2026 13:15" },
     { id: 3, name: "Carlos Rodríguez", email: "carlos.rodriguez@squatgym.com", role: "Secretaría", sede: "Norte", status: "Activo", lastLogin: "21/04/2026 09:45" },
-    { id: 8, name: "Sofía Duarte", email: "sofia.duarte@squatgym.com", role: "Encargado", sede: "Central", status: "Activo", lastLogin: "21/04/2026 15:05" },
-    { id: 4, name: "Ana Martínez", email: "ana.martinez@squatgym.com", role: "Instructor", sede: "Central", status: "Activo", lastLogin: "20/04/2026 18:20" },
-    { id: 5, name: "Pedro Sánchez", email: "pedro.sanchez@squatgym.com", role: "Secretaría", sede: "Sur", status: "Activo", lastLogin: "21/04/2026 10:00" },
+    { id: 8, name: "Sofía Duarte", email: "sofia.duarte@squatgym.com", role: "Encargado", sede: "Norte", status: "Activo", lastLogin: "21/04/2026 15:05" },
+    { id: 4, name: "Ana Martínez", email: "ana.martinez@squatgym.com", role: "Instructor", sede: "Norte", status: "Activo", lastLogin: "20/04/2026 18:20" },
+    { id: 5, name: "Pedro Sánchez", email: "pedro.sanchez@squatgym.com", role: "Secretaría", sede: "Norte", status: "Activo", lastLogin: "21/04/2026 10:00" },
     { id: 6, name: "Laura Fernández", email: "laura.fernandez@squatgym.com", role: "Instructor", sede: "Norte", status: "Activo", lastLogin: "19/04/2026 16:30" },
-    { id: 7, name: "Diego López", email: "diego.lopez@squatgym.com", role: "Mantenimiento", sede: "Sur", status: "Inactivo", lastLogin: "15/04/2026 12:00" },
+    { id: 7, name: "Diego López", email: "diego.lopez@squatgym.com", role: "Mantenimiento", sede: "Norte", status: "Inactivo", lastLogin: "15/04/2026 12:00" },
   ];
 
   const filteredUsers = users.filter(user => {
@@ -34,7 +34,7 @@ export default function GestionUsuarios() {
   });
 
   const roleColors: { [key: string]: string } = {
-    "Administrador": "bg-red-100 text-red-700",
+    "Administrador": "bg-indigo-100 text-indigo-700",
     "Encargado": "bg-amber-100 text-amber-700",
     "Secretaría": "bg-blue-100 text-blue-700",
     "Instructor": "bg-green-100 text-green-700",
@@ -60,7 +60,7 @@ export default function GestionUsuarios() {
         </div>
         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
           <p className="text-sm text-gray-500 mb-1">Administradores</p>
-          <p className="text-2xl font-bold text-red-600">{users.filter(u => u.role === "Administrador").length}</p>
+          <p className="text-2xl font-bold text-indigo-600">{users.filter(u => u.role === "Administrador").length}</p>
         </div>
         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
           <p className="text-sm text-gray-500 mb-1">Usuarios inactivos</p>

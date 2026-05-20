@@ -14,7 +14,7 @@ const roleCards: Array<{ role: Role; users: number; tone: string; description: s
   {
     role: "admin",
     users: 2,
-    tone: "border-red-200 bg-red-50",
+    tone: "border-indigo-200 bg-indigo-50",
     description: "Control general, reportes consolidados y configuracion.",
   },
   {

@@ -15,7 +15,7 @@ export default function Login() {
       value: "admin" as const,
       name: "Administrador general",
       icon: Shield,
-      color: "from-rose-500 to-red-500",
+      color: "from-blue-600 to-indigo-600",
       description: "Acceso completo al sistema",
     },
     {

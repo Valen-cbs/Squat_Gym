@@ -163,16 +163,16 @@ export default function GestionPromociones({ section = "promociones" }: GestionP
                 <p className="text-sm text-green-600 mb-1">Total usos</p>
                 <p className="text-2xl font-bold text-green-700">{totalPromotionUses}</p>
               </div>
-              <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
-                <p className="text-sm text-purple-600 mb-1">Promociones cargadas</p>
-                <p className="text-2xl font-bold text-purple-700">{promotionsState.length}</p>
+              <div className="bg-indigo-50 rounded-lg p-4 border border-indigo-200">
+                <p className="text-sm text-indigo-600 mb-1">Promociones cargadas</p>
+                <p className="text-2xl font-bold text-indigo-700">{promotionsState.length}</p>
               </div>
             </div>
 
             <div className="flex justify-end mb-4">
               <button
                 onClick={openNewPromotion}
-                className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+                className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
               >
                 <Plus className="w-4 h-4" />
                 Nueva Promocion
@@ -251,16 +251,16 @@ export default function GestionPromociones({ section = "promociones" }: GestionP
                 <p className="text-sm text-green-600 mb-1">Total suscriptores</p>
                 <p className="text-2xl font-bold text-green-700">{plans.reduce((sum, plan) => sum + plan.subscribers, 0)}</p>
               </div>
-              <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
-                <p className="text-sm text-purple-600 mb-1">Ingreso mensual</p>
-                <p className="text-2xl font-bold text-purple-700">${monthlyPlanIncome.toLocaleString("es-AR")}</p>
+              <div className="bg-indigo-50 rounded-lg p-4 border border-indigo-200">
+                <p className="text-sm text-indigo-600 mb-1">Ingreso mensual</p>
+                <p className="text-2xl font-bold text-indigo-700">${monthlyPlanIncome.toLocaleString("es-AR")}</p>
               </div>
             </div>
 
             <div className="flex justify-end mb-4">
               <button
                 onClick={openNewPlan}
-                className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+                className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
               >
                 <Plus className="w-4 h-4" />
                 Nuevo Plan

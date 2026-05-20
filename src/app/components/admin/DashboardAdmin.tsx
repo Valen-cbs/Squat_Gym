@@ -14,8 +14,8 @@ import { membershipPlans, promotions } from "../../data/catalog";
 
 export default function DashboardAdmin() {
   const stats = [
-    { label: "Promociones activas", value: String(promotions.filter((promotion) => promotion.status === "Activa").length), icon: Tag, color: "from-violet-500 to-purple-500" },
-    { label: "Sedes operativas", value: "3", icon: BarChart3, color: "from-emerald-500 to-green-500" },
+    { label: "Promociones activas", value: String(promotions.filter((promotion) => promotion.status === "Activa").length), icon: Tag, color: "from-blue-500 to-indigo-500" },
+    { label: "Sede operativa", value: "1", icon: BarChart3, color: "from-emerald-500 to-green-500" },
   ];
 
   const quickActions = [
@@ -35,30 +35,28 @@ export default function DashboardAdmin() {
     },
     {
       title: "Reporte de cobranzas",
-      description: "Pagos recibidos, pendientes y deuda por sede.",
+      description: "Pagos recibidos, pendientes y deuda de Sede Norte.",
       icon: BarChart3,
       link: "/admin/reportes",
-      badge: "3 sedes",
+      badge: "Sede Norte",
     },
     {
       title: "Kiosco",
-      description: "Selecciona sede y consulta por turno o por rango de dias.",
+      description: "Consulta ventas por turno o por rango de dias.",
       icon: ShoppingCart,
       link: "/kiosco",
-      badge: "Por sede",
+      badge: "Sede Norte",
     },
   ];
 
   const recentActivity = [
     { id: 1, user: "Juan Perez", action: `Creo nueva promocion '${promotions[0].name}'`, time: "Hace 5 minutos", type: "create" },
     { id: 2, user: "Maria Gonzalez", action: "Actualizo fechas de promocion vigente", time: "Hace 15 minutos", type: "update" },
-    { id: 3, user: "Carlos Rodriguez", action: "Genero reporte de sede Central", time: "Hace 1 hora", type: "report" },
+    { id: 3, user: "Carlos Rodriguez", action: "Genero reporte de Sede Norte", time: "Hace 1 hora", type: "report" },
   ];
 
   const systemHealth = [
-    { name: "Sede Central", status: "Operativo", users: 165, revenue: "$125,400", color: "green" },
     { name: "Sede Norte", status: "Operativo", users: 142, revenue: "$98,200", color: "green" },
-    { name: "Sede Sur", status: "Advertencia", users: 89, revenue: "$67,800", color: "orange" },
   ];
 
   return (
@@ -121,7 +119,7 @@ export default function DashboardAdmin() {
                 <div className={`mt-1 h-2.5 w-2.5 rounded-full ${
                   activity.type === "alert" ? "bg-amber-500" :
                   activity.type === "create" ? "bg-emerald-500" :
-                  activity.type === "update" ? "bg-blue-500" : "bg-violet-500"
+                  activity.type === "update" ? "bg-blue-500" : "bg-indigo-500"
                 }`} />
                 <div className="min-w-0 flex-1">
                   <p className="text-sm font-medium text-slate-900">{activity.user}</p>
