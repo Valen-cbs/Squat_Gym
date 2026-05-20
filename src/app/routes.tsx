@@ -28,7 +28,6 @@ import GestionPromociones, { GestionPlanes } from "./components/admin/GestionPro
 import ReportesSedes from "./components/admin/ReportesSedes";
 import Auditoria from "./components/admin/Auditoria";
 import DashboardEncargado from "./components/encargado/DashboardEncargado";
-import InscripcionesPagos from "./components/encargado/InscripcionesPagos";
 import AlertasNotificaciones from "./components/encargado/AlertasNotificaciones";
 import StockReposicion from "./components/encargado/StockReposicion";
 import Alumnos from "./components/encargado/Alumnos";
@@ -146,7 +145,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, Component: withPermission(["collections.viewDebtors"], DashboardEncargado) },
       { path: "alumnos", Component: withPermission(["collections.viewDebtors"], Alumnos) },
-      { path: "inscripciones", Component: withPermission(["collections.viewDebtors"], InscripcionesPagos) },
+      { path: "inscripciones", Component: withPermission(["collections.viewDebtors"], ListadoCobranzas) },
       { path: "alertas", Component: withPermission(["collections.viewDebtors"], AlertasNotificaciones) },
       { path: "novedades", Component: withPermission(["collections.viewDebtors"], NovedadesInternas) },
       { path: "stock", Component: withPermission(["kiosk.createRestockOrder"], StockReposicion) },

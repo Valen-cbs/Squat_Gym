@@ -39,13 +39,6 @@ const salesReportData = [
   { id: 306, branch: "Sede Sur", date: "2026-04-20", shift: "Noche", sales: 6, amount: 760 },
 ];
 
-const latestSales = [
-  { id: 501, time: "19:10", product: "Batido de Proteina", quantity: 1, amount: 80 },
-  { id: 502, time: "18:45", product: "Agua Mineral", quantity: 2, amount: 60 },
-  { id: 503, time: "18:20", product: "Barrita Proteica", quantity: 1, amount: 70 },
-  { id: 504, time: "17:55", product: "Bebida Isotonica", quantity: 1, amount: 60 },
-];
-
 type ReportMode = "shift" | "day";
 
 function formatCurrency(value: number) {
@@ -202,39 +195,6 @@ export default function KioscoPrincipal() {
               <ArrowRight className="app-action-arrow" />
             </Link>
           ))}
-        </div>
-      )}
-
-      {(canRegisterSale || canViewStock || canViewDailySales) && (
-        <div className="mt-6 app-panel overflow-hidden">
-          <div className="border-b border-slate-200 px-5 py-4 sm:px-6">
-            <div className="flex items-center gap-2">
-              <ShoppingCart className="h-5 w-5 text-emerald-600" />
-              <h2 className="text-xl font-bold text-slate-900">Ultimas ventas</h2>
-            </div>
-          </div>
-          <div className="app-table-scroll">
-            <table className="app-table w-full">
-              <thead>
-                <tr className="border-b border-slate-200 bg-slate-50">
-                  <th className="px-5 py-3 text-left text-sm font-medium text-slate-500">Hora</th>
-                  <th className="px-5 py-3 text-left text-sm font-medium text-slate-500">Producto</th>
-                  <th className="px-5 py-3 text-center text-sm font-medium text-slate-500">Cant.</th>
-                  <th className="px-5 py-3 text-right text-sm font-medium text-slate-500">Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                {latestSales.map((sale) => (
-                  <tr key={sale.id} className="border-b border-slate-100">
-                    <td className="px-5 py-3 text-sm text-slate-600">{sale.time}</td>
-                    <td className="px-5 py-3 text-sm font-medium text-slate-900">{sale.product}</td>
-                    <td className="px-5 py-3 text-center text-sm text-slate-600">{sale.quantity}</td>
-                    <td className="px-5 py-3 text-right text-sm font-semibold text-slate-900">{formatCurrency(sale.amount)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
         </div>
       )}
 

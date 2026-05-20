@@ -41,7 +41,7 @@ export default function DashboardAdmin() {
       badge: "3 sedes",
     },
     {
-      title: "Ventas del kiosco",
+      title: "Kiosco",
       description: "Selecciona sede y consulta por turno o por rango de dias.",
       icon: ShoppingCart,
       link: "/kiosco",

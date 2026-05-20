@@ -20,8 +20,8 @@ export default function DashboardEncargado() {
       link: "/encargado/alumnos",
     },
     {
-      title: "Ventas del kiosco",
-      description: "Reporte diario por turno o por rango de dias.",
+      title: "Kiosco",
+      description: "Ventas, stock y pedidos de reposicion.",
       icon: ShoppingCart,
       badge: "$4.250 hoy",
       link: "/kiosco",

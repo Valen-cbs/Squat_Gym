@@ -60,11 +60,11 @@ export default function Home() {
 
   const managerActions = [
     {
-      title: "Pagos",
-      description: "Segui los pagos registrados de tu sede y el trabajo de recepcion.",
+      title: "Cobranzas",
+      description: "Segui las cobranzas registradas de tu sede y el trabajo de recepcion.",
       icon: DollarSign,
       link: "/encargado/inscripciones",
-      features: ["Consultar pagos", "Recibos", "Registros por secretaria"],
+      features: ["Listado de cobranzas", "Recibos", "Registros por secretaria"],
     },
     {
       title: "Stock y reposicion",
@@ -101,8 +101,8 @@ export default function Home() {
     },
     ...(canViewDailySales
       ? [{
-          title: "Ventas del kiosco",
-          description: "Selecciona una sede y consulta ventas por turno o por rango de dias.",
+          title: "Kiosco",
+          description: "Selecciona una sede y consulta ventas, stock y reposicion.",
           icon: ShoppingCart,
           link: "/kiosco",
           features: ["Seleccion de sede", "Reporte por turno", "Reporte por dia"],

@@ -61,7 +61,7 @@ export default function Layout() {
         title: "Gestion de sucursal",
         items: [
           { to: "/encargado/alumnos", label: "Alumnos", icon: Users },
-          { to: "/kiosco", label: "Ventas kiosco", icon: ShoppingCart },
+          { to: "/kiosco", label: "Kiosco", icon: ShoppingCart },
         ],
       });
     }
@@ -74,7 +74,7 @@ export default function Layout() {
           { to: "/admin/planes", label: "Planes", icon: ClipboardList },
           { to: "/admin/reportes", label: "Reporte cobranzas", icon: BarChart3 },
           ...(hasPermission(user.role, "kiosk.viewDailySales")
-            ? [{ to: "/kiosco", label: "Ventas kiosco", icon: ShoppingCart }]
+            ? [{ to: "/kiosco", label: "Kiosco", icon: ShoppingCart }]
             : []),
         ],
       });
@@ -142,7 +142,7 @@ export default function Layout() {
     if (hasPermission(user?.role, "kiosk.viewDailySales")) {
       items.push({
         id: "sales",
-        title: "Ventas del kiosco",
+        title: "Kiosco",
         message: "El reporte diario está disponible para consultar.",
         to: "/kiosco",
         icon: ShoppingCart,

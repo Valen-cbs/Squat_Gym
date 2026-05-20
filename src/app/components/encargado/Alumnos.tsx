@@ -21,6 +21,8 @@ export default function Alumnos() {
 
     return matchesSearch && matchesStatus && matchesPlan;
   });
+  const totalAlDia = filteredAlumnos.filter((alumno) => alumno.status === "Al dia").length;
+  const totalDeudores = filteredAlumnos.filter((alumno) => alumno.status === "Deudor").length;
 
   return (
     <div className="app-page">
@@ -78,6 +80,21 @@ export default function Alumnos() {
             </div>
           </div>
         )}
+      </div>
+
+      <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+          <p className="text-sm font-medium text-gray-500">Total alumnos</p>
+          <p className="mt-2 text-2xl font-bold text-gray-900">{filteredAlumnos.length}</p>
+        </div>
+        <div className="rounded-xl border border-success-light bg-white p-5 shadow-sm">
+          <p className="text-sm font-medium text-success-dark">Al dia</p>
+          <p className="mt-2 text-2xl font-bold text-success-dark">{totalAlDia}</p>
+        </div>
+        <div className="rounded-xl border border-warning-light bg-white p-5 shadow-sm">
+          <p className="text-sm font-medium text-warning-dark">Deudores</p>
+          <p className="mt-2 text-2xl font-bold text-warning-dark">{totalDeudores}</p>
+        </div>
       </div>
 
       <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
