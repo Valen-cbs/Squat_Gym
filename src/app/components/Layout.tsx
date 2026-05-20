@@ -277,20 +277,21 @@ export default function Layout() {
                 <Users className="h-5 w-5" />
               )}
             </div>
-            <div>
+            <div className="min-w-0 flex-1">
               <p className="font-medium text-slate-900">{user?.name || "Usuario"}</p>
               <p className="text-sm text-slate-500">{user?.roleName || "Rol no asignado"}</p>
             </div>
+            <Link
+              to="/perfil"
+              onClick={closeMobileMenu}
+              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition-all duration-300 hover:bg-slate-100 hover:text-slate-900"
+              aria-label="Datos de cuenta"
+              title="Datos de cuenta"
+            >
+              <Settings className="h-4 w-4" />
+            </Link>
           </div>
         </div>
-        <Link
-          to="/perfil"
-          onClick={closeMobileMenu}
-          className="mb-3 flex w-full items-center justify-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-700 transition-all duration-300 hover:bg-slate-100"
-        >
-          <Settings className="h-4 w-4" />
-          Preferencias
-        </Link>
         <button
           onClick={handleLogout}
           className="flex w-full items-center justify-center gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-600 transition-all duration-300 hover:bg-red-100"

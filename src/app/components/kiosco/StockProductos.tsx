@@ -48,7 +48,7 @@ export default function StockProductos() {
         <div className="rounded-xl border border-red-200 bg-red-50 p-4 shadow-sm sm:p-6">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <p className="mb-1 text-sm text-red-700">Bajo minimo</p>
+              <p className="mb-1 text-sm text-red-700">Bajo</p>
               <p className="text-2xl font-bold text-red-700">{lowStock}</p>
             </div>
             <Package className="h-8 w-8 shrink-0 text-red-500 sm:h-10 sm:w-10" />
