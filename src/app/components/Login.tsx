@@ -8,7 +8,6 @@ type LoginRole = {
   input: string;
   value: Role;
   name: string;
-  redirectTo: string;
 };
 
 const roles: LoginRole[] = [
@@ -16,19 +15,16 @@ const roles: LoginRole[] = [
     input: "secretaria",
     value: "secretary",
     name: "Secretaria",
-    redirectTo: "/cobranzas",
   },
   {
     input: "administrador",
     value: "admin",
     name: "Administrador",
-    redirectTo: "/admin",
   },
   {
     input: "encargado",
     value: "manager",
     name: "Encargado de sede norte",
-    redirectTo: "/encargado",
   },
 ];
 
@@ -55,7 +51,7 @@ export default function Login() {
       role: role.value,
       roleName: role.name,
     });
-    navigate(role.redirectTo);
+    navigate("/home");
   };
 
   return (
