@@ -4,7 +4,6 @@ import {
   ShoppingCart,
   AlertCircle,
   ArrowRight,
-  Tag,
   BarChart3,
   ClipboardList,
   Package,
@@ -21,13 +20,12 @@ export default function Home() {
     user?.role === "manager" ? "Encargado de sede norte" :
     user?.role === "admin" ? "Administrador" :
     "Usuario";
-  const scopeLabel = user?.role === "admin" ? "" : "Sede: Norte.";
+  const scopeLabel = user?.role === "admin" ? "Vista general." : "Sede: Norte.";
 
   const canViewDebtors = hasPermission(user?.role, "collections.viewDebtors");
   const canManageClaims = hasPermission(user?.role, "collections.managePaymentClaim");
   const canViewStock = hasPermission(user?.role, "kiosk.viewStock");
   const canCreateRestockOrder = hasPermission(user?.role, "kiosk.createRestockOrder");
-  const canViewDailySales = hasPermission(user?.role, "kiosk.viewDailySales");
 
   const secretaryActions = [
     ...(canViewDebtors
@@ -80,42 +78,26 @@ export default function Home() {
 
   const adminActions = [
     {
-      title: "Promociones",
-      description: "Configura campanas comerciales y descuentos por sede.",
-      icon: Tag,
-      link: "/admin/promociones",
-      features: ["Promociones activas", "Vigencias", "Descuentos"],
-    },
-    {
-      title: "Planes",
-      description: "Gestiona planes de membresia, precios y beneficios.",
-      icon: ClipboardList,
-      link: "/admin/planes",
-      features: ["Planes activos", "Precios", "Beneficios"],
-    },
-    {
-      title: "Reporte de cobranzas",
+      title: "Reporte de Cobranzas",
       description: "Informe consolidado de pagos recibidos, pendientes y deuda por sede.",
       icon: BarChart3,
       link: "/admin/reportes",
       features: ["Pagos recibidos", "Pendientes", "Deudas por sede"],
     },
-    ...(canViewDailySales
-      ? [{
-          title: "Kiosco",
-          description: "Selecciona una sede y consulta ventas, stock y reposicion.",
-          icon: ShoppingCart,
-          link: "/kiosco",
-          features: ["Seleccion de sede", "Reporte por turno", "Reporte por dia"],
-        }]
-      : []),
+    {
+      title: "Reporte de Kiosco",
+      description: "Consulta ventas del kiosco por sede, turno o rango de dias.",
+      icon: ShoppingCart,
+      link: "/kiosco",
+      features: ["Seleccion de sede", "Reporte por turno", "Reporte por dia"],
+    },
   ];
 
   const quickActions =
     user?.role === "admin" ? adminActions :
     user?.role === "manager" ? managerActions :
     secretaryActions;
-  const quickActionsGridClass = user?.role === "manager"
+  const quickActionsGridClass = user?.role === "admin" || user?.role === "manager"
     ? "mx-auto mb-6 grid max-w-5xl gap-4 lg:grid-cols-2"
     : `grid gap-4 ${
         quickActions.length > 4

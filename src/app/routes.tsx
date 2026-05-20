@@ -131,7 +131,8 @@ export const router = createBrowserRouter([
       { path: "planes", Component: withPermission(["admin.managePromotions"], GestionPlanes) },
       { path: "reportes", Component: withPermission(["collections.generateReport"], ReportesSedes) },
       { path: "auditoria", Component: withPermission(["admin.audit"], Auditoria) },
-      { path: "permisos", Component: withPermission(["admin.configurePermissions"], ConfiguracionPermisos) },
+      { path: "notificaciones", Component: withPermission(["admin.configurePermissions"], ConfiguracionPermisos) },
+      { path: "permisos", Component: () => <Navigate to="/admin/notificaciones" replace /> },
     ],
   },
   {

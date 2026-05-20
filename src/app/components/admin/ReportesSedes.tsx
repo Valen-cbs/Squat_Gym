@@ -173,9 +173,6 @@ export default function ReportesSedes() {
               <tr className="border-b border-slate-200 bg-slate-50">
                 <th className="px-6 py-4 text-left text-sm font-medium text-slate-500">Mes</th>
                 <th className="px-6 py-4 text-right text-sm font-medium text-slate-500">Pagos recibidos</th>
-                {isCurrentPeriod && (
-                  <th className="px-6 py-4 text-right text-sm font-medium text-slate-500">Pendiente</th>
-                )}
                 <th className="px-6 py-4 text-right text-sm font-medium text-slate-500">Deuda</th>
               </tr>
             </thead>
@@ -184,11 +181,6 @@ export default function ReportesSedes() {
                 <tr key={row.month} className="border-b border-slate-100 hover:bg-slate-50">
                   <td className="px-6 py-4 font-medium text-slate-900">{row.month}</td>
                   <td className="px-6 py-4 text-right text-slate-900">${row.received.toLocaleString()}</td>
-                  {isCurrentPeriod && (
-                    <td className="px-6 py-4 text-right text-slate-900">
-                      {row.period === currentPeriod ? `$${row.pending.toLocaleString()}` : "-"}
-                    </td>
-                  )}
                   <td className="px-6 py-4 text-right font-medium text-orange-700">${row.debt.toLocaleString()}</td>
                 </tr>
               ))}
@@ -197,9 +189,6 @@ export default function ReportesSedes() {
               <tr className="bg-blue-50 font-bold">
                 <td className="px-6 py-4 text-slate-900">Total {period}</td>
                 <td className="px-6 py-4 text-right text-slate-900">${totalReceived.toLocaleString()}</td>
-                {isCurrentPeriod && (
-                  <td className="px-6 py-4 text-right text-slate-900">${totalPending.toLocaleString()}</td>
-                )}
                 <td className="px-6 py-4 text-right text-orange-700">${totalDebt.toLocaleString()}</td>
               </tr>
             </tfoot>

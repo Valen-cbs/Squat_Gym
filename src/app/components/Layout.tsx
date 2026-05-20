@@ -9,7 +9,6 @@ import {
   Shield,
   Briefcase,
   Tag,
-  BarChart3,
   Bell,
   AlertCircle,
   Package,
@@ -72,10 +71,7 @@ export default function Layout() {
         items: [
           { to: "/admin/promociones", label: "Promociones", icon: Tag },
           { to: "/admin/planes", label: "Planes", icon: ClipboardList },
-          { to: "/admin/reportes", label: "Reporte cobranzas", icon: BarChart3 },
-          ...(hasPermission(user.role, "kiosk.viewDailySales")
-            ? [{ to: "/kiosco", label: "Kiosco", icon: ShoppingCart }]
-            : []),
+          { to: "/admin/notificaciones", label: "Configuración de notificaciones", icon: Bell },
         ],
       });
     }

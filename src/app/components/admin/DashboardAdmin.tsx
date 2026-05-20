@@ -8,44 +8,29 @@ import {
   TrendingUp,
   AlertTriangle,
   CheckCircle,
-  ClipboardList,
 } from "lucide-react";
-import { membershipPlans, promotions } from "../../data/catalog";
+import { promotions } from "../../data/catalog";
 
 export default function DashboardAdmin() {
   const stats = [
     { label: "Promociones activas", value: String(promotions.filter((promotion) => promotion.status === "Activa").length), icon: Tag, color: "from-blue-500 to-indigo-500" },
-    { label: "Sede operativa", value: "1", icon: BarChart3, color: "from-emerald-500 to-green-500" },
+    { label: "Sedes operativas", value: "2", icon: BarChart3, color: "from-emerald-500 to-green-500" },
   ];
 
   const quickActions = [
     {
-      title: "Promociones",
-      description: "Campanas y descuentos vigentes.",
-      icon: Tag,
-      link: "/admin/promociones",
-      badge: `${promotions.filter((promotion) => promotion.status === "Activa").length} activas`,
-    },
-    {
-      title: "Planes",
-      description: "Planes de membresia, precios y beneficios.",
-      icon: ClipboardList,
-      link: "/admin/planes",
-      badge: `${membershipPlans.filter((plan) => plan.active).length} activos`,
-    },
-    {
-      title: "Reporte de cobranzas",
-      description: "Pagos recibidos, pendientes y deuda de Sede Norte.",
+      title: "Reporte de Cobranzas",
+      description: "Pagos recibidos, pendientes y deuda por sede.",
       icon: BarChart3,
       link: "/admin/reportes",
-      badge: "Sede Norte",
+      badge: "2 sedes",
     },
     {
-      title: "Kiosco",
-      description: "Consulta ventas por turno o por rango de dias.",
+      title: "Reporte de Kiosco",
+      description: "Consulta ventas por sede, turno o rango de dias.",
       icon: ShoppingCart,
       link: "/kiosco",
-      badge: "Sede Norte",
+      badge: "2 sedes",
     },
   ];
 
@@ -57,6 +42,7 @@ export default function DashboardAdmin() {
 
   const systemHealth = [
     { name: "Sede Norte", status: "Operativo", users: 142, revenue: "$98,200", color: "green" },
+    { name: "Sede Sur", status: "Operativo", users: 89, revenue: "$67,800", color: "green" },
   ];
 
   return (
