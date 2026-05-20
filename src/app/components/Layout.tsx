@@ -16,6 +16,7 @@ import {
   X,
   ClipboardList,
   Settings,
+  FileText,
 } from "lucide-react";
 import { useUser } from "../context/UserContext";
 import PageBackButton from "./PageBackButton";
@@ -50,6 +51,7 @@ export default function Layout() {
           { to: "/cobranzas", label: "Cobranzas", icon: DollarSign },
           { to: "/cobranzas/reclamos", label: "Reclamos de pago", icon: ClipboardList },
           { to: "/kiosco", label: "Kiosco", icon: ShoppingCart },
+          { to: "/cobranzas/reporte-deudores", label: "Reporte de deudores", icon: FileText },
         ],
       });
     }

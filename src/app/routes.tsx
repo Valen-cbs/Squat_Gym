@@ -14,6 +14,7 @@ import ComprobanteCobranza from "./components/cobranzas/ComprobanteCobranza";
 import ListadoCobranzas from "./components/cobranzas/ListadoCobranzas";
 import ReclamosPago from "./components/cobranzas/ReclamosPago";
 import ReclamoDetalle from "./components/cobranzas/ReclamoDetalle";
+import ReporteDeudores from "./components/cobranzas/ReporteDeudores";
 import KioscoPrincipal from "./components/kiosco/KioscoPrincipal";
 import RegistrarVenta from "./components/kiosco/RegistrarVenta";
 import DetalleVenta from "./components/kiosco/DetalleVenta";
@@ -84,6 +85,7 @@ export const router = createBrowserRouter([
       { index: true, Component: withPermission(["collections.registerPayment"], DashboardCobranzas) },
       { path: "buscar-alumno", Component: withPermission(["collections.registerPayment"], BusquedaAlumno) },
       { path: "deudores", Component: withPermission(["collections.viewDebtors"], Deudores) },
+      { path: "reporte-deudores", Component: withPermission(["collections.viewDebtors"], ReporteDeudores) },
       { path: "estado-cuenta/:id", Component: withPermission(["collections.viewDebtors"], EstadoCuenta) },
       { path: "registrar-pago", Component: withPermission(["collections.registerPayment"], RegistrarPago) },
       { path: "registrar-pago/:id", Component: withPermission(["collections.registerPayment"], RegistrarPago) },

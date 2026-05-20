@@ -1,5 +1,5 @@
-import { useParams } from "react-router";
-import { Download, Printer, Send } from "lucide-react";
+import { Link, useParams } from "react-router";
+import { Download, Home, Printer, Send } from "lucide-react";
 import PaymentReceipt from "../PaymentReceipt";
 import { getCobranzaById } from "../../data/cobranzas";
 
@@ -47,6 +47,16 @@ export default function ComprobanteCobranza() {
           <Send className="h-5 w-5" />
           <span className="font-medium">Enviar por Email</span>
         </button>
+      </div>
+
+      <div className="mx-auto mt-4 max-w-2xl">
+        <Link
+          to="/home"
+          className="flex items-center justify-center gap-3 rounded-lg border border-indigo-light bg-white p-4 font-medium text-indigo-primary transition-colors hover:bg-indigo-lightest"
+        >
+          <Home className="h-5 w-5" />
+          Volver al menu
+        </Link>
       </div>
     </div>
   );
