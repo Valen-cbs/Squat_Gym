@@ -16,6 +16,7 @@ import {
   Menu,
   X,
   ClipboardList,
+  Settings,
 } from "lucide-react";
 import { useUser } from "../context/UserContext";
 import PageBackButton from "./PageBackButton";
@@ -50,7 +51,6 @@ export default function Layout() {
         items: [
           { to: "/cobranzas", label: "Cobranzas", icon: DollarSign },
           { to: "/cobranzas/reclamos", label: "Reclamos de pago", icon: ClipboardList },
-          { to: "/cobranzas/recordatorios", label: "Recordatorios", icon: Bell },
           { to: "/kiosco", label: "Kiosco", icon: ShoppingCart },
         ],
       });
@@ -287,6 +287,14 @@ export default function Layout() {
             </div>
           </div>
         </div>
+        <Link
+          to="/perfil"
+          onClick={closeMobileMenu}
+          className="mb-3 flex w-full items-center justify-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-700 transition-all duration-300 hover:bg-slate-100"
+        >
+          <Settings className="h-4 w-4" />
+          Preferencias
+        </Link>
         <button
           onClick={handleLogout}
           className="flex w-full items-center justify-center gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-600 transition-all duration-300 hover:bg-red-100"

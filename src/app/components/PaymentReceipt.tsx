@@ -23,8 +23,8 @@ type PaymentReceiptProps = {
   discount?: number;
   total: number;
   paymentMethod: string;
-  attendedBy: string;
-  note: string;
+  attendedBy?: string;
+  note?: string;
 };
 
 export default function PaymentReceipt({
@@ -44,6 +44,7 @@ export default function PaymentReceipt({
   note,
 }: PaymentReceiptProps) {
   const documentLabel = variant === "membership" ? "Recibo Nro" : "Ticket Nro";
+  const itemLabel = variant === "membership" ? "Pago" : "Concepto";
 
   return (
     <div className="mx-auto max-w-2xl rounded-2xl border-2 border-indigo-light bg-white p-6 shadow-lg shadow-indigo-light/50 sm:p-8">
@@ -81,7 +82,7 @@ export default function PaymentReceipt({
         <table className="w-full min-w-[460px]">
           <thead>
             <tr className="border-b-2 border-indigo-light">
-              <th className="py-3 text-left text-sm font-medium text-indigo-dark">Concepto</th>
+              <th className="py-3 text-left text-sm font-medium text-indigo-dark">{itemLabel}</th>
               <th className="py-3 text-center text-sm font-medium text-indigo-dark">Cant.</th>
               <th className="py-3 text-right text-sm font-medium text-indigo-dark">Unitario</th>
               <th className="py-3 text-right text-sm font-medium text-indigo-dark">Monto</th>
@@ -124,13 +125,12 @@ export default function PaymentReceipt({
         <p className="mt-2 text-sm text-indigo-dark">Metodo de pago: {paymentMethod}</p>
       </div>
 
-      <div className="border-t-2 border-indigo-light pt-5 text-center">
-        <p className="text-sm text-indigo-dark">Atendido por: {attendedBy}</p>
-        <p className="mt-2 text-xs text-indigo-dark">{note}</p>
-        <p className="mt-4 text-xs font-semibold text-indigo-primary">
-          SquatGym Sede Norte
-        </p>
-      </div>
+      {(attendedBy || note) && (
+        <div className="border-t-2 border-indigo-light pt-5 text-center">
+          {attendedBy && <p className="text-sm text-indigo-dark">Atendido por: {attendedBy}</p>}
+          {note && <p className="mt-2 text-xs text-indigo-dark">{note}</p>}
+        </div>
+      )}
     </div>
   );
 }

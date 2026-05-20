@@ -44,7 +44,7 @@ export default function DashboardCobranzas() {
     <div className="app-page">
       <div className="app-page-header">
         <div>
-          <h1 className="app-page-title">Panel de cobranzas</h1>
+          <h1 className="app-page-title">Cobranzas</h1>
         </div>
       </div>
 

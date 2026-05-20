@@ -1,5 +1,3 @@
-export type ClaimStatus = "Pendiente" | "En revision" | "Resuelto";
-
 export type PaymentClaim = {
   id: number;
   alumno: string;
@@ -7,8 +5,8 @@ export type PaymentClaim = {
   reportedDate: string;
   amount: number;
   method: string;
-  receipt: string;
-  status: ClaimStatus;
+  operationNumber: string;
+  description: string;
 };
 
 export const claims: PaymentClaim[] = [
@@ -19,8 +17,8 @@ export const claims: PaymentClaim[] = [
     reportedDate: "22/04/2026",
     amount: 850,
     method: "Transferencia",
-    receipt: "Comprobante banco Macro",
-    status: "Pendiente",
+    operationNumber: "OP-739184",
+    description: "La alumna informa que la transferencia fue enviada, pero el pago todavia no aparece acreditado en caja.",
   },
   {
     id: 2,
@@ -29,18 +27,8 @@ export const claims: PaymentClaim[] = [
     reportedDate: "20/04/2026",
     amount: 1200,
     method: "QR",
-    receipt: "Operacion 80913",
-    status: "En revision",
-  },
-  {
-    id: 3,
-    alumno: "Roberto Silva",
-    dni: "67890123",
-    reportedDate: "18/04/2026",
-    amount: 850,
-    method: "Efectivo",
-    receipt: "Ticket caja tarde",
-    status: "Resuelto",
+    operationNumber: "OP-80913",
+    description: "El comprobante indica pago por QR, pero falta confirmar la acreditacion en la cuenta bancaria.",
   },
 ];
 

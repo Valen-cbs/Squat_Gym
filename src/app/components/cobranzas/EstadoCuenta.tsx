@@ -16,7 +16,6 @@ export default function EstadoCuenta() {
   const { id } = useParams();
   const alumno = getAlumnoById(id ?? "1") ?? getAlumnoById(1)!;
   const canViewReceipt = hasPermission(user?.role, "collections.registerPayment");
-  const canSendReminder = hasPermission(user?.role, "collections.sendMassDueReminders");
 
   const paymentHistory = [
     { id: 1, date: "01/04/2026", amount: 850, method: "Efectivo", receipt: "REC-001234" },
@@ -102,12 +101,6 @@ export default function EstadoCuenta() {
           </div>
         )}
       </div>
-
-      {!canSendReminder && alumno.status === "Deudor" && (
-        <div className="mb-6 rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
-          Vista de consulta: el registro de pagos y los recordatorios quedan asignados a Secretaria o Sistema segun corresponda.
-        </div>
-      )}
 
       <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
         <div className="border-b border-gray-200 p-6">

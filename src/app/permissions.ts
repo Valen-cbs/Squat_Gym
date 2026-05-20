@@ -52,11 +52,6 @@ export const permissionCatalog = {
     label: "Rehabilitar acceso tras pago",
     actor: "Sistema",
   },
-  "collections.sendMassDueReminders": {
-    module: "Gestion de Cobranzas",
-    label: "Enviar recordatorio masivo de vencimientos",
-    actor: "Secretaria",
-  },
   "kiosk.registerSale": {
     module: "Administracion de Kiosco",
     label: "Registrar venta del kiosco",
@@ -139,7 +134,6 @@ export const rolePermissions: Record<Role, PermissionId[]> = {
     "collections.registerPayment",
     "collections.viewDebtors",
     "collections.managePaymentClaim",
-    "collections.sendMassDueReminders",
     "kiosk.registerSale",
     "kiosk.viewStock",
   ],

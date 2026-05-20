@@ -8,7 +8,6 @@ import {
   BarChart3,
   Bell,
   ClipboardList,
-  Send,
   Package,
   Users,
 } from "lucide-react";
@@ -26,7 +25,6 @@ export default function Home() {
 
   const canViewDebtors = hasPermission(user?.role, "collections.viewDebtors");
   const canManageClaims = hasPermission(user?.role, "collections.managePaymentClaim");
-  const canSendReminders = hasPermission(user?.role, "collections.sendMassDueReminders");
   const canViewStock = hasPermission(user?.role, "kiosk.viewStock");
   const canCreateRestockOrder = hasPermission(user?.role, "kiosk.createRestockOrder");
   const canViewDailySales = hasPermission(user?.role, "kiosk.viewDailySales");
@@ -48,15 +46,6 @@ export default function Home() {
           icon: ClipboardList,
           link: "/cobranzas/reclamos",
           features: ["Validar comprobante", "Resolver reclamo", "Conciliar pago"],
-        }]
-      : []),
-    ...(canSendReminders
-      ? [{
-          title: "Recordatorios masivos",
-          description: "Enviar avisos a alumnos con cuotas proximas a vencer.",
-          icon: Send,
-          link: "/cobranzas/recordatorios",
-          features: ["Seleccion masiva", "Vencidos y proximos", "Envio por canal"],
         }]
       : []),
     ...(canViewStock
@@ -90,7 +79,7 @@ export default function Home() {
       description: "Prioriza deudores y stock critico desde un solo panel.",
       icon: Bell,
       link: "/encargado/alertas",
-      features: ["Alumnos deudores", "Stock critico", "Alertas operativas"],
+      features: ["Alumnos deudores", "Stock bajo", "Alertas operativas"],
     },
     ...(canViewDebtors
       ? [{

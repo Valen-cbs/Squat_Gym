@@ -3,22 +3,25 @@ import type { ComponentType } from "react";
 import Layout from "./components/Layout";
 import Login from "./components/Login";
 import Home from "./components/Home";
+import PerfilPreferencias from "./components/PerfilPreferencias";
 import DashboardCobranzas from "./components/cobranzas/DashboardCobranzas";
 import BusquedaAlumno from "./components/cobranzas/BusquedaAlumno";
 import Deudores from "./components/cobranzas/Deudores";
 import EstadoCuenta from "./components/cobranzas/EstadoCuenta";
 import RegistrarPago from "./components/cobranzas/RegistrarPago";
 import ReciboGenerado from "./components/cobranzas/ReciboGenerado";
+import ComprobanteCobranza from "./components/cobranzas/ComprobanteCobranza";
 import ListadoCobranzas from "./components/cobranzas/ListadoCobranzas";
 import ReclamosPago from "./components/cobranzas/ReclamosPago";
 import ReclamoDetalle from "./components/cobranzas/ReclamoDetalle";
-import RecordatoriosVencimientos from "./components/cobranzas/RecordatoriosVencimientos";
 import KioscoPrincipal from "./components/kiosco/KioscoPrincipal";
 import RegistrarVenta from "./components/kiosco/RegistrarVenta";
 import DetalleVenta from "./components/kiosco/DetalleVenta";
 import DetalleVentasReporte from "./components/kiosco/DetalleVentasReporte";
 import StockProductos from "./components/kiosco/StockProductos";
 import DetalleProducto from "./components/kiosco/DetalleProducto";
+import EditarProducto from "./components/kiosco/EditarProducto";
+import NuevoProducto from "./components/kiosco/NuevoProducto";
 import PedidoReposicion from "./components/kiosco/PedidoReposicion";
 import DashboardAdmin from "./components/admin/DashboardAdmin";
 import GestionPromociones, { GestionPlanes } from "./components/admin/GestionPromociones";
@@ -65,12 +68,18 @@ export const router = createBrowserRouter([
     ],
   },
   {
+    path: "/perfil",
+    Component: withAuth(Layout),
+    children: [
+      { index: true, Component: withAuth(PerfilPreferencias) },
+    ],
+  },
+  {
     path: "/cobranzas",
     Component: withPermission([
       "collections.registerPayment",
       "collections.viewDebtors",
       "collections.managePaymentClaim",
-      "collections.sendMassDueReminders",
     ], Layout),
     children: [
       { index: true, Component: withPermission(["collections.registerPayment"], DashboardCobranzas) },
@@ -80,10 +89,10 @@ export const router = createBrowserRouter([
       { path: "registrar-pago", Component: withPermission(["collections.registerPayment"], RegistrarPago) },
       { path: "registrar-pago/:id", Component: withPermission(["collections.registerPayment"], RegistrarPago) },
       { path: "recibo/:id", Component: withPermission(["collections.registerPayment"], ReciboGenerado) },
+      { path: "comprobante/:id", Component: withPermission(["collections.managePaymentClaim"], ComprobanteCobranza) },
       { path: "listado", Component: withPermission(["collections.managePaymentClaim"], ListadoCobranzas) },
       { path: "reclamos", Component: withPermission(["collections.managePaymentClaim"], ReclamosPago) },
       { path: "reclamos/:id", Component: withPermission(["collections.managePaymentClaim"], ReclamoDetalle) },
-      { path: "recordatorios", Component: withPermission(["collections.sendMassDueReminders"], RecordatoriosVencimientos) },
     ],
   },
   {
@@ -100,7 +109,9 @@ export const router = createBrowserRouter([
       { path: "detalle-ventas", Component: withPermission(["kiosk.viewDailySales"], DetalleVentasReporte) },
       { path: "venta/:id", Component: withPermission(["kiosk.registerSale", "kiosk.viewDailySales"], DetalleVenta) },
       { path: "stock", Component: withPermission(["kiosk.viewStock"], StockProductos) },
+      { path: "producto/nuevo", Component: withPermission(["kiosk.viewStock"], NuevoProducto) },
       { path: "producto/:id", Component: withPermission(["kiosk.viewStock"], DetalleProducto) },
+      { path: "producto/:id/editar", Component: withPermission(["kiosk.viewStock"], EditarProducto) },
       { path: "reposicion", Component: withPermission(["kiosk.createRestockOrder"], PedidoReposicion) },
     ],
   },

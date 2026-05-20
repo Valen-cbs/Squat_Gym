@@ -24,7 +24,6 @@ export default function BusquedaAlumno() {
     <div className="app-page">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Buscar alumno</h1>
-        <p className="mt-2 text-gray-500">Encuentra un alumno para consultar su estado de cuenta o registrar un pago.</p>
       </div>
 
       <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6 shadow-sm">

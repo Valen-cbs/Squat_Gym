@@ -1,44 +1,45 @@
-﻿import { useState } from "react";
-import { useNavigate, useParams } from "react-router";
-import { Save } from "lucide-react";
-import { getProductById } from "../../data/catalog";
+import { useState } from "react";
+import { useNavigate } from "react-router";
+import { Plus, Save } from "lucide-react";
 
-export default function EditarProducto() {
-  const { id } = useParams();
+export default function NuevoProducto() {
   const navigate = useNavigate();
-  const product = getProductById(id ?? 1) ?? getProductById(1)!;
   const [form, setForm] = useState({
-    name: product.name,
-    category: product.category,
-    price: String(product.price),
-    cost: String(product.cost),
-    stock: String(product.stock),
-    minStock: String(product.minStock),
-    maxStock: "",
-    supplier: product.supplier,
-    barcode: product.barcode,
+    name: "",
+    category: "",
+    price: "",
+    cost: "",
+    stock: "",
+    minStock: "",
+    supplier: "",
+    barcode: "",
   });
 
   const updateField = (field: keyof typeof form, value: string) => {
     setForm((current) => ({ ...current, [field]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    navigate(`/kiosco/producto/${id}`);
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    navigate("/kiosco/stock");
   };
 
   return (
     <div className="app-page">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">Editar producto</h1>
-        <p className="mt-2 text-sm text-gray-500 sm:text-base">Actualiza los datos comerciales y de stock del producto.</p>
+        <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">Nuevo producto</h1>
       </div>
 
       <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <div className="space-y-6 lg:col-span-2">
-          <div className="app-panel p-5 sm:p-6">
-            <h2 className="mb-4 text-xl font-bold text-gray-900">Informacion general</h2>
+          <section className="app-panel p-5 sm:p-6">
+            <div className="mb-4 flex items-center gap-3">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                <Plus className="h-5 w-5" />
+              </div>
+              <h2 className="text-xl font-bold text-gray-900">Datos del producto</h2>
+            </div>
+
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div className="md:col-span-2">
                 <label className="mb-2 block text-sm font-medium text-gray-700">Nombre</label>
@@ -46,6 +47,7 @@ export default function EditarProducto() {
                   value={form.name}
                   onChange={(e) => updateField("name", e.target.value)}
                   className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
                 />
               </div>
               <div>
@@ -54,9 +56,11 @@ export default function EditarProducto() {
                   value={form.category}
                   onChange={(e) => updateField("category", e.target.value)}
                   className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
                 >
+                  <option value="">Seleccionar categoria</option>
                   <option value="Bebidas">Bebidas</option>
-                  <option value="Snacks">Snacks</option>
+                  <option value="Alimentos">Alimentos</option>
                   <option value="Suplementos">Suplementos</option>
                   <option value="Accesorios">Accesorios</option>
                 </select>
@@ -78,6 +82,7 @@ export default function EditarProducto() {
                   value={form.price}
                   onChange={(e) => updateField("price", e.target.value)}
                   className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
                 />
               </div>
               <div>
@@ -89,10 +94,11 @@ export default function EditarProducto() {
                   value={form.cost}
                   onChange={(e) => updateField("cost", e.target.value)}
                   className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
                 />
               </div>
               <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700">Stock actual</label>
+                <label className="mb-2 block text-sm font-medium text-gray-700">Stock inicial</label>
                 <input
                   type="number"
                   min="0"
@@ -100,9 +106,22 @@ export default function EditarProducto() {
                   value={form.stock}
                   onChange={(e) => updateField("stock", e.target.value)}
                   className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
                 />
               </div>
               <div>
+                <label className="mb-2 block text-sm font-medium text-gray-700">Stock minimo recomendado</label>
+                <input
+                  type="number"
+                  min="0"
+                  step="1"
+                  value={form.minStock}
+                  onChange={(e) => updateField("minStock", e.target.value)}
+                  className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+              </div>
+              <div className="md:col-span-2">
                 <label className="mb-2 block text-sm font-medium text-gray-700">Proveedor</label>
                 <input
                   value={form.supplier}
@@ -111,56 +130,28 @@ export default function EditarProducto() {
                 />
               </div>
             </div>
-          </div>
-
-          <div className="app-panel p-5 sm:p-6">
-            <h2 className="mb-4 text-xl font-bold text-gray-900">Politica de stock</h2>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700">Stock minimo</label>
-                <input
-                  type="number"
-                  min="0"
-                  step="1"
-                  value={form.minStock}
-                  onChange={(e) => updateField("minStock", e.target.value)}
-                  className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-              <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700">Stock maximo</label>
-                <input
-                  type="number"
-                  min="0"
-                  step="1"
-                  value={form.maxStock}
-                  onChange={(e) => updateField("maxStock", e.target.value)}
-                  className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-            </div>
-          </div>
+          </section>
         </div>
 
-        <div className="lg:col-span-1">
+        <aside className="lg:col-span-1">
           <div className="app-panel p-5 sm:p-6 lg:sticky lg:top-8">
             <h3 className="mb-4 text-lg font-bold text-gray-900">Resumen</h3>
             <div className="space-y-3 text-sm text-gray-600">
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between gap-3">
                 <span>Producto</span>
-                <span className="font-medium text-gray-900">{form.name}</span>
+                <span className="text-right font-medium text-gray-900">{form.name || "-"}</span>
               </div>
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between gap-3">
                 <span>Categoria</span>
-                <span className="font-medium text-gray-900">{form.category}</span>
+                <span className="text-right font-medium text-gray-900">{form.category || "-"}</span>
               </div>
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between gap-3">
                 <span>Precio</span>
-                <span className="font-medium text-gray-900">${form.price}</span>
+                <span className="font-medium text-gray-900">{form.price ? `$${form.price}` : "-"}</span>
               </div>
-              <div className="flex items-center justify-between">
-                <span>Stock</span>
-                <span className="font-medium text-gray-900">{form.stock} u.</span>
+              <div className="flex items-center justify-between gap-3">
+                <span>Stock inicial</span>
+                <span className="font-medium text-gray-900">{form.stock || "-"} u.</span>
               </div>
             </div>
 
@@ -169,10 +160,10 @@ export default function EditarProducto() {
               className="mt-6 flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 py-3 font-medium text-white transition-colors hover:bg-blue-700"
             >
               <Save className="h-5 w-5" />
-              Guardar cambios
+              Agregar producto
             </button>
           </div>
-        </div>
+        </aside>
       </form>
     </div>
   );

@@ -1,21 +1,15 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router";
 import {
-  ArrowLeft,
+  Plus,
   Search,
-  AlertTriangle,
-  CheckCircle,
   Package,
 } from "lucide-react";
-import { useUser } from "../../context/UserContext";
-import { hasPermission } from "../../permissions";
 import { kioskProducts } from "../../data/catalog";
+import ProductArtwork from "./ProductArtwork";
 
 export default function StockProductos() {
-  const { user } = useUser();
   const [searchTerm, setSearchTerm] = useState("");
-  const canCreateRestockOrder = hasPermission(user?.role, "kiosk.createRestockOrder");
-
   const products = kioskProducts;
 
   const filteredProducts = products.filter((product) =>
@@ -23,49 +17,41 @@ export default function StockProductos() {
     product.category.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const criticalStock = products.filter((product) => product.status === "critical").length;
-  const warningStock = products.filter((product) => product.status === "warning").length;
-  const totalValue = products.reduce((sum, product) => sum + product.price * product.stock, 0);
+  const lowStock = products.filter((product) => product.stock <= product.minStock).length;
 
   return (
     <div className="app-page">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Stock de productos</h1>
-        <p className="mt-2 text-gray-500">Consulta y gestiona el inventario del kiosco.</p>
+      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900">Productos</h1>
+          <p className="mt-2 text-gray-500">Consulta y gestiona el inventario del kiosco.</p>
+        </div>
+        <Link
+          to="/kiosco/producto/nuevo"
+          className="inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+        >
+          <Plus className="h-4 w-4" />
+          Nuevo producto
+        </Link>
       </div>
 
-      <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-4">
-        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="flex items-center justify-between">
+      <div className="mb-8 grid grid-cols-2 gap-4">
+        <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm sm:p-6">
+          <div className="flex items-center justify-between gap-3">
             <div>
               <p className="mb-1 text-sm text-gray-500">Total productos</p>
               <p className="text-2xl font-bold text-gray-900">{products.length}</p>
             </div>
-            <Package className="h-10 w-10 text-blue-500" />
+            <Package className="h-8 w-8 shrink-0 text-blue-500 sm:h-10 sm:w-10" />
           </div>
         </div>
-        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="flex items-center justify-between">
+        <div className="rounded-xl border border-red-200 bg-red-50 p-4 shadow-sm sm:p-6">
+          <div className="flex items-center justify-between gap-3">
             <div>
-              <p className="mb-1 text-sm text-gray-500">Stock critico</p>
-              <p className="text-2xl font-bold text-red-600">{criticalStock}</p>
+              <p className="mb-1 text-sm text-red-700">Bajo minimo</p>
+              <p className="text-2xl font-bold text-red-700">{lowStock}</p>
             </div>
-            <AlertTriangle className="h-10 w-10 text-red-500" />
-          </div>
-        </div>
-        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="mb-1 text-sm text-gray-500">Advertencias</p>
-              <p className="text-2xl font-bold text-orange-600">{warningStock}</p>
-            </div>
-            <AlertTriangle className="h-10 w-10 text-orange-500" />
-          </div>
-        </div>
-        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div>
-            <p className="mb-1 text-sm text-gray-500">Valor total stock</p>
-            <p className="text-2xl font-bold text-gray-900">${totalValue.toLocaleString()}</p>
+            <Package className="h-8 w-8 shrink-0 text-red-500 sm:h-10 sm:w-10" />
           </div>
         </div>
       </div>
@@ -86,14 +72,6 @@ export default function StockProductos() {
       <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
         <div className="flex items-center justify-between border-b border-gray-200 p-6">
           <h2 className="text-xl font-bold text-gray-900">Inventario ({filteredProducts.length})</h2>
-          {canCreateRestockOrder && (
-            <Link
-              to="/kiosco/reposicion"
-              className="rounded-lg bg-orange-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-orange-700"
-            >
-              Generar reposicion
-            </Link>
-          )}
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">
@@ -103,59 +81,45 @@ export default function StockProductos() {
                 <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Categoria</th>
                 <th className="px-6 py-4 text-right text-sm font-medium text-gray-500">Precio</th>
                 <th className="px-6 py-4 text-center text-sm font-medium text-gray-500">Stock</th>
-                <th className="px-6 py-4 text-center text-sm font-medium text-gray-500">Estado</th>
                 <th className="px-6 py-4 text-center text-sm font-medium text-gray-500">Accion</th>
               </tr>
             </thead>
             <tbody>
-              {filteredProducts.map((product) => (
-                <tr key={product.id} className="border-b border-gray-100 hover:bg-gray-50">
-                  <td className="px-6 py-4 text-sm font-medium text-gray-900">{product.name}</td>
-                  <td className="px-6 py-4 text-sm text-gray-600">{product.category}</td>
-                  <td className="px-6 py-4 text-right text-sm font-medium text-gray-900">${product.price}</td>
-                  <td className="px-6 py-4 text-center">
-                    <span
-                      className={`inline-block rounded-full px-3 py-1 text-sm font-bold ${
-                        product.status === "critical"
-                          ? "bg-red-100 text-red-700"
-                          : product.status === "warning"
-                            ? "bg-orange-100 text-orange-700"
-                            : "bg-green-100 text-green-700"
-                      }`}
-                    >
-                      {product.stock}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-center">
-                    {product.status === "critical" ? (
-                      <span className="inline-flex items-center gap-1.5 rounded-full bg-red-100 px-2 py-1 text-xs font-medium text-red-700">
-                        <AlertTriangle className="h-3 w-3" />
-                        CRITICO
-                      </span>
-                    ) : product.status === "warning" ? (
-                      <span className="inline-flex items-center gap-1.5 rounded-full bg-orange-100 px-2 py-1 text-xs font-medium text-orange-700">
-                        <AlertTriangle className="h-3 w-3" />
-                        BAJO
-                      </span>
-                    ) : (
-                      <span className="inline-flex items-center gap-1.5 rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-700">
-                        <CheckCircle className="h-3 w-3" />
-                        OK
-                      </span>
-                    )}
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="flex items-center justify-center gap-4 text-sm">
-                      <Link
-                        to={`/kiosco/producto/${product.id}`}
-                        className="font-medium text-blue-600 hover:text-blue-700 hover:underline"
+              {filteredProducts.map((product) => {
+                const needsRestock = product.stock <= product.minStock;
+
+                return (
+                  <tr key={product.id} className="border-b border-gray-100 hover:bg-gray-50">
+                    <td className="px-6 py-4 text-sm font-medium text-gray-900">
+                      <div className="flex items-center gap-3">
+                        <ProductArtwork product={product} />
+                        <span>{product.name}</span>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-600">{product.category}</td>
+                    <td className="px-6 py-4 text-right text-sm font-medium text-gray-900">${product.price}</td>
+                    <td className="px-6 py-4 text-center">
+                      <span
+                        className={`inline-block rounded-full px-3 py-1 text-sm font-bold ${
+                          needsRestock ? "bg-red-100 text-red-700" : "bg-slate-100 text-slate-700"
+                        }`}
                       >
-                        Ver detalle
-                      </Link>
-                    </div>
-                  </td>
-                </tr>
-              ))}
+                        {product.stock}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center justify-center gap-4 text-sm">
+                        <Link
+                          to={`/kiosco/producto/${product.id}`}
+                          className="font-medium text-blue-600 hover:text-blue-700 hover:underline"
+                        >
+                          Ver detalle
+                        </Link>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

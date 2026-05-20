@@ -1,75 +1,18 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router";
 import { CheckCircle, FileSearch, Search, ShieldCheck, XCircle } from "lucide-react";
-
-type ClaimStatus = "Pendiente" | "En revision" | "Resuelto";
-
-type PaymentClaim = {
-  id: number;
-  alumno: string;
-  dni: string;
-  reportedDate: string;
-  amount: number;
-  method: string;
-  receipt: string;
-  status: ClaimStatus;
-};
+import { claims as initialClaims, PaymentClaim } from "../../data/reclamos";
 
 export default function ReclamosPago() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [claims, setClaims] = useState<PaymentClaim[]>([
-    {
-      id: 1,
-      alumno: "Laura Fernandez",
-      dni: "78901234",
-      reportedDate: "22/04/2026",
-      amount: 850,
-      method: "Transferencia",
-      receipt: "Comprobante banco Macro",
-      status: "Pendiente",
-    },
-    {
-      id: 2,
-      alumno: "Diego Lopez",
-      dni: "89012345",
-      reportedDate: "20/04/2026",
-      amount: 1200,
-      method: "QR",
-      receipt: "Operacion 80913",
-      status: "En revision",
-    },
-    {
-      id: 3,
-      alumno: "Roberto Silva",
-      dni: "67890123",
-      reportedDate: "18/04/2026",
-      amount: 850,
-      method: "Efectivo",
-      receipt: "Ticket caja tarde",
-      status: "Resuelto",
-    },
-  ]);
+  const [claims, setClaims] = useState<PaymentClaim[]>(initialClaims);
 
   const filteredClaims = claims.filter((claim) =>
-    `${claim.alumno} ${claim.dni} ${claim.receipt}`.toLowerCase().includes(searchTerm.toLowerCase())
+    `${claim.alumno} ${claim.dni} ${claim.operationNumber}`.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const resolveClaim = (claimId: number) => {
-    setClaims((current) =>
-      current.map((claim) => (claim.id === claimId ? { ...claim, status: "Resuelto" } : claim))
-    );
-  };
-
-  const markInReview = (claimId: number) => {
-    setClaims((current) =>
-      current.map((claim) => (claim.id === claimId ? { ...claim, status: "En revision" } : claim))
-    );
-  };
-
-  const statusStyles: Record<ClaimStatus, string> = {
-    Pendiente: "bg-orange-100 text-orange-700",
-    "En revision": "bg-blue-100 text-blue-700",
-    Resuelto: "bg-green-100 text-green-700",
+    setClaims((current) => current.filter((claim) => claim.id !== claimId));
   };
 
   return (
@@ -77,30 +20,6 @@ export default function ReclamosPago() {
       <div className="app-page-header">
         <div>
           <h1 className="app-page-title">Reclamos de pago</h1>
-          <p className="app-page-copy">
-            Verificacion de pagos informados por alumnos cuando el cobro no aparece registrado.
-          </p>
-        </div>
-      </div>
-
-      <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-3">
-        <div className="app-panel p-5">
-          <p className="text-sm text-slate-500">Pendientes</p>
-          <p className="mt-2 text-3xl font-bold text-orange-600">
-            {claims.filter((claim) => claim.status === "Pendiente").length}
-          </p>
-        </div>
-        <div className="app-panel p-5">
-          <p className="text-sm text-slate-500">En revision</p>
-          <p className="mt-2 text-3xl font-bold text-blue-600">
-            {claims.filter((claim) => claim.status === "En revision").length}
-          </p>
-        </div>
-        <div className="app-panel p-5">
-          <p className="text-sm text-slate-500">Resueltos</p>
-          <p className="mt-2 text-3xl font-bold text-green-600">
-            {claims.filter((claim) => claim.status === "Resuelto").length}
-          </p>
         </div>
       </div>
 
@@ -132,8 +51,7 @@ export default function ReclamosPago() {
                 <th className="px-6 py-4 text-left text-sm font-medium text-slate-500">Fecha informada</th>
                 <th className="px-6 py-4 text-left text-sm font-medium text-slate-500">Monto</th>
                 <th className="px-6 py-4 text-left text-sm font-medium text-slate-500">Medio</th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-slate-500">Comprobante</th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-slate-500">Estado</th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-slate-500">Operacion</th>
                 <th className="px-6 py-4 text-left text-sm font-medium text-slate-500">Accion</th>
               </tr>
             </thead>
@@ -147,39 +65,34 @@ export default function ReclamosPago() {
                   <td className="px-6 py-4 text-sm text-slate-600">{claim.reportedDate}</td>
                   <td className="px-6 py-4 text-sm font-bold text-slate-900">${claim.amount}</td>
                   <td className="px-6 py-4 text-sm text-slate-600">{claim.method}</td>
-                  <td className="px-6 py-4 text-sm text-slate-600">{claim.receipt}</td>
+                  <td className="px-6 py-4 text-sm font-mono text-slate-700">{claim.operationNumber}</td>
                   <td className="px-6 py-4">
-                    <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${statusStyles[claim.status]}`}>
-                      {claim.status}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4">
-                    {claim.status === "Resuelto" ? (
-                      <span className="inline-flex items-center gap-2 text-sm font-medium text-green-700">
+                    <div className="flex flex-wrap gap-2">
+                      <Link
+                        to={`/cobranzas/reclamos/${claim.id}`}
+                        className="inline-flex items-center gap-2 rounded-lg border border-blue-200 px-3 py-2 text-sm font-medium text-blue-700 hover:bg-blue-50"
+                      >
+                        <ShieldCheck className="h-4 w-4" />
+                        Revisar
+                      </Link>
+                      <button
+                        onClick={() => resolveClaim(claim.id)}
+                        className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-3 py-2 text-sm font-medium text-white hover:bg-green-700"
+                      >
                         <CheckCircle className="h-4 w-4" />
-                        Pago conciliado
-                      </span>
-                    ) : (
-                      <div className="flex flex-wrap gap-2">
-                        <Link
-                          to={`/cobranzas/reclamos/${claim.id}`}
-                          className="inline-flex items-center gap-2 rounded-lg border border-blue-200 px-3 py-2 text-sm font-medium text-blue-700 hover:bg-blue-50"
-                        >
-                          <ShieldCheck className="h-4 w-4" />
-                          Revisar
-                        </Link>
-                        <button
-                          onClick={() => resolveClaim(claim.id)}
-                          className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-3 py-2 text-sm font-medium text-white hover:bg-green-700"
-                        >
-                          <CheckCircle className="h-4 w-4" />
-                          Resolver
-                        </button>
-                      </div>
-                    )}
+                        Resuelto
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
+              {filteredClaims.length === 0 && (
+                <tr>
+                  <td colSpan={6} className="px-6 py-8 text-center text-sm text-slate-500">
+                    No hay reclamos pendientes para los filtros seleccionados.
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
@@ -189,7 +102,7 @@ export default function ReclamosPago() {
         <div className="flex items-start gap-2">
           <XCircle className="mt-0.5 h-4 w-4 shrink-0 text-slate-500" />
           <p>
-            Si el comprobante no coincide con caja o banco, la secretaria deja el caso en revision y solicita respaldo adicional.
+            Verificar en la cuenta bancaria si el pago fue acreditado antes de marcar el reclamo como resuelto.
           </p>
         </div>
       </div>

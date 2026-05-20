@@ -45,7 +45,27 @@ export default function ReciboGenerado() {
         </div>
       </div>
 
-      <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-3">
+      <PaymentReceipt
+        variant="membership"
+        number={receipt.number}
+        date={receipt.date}
+        time={receipt.time}
+        title="Comprobante de Membresia"
+        subtitle="Cobro de cuota mensual"
+        party={{
+          title: "Datos del alumno",
+          lines: [receipt.alumno.name, `DNI: ${receipt.alumno.dni}`, `Plan: ${receipt.alumno.plan}`],
+        }}
+        items={[{ label: `Cuota mensual - ${receipt.alumno.plan}`, amount: receipt.payment.amount }]}
+        subtotal={receipt.payment.amount}
+        discount={receipt.payment.discount}
+        total={receipt.payment.total}
+        paymentMethod={receipt.payment.method}
+        attendedBy={receipt.attendedBy}
+        note="En la tabla se usa Pago porque tambien pueden registrarse pagos adelantados con descuento."
+      />
+
+      <div className="mx-auto mt-6 grid max-w-2xl grid-cols-1 gap-4 md:grid-cols-3">
         <button className="flex items-center justify-center gap-3 rounded-lg bg-indigo-primary p-4 text-white transition-colors hover:opacity-90">
           <Printer className="h-5 w-5" />
           <span className="font-medium">Imprimir</span>
@@ -67,26 +87,6 @@ export default function ReciboGenerado() {
           </span>
         </button>
       </div>
-
-      <PaymentReceipt
-        variant="membership"
-        number={receipt.number}
-        date={receipt.date}
-        time={receipt.time}
-        title="Comprobante de Membresia"
-        subtitle="Cobro de cuota mensual"
-        party={{
-          title: "Datos del alumno",
-          lines: [receipt.alumno.name, `DNI: ${receipt.alumno.dni}`, `Plan: ${receipt.alumno.plan}`],
-        }}
-        items={[{ label: `Cuota mensual - ${receipt.alumno.plan}`, amount: receipt.payment.amount }]}
-        subtotal={receipt.payment.amount}
-        discount={receipt.payment.discount}
-        total={receipt.payment.total}
-        paymentMethod={receipt.payment.method}
-        attendedBy={receipt.attendedBy}
-        note="Este comprobante certifica el pago de la cuota mensual del gimnasio."
-      />
 
       <div className="mx-auto mt-6 flex max-w-2xl justify-center gap-4">
         <Link to="/cobranzas/buscar-alumno" className="font-medium text-indigo-primary hover:underline">

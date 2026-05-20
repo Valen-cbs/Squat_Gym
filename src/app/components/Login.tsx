@@ -30,7 +30,7 @@ export default function Login() {
       name: "Secretaria",
       icon: Users,
       color: "from-sky-500 to-blue-500",
-      description: "Cobros, reclamos, recordatorios y ventas",
+      description: "Cobros, reclamos, kiosco y ventas",
     },
   ];
 

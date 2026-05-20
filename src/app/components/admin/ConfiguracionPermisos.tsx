@@ -27,7 +27,7 @@ const roleCards: Array<{ role: Role; users: number; tone: string; description: s
     role: "secretary",
     users: 4,
     tone: "border-blue-200 bg-blue-50",
-    description: "Cobros, reclamos, recordatorios, ventas y consulta de stock.",
+    description: "Cobros, reclamos, ventas y consulta de stock.",
   },
 ];
 

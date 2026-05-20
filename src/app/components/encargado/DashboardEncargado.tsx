@@ -71,7 +71,7 @@ export default function DashboardEncargado() {
     },
     {
       id: 2,
-      message: `Stock critico: ${criticalProduct.name} (${criticalProduct.stock} unidades)`,
+      message: `Stock bajo: ${criticalProduct.name} (${criticalProduct.stock} unidades)`,
       time: "Hace 30 min",
       icon: AlertTriangle,
       containerClass: "bg-amber-100",
