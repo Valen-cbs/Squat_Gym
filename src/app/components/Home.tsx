@@ -6,7 +6,6 @@ import {
   ArrowRight,
   Tag,
   BarChart3,
-  Bell,
   ClipboardList,
   Package,
   Users,
@@ -61,39 +60,16 @@ export default function Home() {
 
   const managerActions = [
     {
-      title: "Alumnos",
-      description: "Consulta el listado general de alumnos de la sede y administra bajas.",
-      icon: Users,
-      link: "/encargado/alumnos",
-      features: ["Buscar alumnos", "Ver estado", "Borrar registros"],
-    },
-    {
-      title: "Inscripciones y pagos",
-      description: "Segui el movimiento comercial de tu sede y el trabajo de recepcion.",
+      title: "Pagos",
+      description: "Segui los pagos registrados de tu sede y el trabajo de recepcion.",
       icon: DollarSign,
       link: "/encargado/inscripciones",
-      features: ["Ver inscripciones", "Consultar pagos", "Registros por secretaria"],
+      features: ["Consultar pagos", "Recibos", "Registros por secretaria"],
     },
-    {
-      title: "Alertas",
-      description: "Prioriza deudores y stock critico desde un solo panel.",
-      icon: Bell,
-      link: "/encargado/alertas",
-      features: ["Alumnos deudores", "Stock bajo", "Alertas operativas"],
-    },
-    ...(canViewDailySales
-      ? [{
-          title: "Ventas del kiosco",
-          description: "Consulta ventas diarias por turno o por rango de dias.",
-          icon: ShoppingCart,
-          link: "/kiosco",
-          features: ["Reporte por turno", "Reporte por dia", "Total general"],
-        }]
-      : []),
     {
       title: "Stock y reposicion",
       description: "Monitorea inventario, faltantes y proximos pedidos del kiosco.",
-      icon: ShoppingCart,
+      icon: Package,
       link: "/encargado/stock",
       features: canCreateRestockOrder
         ? ["Inventario actual", "Productos criticos", "Generar pedidos"]

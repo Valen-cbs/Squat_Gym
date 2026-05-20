@@ -61,11 +61,7 @@ export default function Layout() {
         title: "Gestion de sucursal",
         items: [
           { to: "/encargado/alumnos", label: "Alumnos", icon: Users },
-          { to: "/encargado/inscripciones", label: "Inscripciones y pagos", icon: DollarSign },
-          { to: "/encargado/alertas", label: "Alertas", icon: Bell },
-          { to: "/cobranzas/deudores", label: "Alumnos con deuda", icon: Users },
           { to: "/kiosco", label: "Ventas kiosco", icon: ShoppingCart },
-          { to: "/encargado/stock", label: "Stock y reposicion", icon: Package },
         ],
       });
     }
@@ -113,7 +109,7 @@ export default function Layout() {
   const notifications = useMemo(() => {
     const items = [];
 
-    if (hasPermission(user?.role, "collections.viewDebtors")) {
+    if (user?.role !== "manager" && hasPermission(user?.role, "collections.viewDebtors")) {
       items.push({
         id: "debtors",
         title: "Alumnos con deuda",

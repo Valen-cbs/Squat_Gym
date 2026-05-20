@@ -2,8 +2,6 @@ import { Link } from "react-router";
 import {
   ArrowRight,
   Users,
-  Bell,
-  Package,
   TrendingUp,
   AlertTriangle,
   DollarSign,
@@ -22,32 +20,11 @@ export default function DashboardEncargado() {
       link: "/encargado/alumnos",
     },
     {
-      title: "Inscripciones y pagos",
-      description: "Consultar movimientos comerciales y el trabajo de recepcion.",
-      icon: DollarSign,
-      badge: "23 este mes",
-      link: "/encargado/inscripciones",
-    },
-    {
-      title: "Alertas y notificaciones",
-      description: "Ver deudores y stock critico.",
-      icon: Bell,
-      badge: "5 alertas",
-      link: "/encargado/alertas",
-    },
-    {
       title: "Ventas del kiosco",
       description: "Reporte diario por turno o por rango de dias.",
       icon: ShoppingCart,
       badge: "$4.250 hoy",
       link: "/kiosco",
-    },
-    {
-      title: "Stock y reposicion",
-      description: "Control de inventario y pedidos del kiosco.",
-      icon: Package,
-      badge: "3 criticos",
-      link: "/encargado/stock",
     },
   ];
 
@@ -70,7 +47,7 @@ export default function DashboardEncargado() {
     },
     {
       id: 3,
-      message: "Se registro una nueva inscripcion en la sede",
+      message: "Pago confirmado: Ana Martinez - $1.200",
       time: "Hace 1 hora",
       icon: Users,
       containerClass: "bg-blue-100",
