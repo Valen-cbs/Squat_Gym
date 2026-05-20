@@ -21,6 +21,7 @@ export default function Home() {
     user?.role === "manager" ? "Encargado de sede norte" :
     user?.role === "admin" ? "Administrador" :
     "Usuario";
+  const scopeLabel = user?.role === "admin" ? "" : "Sede: Norte.";
 
   const canViewDebtors = hasPermission(user?.role, "collections.viewDebtors");
   const canManageClaims = hasPermission(user?.role, "collections.managePaymentClaim");
@@ -146,7 +147,7 @@ export default function Home() {
         <h1 className="mt-2 text-2xl font-bold text-indigo-darkest sm:text-3xl">
           {roleLabel}: {displayName}
         </h1>
-        <p className="mt-1 text-sm text-indigo-dark sm:text-base">Sede: Norte.</p>
+        <p className="mt-1 text-sm text-indigo-dark sm:text-base">{scopeLabel}</p>
       </section>
 
       <section>

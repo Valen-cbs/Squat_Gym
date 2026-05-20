@@ -94,7 +94,7 @@ export default function KioscoPrincipal() {
     ...(canCreateRestockOrder
       ? [
           {
-            to: "/kiosco/reposicion",
+            to: "/encargado/reposicion?modo=automatico",
             title: "Generar reposicion",
             description: "Crear pedido de productos con stock bajo.",
             icon: BoxIcon,

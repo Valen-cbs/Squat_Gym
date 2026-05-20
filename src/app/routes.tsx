@@ -22,7 +22,6 @@ import StockProductos from "./components/kiosco/StockProductos";
 import DetalleProducto from "./components/kiosco/DetalleProducto";
 import EditarProducto from "./components/kiosco/EditarProducto";
 import NuevoProducto from "./components/kiosco/NuevoProducto";
-import PedidoReposicion from "./components/kiosco/PedidoReposicion";
 import DashboardAdmin from "./components/admin/DashboardAdmin";
 import GestionPromociones, { GestionPlanes } from "./components/admin/GestionPromociones";
 import ReportesSedes from "./components/admin/ReportesSedes";
@@ -30,6 +29,7 @@ import Auditoria from "./components/admin/Auditoria";
 import DashboardEncargado from "./components/encargado/DashboardEncargado";
 import AlertasNotificaciones from "./components/encargado/AlertasNotificaciones";
 import StockReposicion from "./components/encargado/StockReposicion";
+import EncargadoReposicion from "./components/encargado/EncargadoReposicion";
 import Alumnos from "./components/encargado/Alumnos";
 import GestionUsuarios from "./components/admin/GestionUsuarios";
 import ConfiguracionPermisos from "./components/admin/ConfiguracionPermisos";
@@ -111,7 +111,7 @@ export const router = createBrowserRouter([
       { path: "producto/nuevo", Component: withPermission(["kiosk.viewStock"], NuevoProducto) },
       { path: "producto/:id", Component: withPermission(["kiosk.viewStock"], DetalleProducto) },
       { path: "producto/:id/editar", Component: withPermission(["kiosk.viewStock"], EditarProducto) },
-      { path: "reposicion", Component: withPermission(["kiosk.createRestockOrder"], PedidoReposicion) },
+      { path: "reposicion", Component: withPermission(["kiosk.createRestockOrder"], () => <Navigate to="/encargado/reposicion?modo=automatico" replace />) },
     ],
   },
   {
@@ -149,6 +149,7 @@ export const router = createBrowserRouter([
       { path: "alertas", Component: withPermission(["collections.viewDebtors"], AlertasNotificaciones) },
       { path: "novedades", Component: withPermission(["collections.viewDebtors"], NovedadesInternas) },
       { path: "stock", Component: withPermission(["kiosk.createRestockOrder"], StockReposicion) },
+      { path: "reposicion", Component: withPermission(["kiosk.createRestockOrder"], EncargadoReposicion) },
     ],
   },
   {

@@ -104,7 +104,7 @@ export default function Layout() {
   const toggleDesktopSidebar = () => setDesktopSidebarOpen((current) => !current);
 
   const roleAccent = "from-indigo-primary to-indigo-dark";
-  const branchLabel = "Sede Norte";
+  const branchLabel = user?.role === "admin" ? "Vista general" : "Sede Norte";
   const debtorsCount = getAlumnosDeudores().length;
   const notifications = useMemo(() => {
     const items = [];
