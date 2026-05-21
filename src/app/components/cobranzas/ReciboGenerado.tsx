@@ -30,7 +30,7 @@ export default function ReciboGenerado() {
       discount: paymentState?.payment?.discount ?? 85,
       total: paymentState?.payment?.total ?? 765,
     },
-    attendedBy: "Secretaria: Malena Trangoni",
+    attendedBy: "Secretaria",
   };
 
   return (
