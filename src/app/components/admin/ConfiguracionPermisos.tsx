@@ -49,7 +49,8 @@ const recipientOptions: NotificationRecipient[] = [
 
 const scheduleModes: NotificationScheduleMode[] = ["Fecha puntual", "Rango de fechas", "Permanente"];
 const frequencyOptions: NotificationFrequency[] = ["Una vez", "Diaria", "Semanal", "Quincenal", "Mensual"];
-const internalDestinationOptions: Array<{ value: InternalDestination; label: string }> = [
+
+const allInternalDestinationOptions: Array<{ value: InternalDestination; label: string }> = [
   { value: "/cobranzas", label: "Cobranzas - Secretaria" },
   { value: "/cobranzas/deudores", label: "Alumnos con deuda" },
   { value: "/cobranzas/reclamos", label: "Reclamos de pago" },
@@ -60,6 +61,82 @@ const internalDestinationOptions: Array<{ value: InternalDestination; label: str
   { value: "/admin/reportes", label: "Reportes del administrador" },
   { value: "/admin/notificaciones", label: "Configuracion de notificaciones" },
 ];
+
+/**
+ * Define qué pantallas internas son válidas para cada destinatario.
+ * "Alumno deudor" no tiene acceso al sistema interno, por lo que
+ * forzamos el canal a "Mail" cuando se selecciona ese destinatario.
+ */
+const destinationsByRecipient: Record<NotificationRecipient, InternalDestination[]> = {
+  "Alumno deudor": [],
+  "Secretaria": [
+    "/cobranzas",
+    "/cobranzas/deudores",
+    "/cobranzas/reclamos",
+  ],
+  "Encargado": [
+    "/encargado",
+    "/encargado/stock",
+    "/kiosco",
+    "/kiosco/stock",
+  ],
+  "Administrador": [
+    "/admin/reportes",
+    "/admin/notificaciones",
+    "/cobranzas/deudores",
+  ],
+  "Secretaria y encargado": [
+    "/cobranzas",
+    "/cobranzas/deudores",
+    "/cobranzas/reclamos",
+    "/encargado",
+    "/encargado/stock",
+    "/kiosco",
+    "/kiosco/stock",
+  ],
+  "Secretaria, encargado y administrador": [
+    "/cobranzas",
+    "/cobranzas/deudores",
+    "/cobranzas/reclamos",
+    "/encargado",
+    "/encargado/stock",
+    "/kiosco",
+    "/kiosco/stock",
+    "/admin/reportes",
+    "/admin/notificaciones",
+  ],
+};
+
+function getAvailableDestinations(recipient: NotificationRecipient) {
+  const allowed = destinationsByRecipient[recipient];
+  return allInternalDestinationOptions.filter((option) => allowed.includes(option.value));
+}
+
+/**
+ * Dado un cambio de destinatario, devuelve los campos que hay que
+ * actualizar en el setting para mantener la consistencia:
+ * - Si es "Alumno deudor", fuerza canal a "Mail" (no tiene pantalla interna).
+ * - Si el destino actual ya no es válido para el nuevo destinatario,
+ *   lo resetea al primero disponible.
+ */
+function patchOnRecipientChange(
+  current: NotificationSetting,
+  newRecipient: NotificationRecipient,
+): Partial<NotificationSetting> {
+  if (newRecipient === "Alumno deudor") {
+    return { recipients: newRecipient, channel: "Mail" };
+  }
+
+  const available = destinationsByRecipient[newRecipient];
+  const destinationStillValid = available.includes(current.internalDestination);
+
+  return {
+    recipients: newRecipient,
+    internalDestination: destinationStillValid
+      ? current.internalDestination
+      : available[0],
+  };
+}
 
 const initialSettings: NotificationSetting[] = [
   {
@@ -211,7 +288,81 @@ function ScheduleControls({ setting, onChange }: ScheduleControlsProps) {
   );
 }
 
-export default function ConfiguracionPermisos() {
+// ─── Subcomponente reutilizable para los campos de canal/destinatario/destino ─
+type RoutingFieldsProps = {
+  setting: NotificationSetting;
+  onChange: (patch: Partial<NotificationSetting>) => void;
+};
+
+function RoutingFields({ setting, onChange }: RoutingFieldsProps) {
+  const availableDestinations = getAvailableDestinations(setting.recipients);
+  const isAlumnoDeudor = setting.recipients === "Alumno deudor";
+
+  return (
+    <>
+      <div className="grid gap-4 sm:grid-cols-2">
+        <label>
+          <span className="mb-2 block text-sm font-medium text-slate-700">Canal</span>
+          <select
+            value={setting.channel}
+            disabled={isAlumnoDeudor}
+            onChange={(event) => onChange({ channel: event.target.value as NotificationChannel })}
+            className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400"
+          >
+            <option value="Interna">Interna</option>
+            <option value="Mail">Mail</option>
+          </select>
+          {isAlumnoDeudor && (
+            <p className="mt-1 text-xs text-slate-400">
+              Los alumnos reciben notificaciones solo por Mail.
+            </p>
+          )}
+        </label>
+
+        <label>
+          <span className="mb-2 block text-sm font-medium text-slate-700">Destinatarios</span>
+          <select
+            value={setting.recipients}
+            onChange={(event) => {
+              const newRecipient = event.target.value as NotificationRecipient;
+              onChange(patchOnRecipientChange(setting, newRecipient));
+            }}
+            className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            {recipientOptions.map((recipient) => (
+              <option key={recipient} value={recipient}>
+                {recipient}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+
+      {setting.channel === "Interna" && !isAlumnoDeudor && (
+        <label>
+          <span className="mb-2 block text-sm font-medium text-slate-700">
+            Pantalla destino al hacer click
+          </span>
+          <select
+            value={setting.internalDestination}
+            onChange={(event) =>
+              onChange({ internalDestination: event.target.value as InternalDestination })
+            }
+            className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            {availableDestinations.map((destination) => (
+              <option key={destination.value} value={destination.value}>
+                {destination.label}
+              </option>
+            ))}
+          </select>
+        </label>
+      )}
+    </>
+  );
+}
+
+export default function ConfiguracionNotificaciones() {
   const [settings, setSettings] = useState(initialSettings);
   const [draftAlert, setDraftAlert] = useState<NotificationSetting | null>(null);
   const draftTitleRef = useRef<HTMLInputElement>(null);
@@ -352,59 +503,10 @@ export default function ConfiguracionPermisos() {
                   />
                 </label>
 
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <label>
-                    <span className="mb-2 block text-sm font-medium text-slate-700">Canal</span>
-                    <select
-                      value={setting.channel}
-                      onChange={(event) =>
-                        updateSetting(setting.id, { channel: event.target.value as NotificationChannel })
-                      }
-                      className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    >
-                      <option value="Interna">Interna</option>
-                      <option value="Mail">Mail</option>
-                    </select>
-                  </label>
-
-                  <label>
-                    <span className="mb-2 block text-sm font-medium text-slate-700">Destinatarios</span>
-                    <select
-                      value={setting.recipients}
-                      onChange={(event) =>
-                        updateSetting(setting.id, { recipients: event.target.value as NotificationRecipient })
-                      }
-                      className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    >
-                      {recipientOptions.map((recipient) => (
-                        <option key={recipient} value={recipient}>
-                          {recipient}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-                </div>
-
-                {setting.channel === "Interna" && (
-                  <label>
-                    <span className="mb-2 block text-sm font-medium text-slate-700">
-                      Pantalla destino al hacer click
-                    </span>
-                    <select
-                      value={setting.internalDestination}
-                      onChange={(event) =>
-                        updateSetting(setting.id, { internalDestination: event.target.value as InternalDestination })
-                      }
-                      className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    >
-                      {internalDestinationOptions.map((destination) => (
-                        <option key={destination.value} value={destination.value}>
-                          {destination.label}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-                )}
+                <RoutingFields
+                  setting={setting}
+                  onChange={(patch) => updateSetting(setting.id, patch)}
+                />
 
                 <ScheduleControls setting={setting} onChange={(patch) => updateSetting(setting.id, patch)} />
               </div>
@@ -480,57 +582,7 @@ export default function ConfiguracionPermisos() {
                 />
               </label>
 
-              <div className="grid gap-4 sm:grid-cols-2">
-                <label>
-                  <span className="mb-2 block text-sm font-medium text-slate-700">Canal</span>
-                  <select
-                    value={draftAlert.channel}
-                    onChange={(event) => updateDraftAlert({ channel: event.target.value as NotificationChannel })}
-                    className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  >
-                    <option value="Interna">Interna</option>
-                    <option value="Mail">Mail</option>
-                  </select>
-                </label>
-
-                <label>
-                  <span className="mb-2 block text-sm font-medium text-slate-700">Destinatarios</span>
-                  <select
-                    value={draftAlert.recipients}
-                    onChange={(event) =>
-                      updateDraftAlert({ recipients: event.target.value as NotificationRecipient })
-                    }
-                    className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  >
-                    {recipientOptions.map((recipient) => (
-                      <option key={recipient} value={recipient}>
-                        {recipient}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-              </div>
-
-              {draftAlert.channel === "Interna" && (
-                <label>
-                  <span className="mb-2 block text-sm font-medium text-slate-700">
-                    Pantalla destino al hacer click
-                  </span>
-                  <select
-                    value={draftAlert.internalDestination}
-                    onChange={(event) =>
-                      updateDraftAlert({ internalDestination: event.target.value as InternalDestination })
-                    }
-                    className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  >
-                    {internalDestinationOptions.map((destination) => (
-                      <option key={destination.value} value={destination.value}>
-                        {destination.label}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-              )}
+              <RoutingFields setting={draftAlert} onChange={updateDraftAlert} />
 
               <ScheduleControls setting={draftAlert} onChange={updateDraftAlert} />
 
